@@ -363,7 +363,7 @@
     }
     .summary textarea { min-height: 280px; padding: 10px; background: var(--content-bg); border: 1px solid var(--input-border); border-radius: 6px; color: var(--input-text); }
     .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
-    .hidden { display: none; }
+    .hidden { display: none !important; }
     .toast { position: fixed; right: 18px; bottom: 18px; background: #38bdf8; color: #0f172a; font-weight: bold; padding: 12px 16px; border-radius: 8px; opacity: 0; transition: .2s; z-index: 1000; }
     .toast.show { opacity: 1; }
     .theme-toggle, .home-toggle { background: #ffffff22; border: 1px solid #ffffff66; color: #fff; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 6px; transition: background 0.2s; }
@@ -457,7 +457,42 @@
   box-shadow:none !important;
 }
 
+/* FLUXO SEQUENCIAL DO SUPORTE */
+#tabFluxoAtendimento .card.fluxo-locked { opacity:.58; }
+#tabFluxoAtendimento .card.fluxo-locked .head { cursor:not-allowed; }
+#tabFluxoAtendimento .card.fluxo-locked .content { display:none !important; }
+#tabFluxoAtendimento .fluxo-status { margin-left:auto; font-size:.78rem; font-weight:800; padding:4px 8px; border-radius:999px; white-space:nowrap; }
+#tabFluxoAtendimento .fluxo-status.pendente { background:#fff3cd; color:#856404; }
+#tabFluxoAtendimento .fluxo-status.ok { background:#d1fae5; color:#065f46; }
+#tabFluxoAtendimento .card.fluxo-atual { box-shadow:0 0 0 2px rgba(2,132,199,.18), 0 8px 24px rgba(0,0,0,.08); }
 
+/* ESTILOS DA ABA LOGIN */
+.login-card {
+  max-width: 420px;
+  margin: 50px auto;
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid var(--card-border);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  text-align: center;
+}
+.login-card h2 {
+  margin-top: 0;
+  color: #38bdf8;
+  font-size: 1.6rem;
+}
+.login-card .field {
+  text-align: left;
+  margin-bottom: 15px;
+}
+.login-error {
+  color: #ef4444;
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  display: none;
+}
 </style>
 </head>
 <body>
@@ -472,7 +507,7 @@
       <p style="margin:4px 0 0;color:#e0f2fe">Plataforma Integrada de Atendimento</p>
     </div>
     <div class="header-actions">
-      <button type="button" class="home-toggle" onclick="openTab(null, 'tabHome')">
+      <button type="button" class="home-toggle app-protected hidden" onclick="openTab(null, 'tabHome')">
         <span>🏠</span> <span>Início</span>
       </button>
       <button type="button" class="theme-toggle" onclick="toggleTheme()">
@@ -485,17 +520,41 @@
 <!-- Navegação Superior -->
 <nav class="nav-bar">
   <div class="nav-container">
-    <button class="nav-btn active" id="btnNavHome" onclick="openTab(event, 'tabHome')">🏠 Início</button>
-    <button class="nav-btn" id="btnNavSuporte" onclick="openTab(event, 'tabFluxoAtendimento')">🎧 SUPORTE</button>
-    <button class="nav-btn" id="btnNavGlpi" onclick="openTab(event, 'tabScriptAnálise')">🚨 GLPI-INCIDENTE</button>
-    <button class="nav-btn" id="btnNavNegociacao" onclick="openTab(event, 'tabNegociacao')">💰 NEGOCIAÇÃO</button>
+    <button class="nav-btn active" id="btnNavLogin" onclick="openTab(event, 'tabLogin')">🔑 LOGIN</button>
+    <button class="nav-btn app-protected hidden" id="btnNavHome" onclick="openTab(event, 'tabHome')">🏠 Início</button>
+    <button class="nav-btn app-protected hidden" id="btnNavSuporte" onclick="openTab(event, 'tabFluxoAtendimento')">🎧 SUPORTE</button>
+    <button class="nav-btn app-protected hidden" id="btnNavGlpi" onclick="openTab(event, 'tabScriptAnálise')">🚨 GLPI-INCIDENTE</button>
+    <button class="nav-btn app-protected hidden" id="btnNavNegociacao" onclick="openTab(event, 'tabNegociacao')">💰 NEGOCIAÇÃO</button>
   </div>
 </nav>
 
 <main class="container">
 
+  <!-- ABA LOGIN -->
+  <div id="tabLogin" class="tab-content active">
+    <div class="login-card">
+      <h2>Acesso ao Sistema</h2>
+      <p style="color: var(--subtext-color); font-size: 0.9rem; margin-bottom: 20px;">Informe seu usuário e senha para acessar as ferramentas.</p>
+      
+      <form onsubmit="autenticarUsuario(event)">
+        <div class="field">
+          <label for="loginUsuario">Usuário:</label>
+          <input type="text" id="loginUsuario" placeholder="Digite seu usuário" required>
+        </div>
+        <div class="field">
+          <label for="loginSenha">Senha:</label>
+          <input type="password" id="loginSenha" placeholder="Digite sua senha" required>
+        </div>
+        
+        <div id="loginError" class="login-error">Usuário ou senha incorretos!</div>
+        
+        <button type="submit" class="btn primary" style="width: 100%; margin-top: 15px; padding: 12px;">Entrar</button>
+      </form>
+    </div>
+  </div>
+
   <!-- ABA TELA INICIAL (HOME) -->
-  <div id="tabHome" class="tab-content active">
+  <div id="tabHome" class="tab-content app-protected hidden">
     <div class="welcome-banner">
       <h2>Selecione o módulo de atendimento</h2>
       <p>Escolha uma das opções abaixo para iniciar as operações.</p>
@@ -523,7 +582,7 @@
   </div>
 
   <!-- ABA 1: GLPI-INCIDENTE -->
-  <div id="tabScriptAnálise" class="tab-content">
+  <div id="tabScriptAnálise" class="tab-content app-protected hidden">
     <div class="index1-card">
       <h2 class="company-title">GLPI-INCIDENTE</h2>
 
@@ -579,7 +638,7 @@
   </div>
 
   <!-- ABA 2: SUPORTE -->
-  <div id="tabFluxoAtendimento" class="tab-content">
+  <div id="tabFluxoAtendimento" class="tab-content app-protected hidden">
     
     <!-- 0. IDENTIFICAÇÃO DO CLIENTE -->
     <section class="card open">
@@ -599,7 +658,7 @@
     </section>
 
     <!-- 1. ANÁLISE EM SISTEMA -->
-    <section class="card open">
+    <section class="card">
       <div class="head" onclick="toggle(this)"><div class="num">1</div><div><h2>ANÁLISE EM SISTEMA</h2></div><span class="arrow">⌄</span></div>
       <div class="content">
         <h3>GLPI:</h3>
@@ -692,7 +751,7 @@
     </section>
 
     <!-- 2. PARTE DO CLIENTE -->
-    <section class="card open">
+    <section class="card">
       <div class="head" onclick="toggle(this)"><div class="num">2</div><div><h2>PARTE DO CLIENTE</h2></div><span class="arrow">⌄</span></div>
       <div class="content">
 
@@ -740,7 +799,7 @@
     </section>
 
     <!-- 3. ORIENTAÇÃO AO CLIENTE -->
-    <section class="card open">
+    <section class="card">
       <div class="head" onclick="toggle(this)"><div class="num">3</div><div><h2>ORIENTAÇÃO AO CLIENTE</h2></div><span class="arrow">⌄</span></div>
       <div class="content">
         
@@ -757,7 +816,7 @@
     </section>
 
     <!-- 4. GERÊNCIA -->
-    <section class="card open">
+    <section class="card">
       <div class="head" onclick="toggle(this)"><div class="num">4</div><div><h2>GERÊNCIA</h2></div><span class="arrow">⌄</span></div>
       <div class="content">
         <div class="fields">
@@ -819,7 +878,7 @@
     </section>
 
     <!-- 5. ENCERRAMENTO -->
-    <section class="card open">
+    <section class="card">
       <div class="head" onclick="toggle(this)"><div class="num">5</div><div><h2>ENCERRAMENTO</h2></div><span class="arrow">⌄</span></div>
       <div class="content">
         <h3>STATUS FINAL:</h3>
@@ -850,7 +909,7 @@
   </div>
 
   <!-- ABA 3: NEGOCIAÇÃO -->
-  <div id="tabNegociacao" class="tab-content">
+  <div id="tabNegociacao" class="tab-content app-protected hidden">
     <div style="max-width: 1200px; margin: 0 auto;">
       <div class="negociacao-card" style="background: linear-gradient(135deg,#0284c7,#0369a1); color: #fff; border-radius: 18px; padding: 25px 30px; margin-bottom: 20px;">
         <h1 style="margin:0 0 7px; font-size:28px;">💰 Cálculo para Negociação</h1>
@@ -979,8 +1038,42 @@
 <div id="toast" class="toast"></div>
 
 <script>
+// --- CONTROLE DE AUTENTICAÇÃO ---
+let usuarioAutenticado = false;
+
+function autenticarUsuario(event) {
+  event.preventDefault();
+  const u = document.getElementById('loginUsuario').value.trim();
+  const s = document.getElementById('loginSenha').value.trim();
+  const err = document.getElementById('loginError');
+
+  if (u === "vct2026" && s === "vct2026") {
+    usuarioAutenticado = true;
+    err.style.display = "none";
+    
+    // Revela os elementos protegidos
+    document.querySelectorAll('.app-protected').forEach(el => {
+      el.classList.remove('hidden');
+    });
+    
+    // Oculta a opção de Login na barra superior
+    document.getElementById('btnNavLogin').style.display = 'none';
+    
+    toast("Acesso permitido! Bem-vindo.");
+    openTab(null, 'tabHome');
+  } else {
+    err.style.display = "block";
+    toast("Usuário ou senha inválidos.");
+  }
+}
+
 // --- FUNÇÃO DE ABAS E NAVEGAÇÃO HOME ---
 function openTab(evt, tabId) {
+  if (!usuarioAutenticado && tabId !== 'tabLogin') {
+    toast("Por favor, faça o login para acessar.");
+    return;
+  }
+
   const contents = document.querySelectorAll(".tab-content");
   contents.forEach(c => c.classList.remove("active"));
   
@@ -992,6 +1085,7 @@ function openTab(evt, tabId) {
   if (evt) {
     evt.currentTarget.classList.add("active");
   } else {
+    if (tabId === 'tabLogin') document.getElementById('btnNavLogin').classList.add('active');
     if (tabId === 'tabHome') document.getElementById('btnNavHome').classList.add('active');
     if (tabId === 'tabFluxoAtendimento') document.getElementById('btnNavSuporte').classList.add('active');
     if (tabId === 'tabScriptAnálise') document.getElementById('btnNavGlpi').classList.add('active');
@@ -1177,7 +1271,102 @@ let listaIps = [];
 let testesManuais = [];
 let editandoManualmente = false;
 
-function toggle(el) { el.parentElement.classList.toggle("open"); }
+function toggle(el) {
+  const card = el.parentElement;
+  if (card.classList.contains("fluxo-locked")) {
+    toast("Conclua a etapa anterior para liberar esta seção.");
+    return;
+  }
+  card.classList.toggle("open");
+}
+
+// Fluxo sequencial: cada etapa permanece fechada/bloqueada até a etapa anterior ser concluída.
+function suporteEtapaConcluida(indice) {
+  const cards = [...document.querySelectorAll("#tabFluxoAtendimento > .card")];
+  const c = cards[indice];
+  if (!c) return false;
+
+  if (indice === 0) {
+    return !!val("clienteInput") && !!val("tellInput") && !!state.canal;
+  }
+  if (indice === 1) {
+    const status = getMulti("statusCliente");
+    const crm = getMulti("statusCRM");
+    const glpiOk = !!state.glpi && (state.glpi !== "Sim" || !!val("ticketGLPIInput"));
+    const histOk = !!state.historico && (state.historico !== "OUTRO" || !!val("infoHistoricoOutro"));
+    return glpiOk && histOk && status.length > 0 && crm.length > 0;
+  }
+  if (indice === 2) {
+    return getAparelhosReclamacaoFormatados().length > 0 && !!state.sinal;
+  }
+  if (indice === 3) {
+    const resultados = [...document.querySelectorAll(".resultado-teste")];
+    return resultados.length > 0 && resultados.every(x => !!x.value);
+  }
+  if (indice === 4) {
+    const procs = getProcedimentos();
+    const outroOk = !procs.some(x => x.startsWith("OUTRO")) || !!val("infoOutroProcedimento");
+    return procs.length > 0 && outroOk && !!state.resultadoDiag;
+  }
+  return false;
+}
+
+function atualizarFluxoSuporte(indicePreferencial = null, mostrarToast = true) {
+  const cards = [...document.querySelectorAll("#tabFluxoAtendimento > .card")];
+  if (!cards.length) return;
+
+  let liberadoAte = 0;
+  for (let i = 0; i < cards.length - 1; i++) {
+    if (suporteEtapaConcluida(i)) liberadoAte = i + 1;
+    else break;
+  }
+
+  cards.forEach((card, i) => {
+    const bloqueado = i > liberadoAte;
+    const concluida = i < cards.length - 1 && suporteEtapaConcluida(i);
+    card.classList.toggle("fluxo-locked", bloqueado);
+    card.classList.toggle("fluxo-atual", i === liberadoAte && !concluida);
+
+    let status = card.querySelector(":scope > .head .fluxo-status");
+    if (!status) {
+      status = document.createElement("span");
+      status.className = "fluxo-status";
+      const head = card.querySelector(":scope > .head");
+      const arrow = head?.querySelector(".arrow");
+      if (arrow) head.insertBefore(status, arrow);
+      else head.appendChild(status);
+    }
+    if (bloqueado) {
+      status.textContent = "🔒 BLOQUEADO";
+      status.className = "fluxo-status pendente";
+    } else if (concluida) {
+      status.textContent = "✅ OK";
+      status.className = "fluxo-status ok";
+    } else {
+      status.textContent = "⏳ PREENCHER";
+      status.className = "fluxo-status pendente";
+    }
+  });
+
+  // Apenas a etapa liberada fica aberta automaticamente.
+  if (indicePreferencial !== null && indicePreferencial === liberadoAte && cards[indicePreferencial]) {
+    cards.forEach((card, i) => { if (i !== indicePreferencial) card.classList.remove("open"); });
+    cards[indicePreferencial].classList.add("open");
+    if (mostrarToast && indicePreferencial > 0) toast("Etapa concluída! Próxima seção liberada.");
+  }
+}
+
+function concluirEAvancarSuporte() {
+  const cards = [...document.querySelectorAll("#tabFluxoAtendimento > .card")];
+  for (let i = 0; i < cards.length - 1; i++) {
+    if (suporteEtapaConcluida(i)) {
+      if (i + 1 < cards.length && cards[i + 1].classList.contains("fluxo-locked")) continue;
+    }
+  }
+  const anterior = cards.findIndex(c => c.classList.contains("open"));
+  atualizarFluxoSuporte(anterior >= 0 ? anterior + 1 : null, anterior >= 0);
+}
+
 
 function select(campo, valor, btn) {
   state[campo] = valor;
@@ -1531,6 +1720,15 @@ function abrirTodas(v) {
   document.querySelectorAll("#tabFluxoAtendimento .card").forEach(c => c.classList.toggle("open", v));
 }
 
+function cardsSuporteResetar() {
+  const cards = [...document.querySelectorAll("#tabFluxoAtendimento > .card")];
+  cards.forEach((card, i) => {
+    card.classList.toggle("open", i === 0);
+    card.classList.toggle("fluxo-locked", i > 0);
+    card.classList.remove("fluxo-atual");
+  });
+}
+
 function reiniciar() {
   document.querySelectorAll("#tabFluxoAtendimento input, #tabFluxoAtendimento textarea, #tabFluxoAtendimento select").forEach(el => {
     if (el.type === "checkbox") el.checked = false;
@@ -1554,6 +1752,8 @@ function reiniciar() {
   document.getElementById("btnToggleEdit2").classList.replace("primary", "secondary");
   atualizarTestesDinâmicos();
   gerarScript2();
+  cardsSuporteResetar();
+  atualizarFluxoSuporte(0, false);
   toast("Campos reiniciados!");
 }
 
@@ -1626,6 +1826,10 @@ document.querySelectorAll("#tabFluxoAtendimento input, #tabFluxoAtendimento text
   el.addEventListener("input", () => {
     if (el.classList.contains("local-trigger")) atualizarTestesDinâmicos();
     gerarScript2();
+    atualizarFluxoSuporte();
+  });
+  el.addEventListener("change", () => {
+    atualizarFluxoSuporte();
   });
 });
 
@@ -1641,6 +1845,7 @@ document.querySelectorAll(".aparelho-trigger").forEach(el => {
 document.getElementById("chkVariosAlarmes").addEventListener("change", (e) => {
   document.getElementById("boxVariosAlarmes").classList.toggle("hidden", !e.target.checked);
   gerarScript2();
+  atualizarFluxoSuporte();
 });
 
 document.querySelectorAll(".procedimentoCheck").forEach(el => {
@@ -1648,11 +1853,13 @@ document.querySelectorAll(".procedimentoCheck").forEach(el => {
     const checked = [...document.querySelectorAll(".procedimentoCheck:checked")].map(c => c.value);
     document.getElementById("boxOutroProcedimento").classList.toggle("hidden", !checked.includes("OUTRO"));
     gerarScript2();
+    atualizarFluxoSuporte();
   });
 });
 
 atualizarTestesDinâmicos();
 gerarScript2();
+atualizarFluxoSuporte(0, false);
 calcularNegociacao();
 
 function gerarScriptClienteN1(){
