@@ -23,6 +23,9 @@
       --subtext-color: #94a3b8;
       --header-bg: linear-gradient(135deg,#0284c7,#0369a1);
       --brand-orange: #FF6600;
+      --green:#35c48a;
+      --yellow:#f5c451;
+      --red:#ff6b6b;
     }
 
     body.light-mode {
@@ -230,9 +233,9 @@
     }
     .modules-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 20px;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto;
     }
     .module-card {
@@ -258,6 +261,9 @@
     }
     .module-card.green:hover {
       border-color: #10b981;
+    }
+    .module-card.purple:hover {
+      border-color: #a855f7;
     }
     .module-icon {
       font-size: 3rem;
@@ -478,6 +484,20 @@
     .notice { background: var(--summary-bg); border-left: 5px solid #e0a400; padding: 14px; border-radius: 8px; line-height: 1.5; color: var(--text-body); border-top: 1px solid var(--card-border); border-right: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
     .cancel { background: var(--summary-bg); border-left: 5px solid #d33; padding: 14px; border-radius: 8px; margin-top: 12px; color: var(--text-body); border-top: 1px solid var(--card-border); border-right: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
 
+    /* Estilos específicos da Mudança de Endereço */
+    .warning{border-left:4px solid var(--yellow);background:#211e13;padding:12px;border-radius:8px;color:#f6e4ae}
+    .danger{border-left:4px solid var(--red);background:#251519;padding:12px;border-radius:8px;color:#ffd0d0}
+    .success{border-left:4px solid var(--green);background:#12251f;padding:12px;border-radius:8px;color:#c7f4e1}
+    .formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .subtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .subtab{border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-body);padding:10px 14px;border-radius:9px;cursor:pointer;font-weight:700}
+    .subtab.active{background:#0284c7;color:white;border-color:#0284c7}
+    .subtabcontent{display:none}.subtabcontent.active{display:block}
+    .successbtn{background:#23845f;color:white}
+    .dangerbtn{background:#8d3030;color:white}
+    .script{white-space:pre-wrap;background:var(--summary-bg);border:1px dashed var(--card-border);padding:16px;border-radius:10px;line-height:1.55;font-family:Consolas,monospace;font-size:13px;color:var(--summary-text);}
+    .small{font-size:12px;color:var(--subtext-color)}
+
     /* Estilo do Alerta de Negociação */
     .alerta-negociacao-topo {
       background: #fff3cd;
@@ -493,7 +513,7 @@
     }
 
     @media(max-width:800px){
-      .grid,.grid3,.fields,.check-grid,.modules-grid { grid-template-columns: 1fr; }
+      .grid,.grid3,.fields,.check-grid,.modules-grid,.formgrid { grid-template-columns: 1fr; }
       .header-content { flex-direction: column; align-items: flex-start; gap: 12px; }
       .result-neg { grid-template-columns: 1fr; }
     }
@@ -586,6 +606,7 @@
     <button class="nav-btn" id="btnNavSuporte" onclick="openTab(event, 'tabFluxoAtendimento')">🎧 SUPORTE</button>
     <button class="nav-btn" id="btnNavGlpi" onclick="openTab(event, 'tabScriptAnálise')">🚨 GLPI-INCIDENTE</button>
     <button class="nav-btn" id="btnNavNegociacao" onclick="openTab(event, 'tabNegociacao')">💰 NEGOCIAÇÃO</button>
+    <button class="nav-btn" id="btnNavMudanca" onclick="openTab(event, 'tabMudancaEndereco')">🚚 MUDANÇA DE ENDEREÇO</button>
   </div>
 </nav>
 
@@ -615,6 +636,12 @@
         <div class="module-icon">💰</div>
         <div class="module-title">NEGOCIAÇÃO</div>
         <div class="module-desc">Calculadora de acordos, regras de parcelamento, planos cancelados e tabela de valores.</div>
+      </div>
+
+      <div class="module-card purple" onclick="openTab(null, 'tabMudancaEndereco')">
+        <div class="module-icon">🔄</div>
+        <div class="module-title">MUDANÇA ENDEREÇO</div>
+        <div class="module-desc">Passo a passo, formulário, scripts de alteração/retirada e orientações do manual.</div>
       </div>
     </div>
   </div>
@@ -1072,6 +1099,141 @@
     </div>
   </div>
 
+  <!-- ABA 4: MUDANÇA DE ENDEREÇO -->
+  <div id="tabMudancaEndereco" class="tab-content">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div class="negociacao-card" style="background: linear-gradient(135deg,#0284c7,#0369a1); color: #fff; border-radius: 18px; padding: 25px 30px; margin-bottom: 20px;">
+        <h1 style="margin:8px 0 7px; font-size:28px;">🔄 Mudança de Endereço — Passo a Passo + script</h1>
+        <p style="margin:0; opacity:.9;">Mudança de endereço Manual</p>
+      </div>
+
+      <div class="subtabs">
+        <button class="subtab active" onclick="openSubTab('dadosMudanca',this)">👤 Dados</button>
+        <button class="subtab" onclick="openSubTab('scriptsMudanca',this)">💬 Scripts</button>
+        <button class="subtab" onclick="openSubTab('orientacoesMudanca',this)">📘 Orientações</button>
+      </div>
+
+      <!-- Sub-aba Dados -->
+      <section id="dadosMudanca" class="subtabcontent active">
+        <div class="card" style="padding:20px;">
+          <h2>👤 Dados para preencher</h2>
+          <div class="formgrid">
+            <div class="field"><label>Cliente</label><input id="mud_cliente" type="text"></div>
+            <div class="field"><label>Plano Internet</label><input id="mud_plano" type="text" placeholder="Ex.: 1"></div>
+            <div class="field"><label>Telefone</label><input id="mud_telefone" type="text"></div>
+            <div class="field"><label>Tipo de cliente</label><select id="mud_tipoCliente"><option value="">Selecione</option><option>Pessoa Física</option><option>Pessoa Jurídica</option></select></div>
+            <div class="field"><label>Data da solicitação</label><input id="mud_data" type="date"></div>
+            <div class="field full">
+              <label>💰 Taxa e forma de pagamento</label>
+              <select id="mud_planoTaxa">
+                <option value="">Selecione a condição</option>
+                <option value="sem-mesh">R$ 99,90 — SEM MESH</option>
+                <option value="com-mesh">R$ 149,90 — COM MESH</option>
+              </select>
+              <div class="small" style="margin-top:6px">Até 5 parcelas sem juros, conforme o manual.</div>
+            </div>
+            <div class="field full">
+              <label>📊 Parcelamento</label>
+              <select id="mud_parcelas">
+                <option value="">Selecione a quantidade de parcelas</option>
+                <option value="1">1x — à vista</option>
+                <option value="2">2x sem juros</option>
+                <option value="3">3x sem juros</option>
+                <option value="4">4x sem juros</option>
+                <option value="5">5x sem juros</option>
+              </select>
+              <div id="mud_calculoTaxa" class="success" style="margin-top:10px;display:none"></div>
+            </div>
+            <div class="field full"><label>Endereço atual (retirada)</label><textarea id="mud_enderecoAtual"></textarea></div>
+            <div class="field"><label>CTO atual (retirada)</label><input id="mud_ctoAtual" type="text"></div>
+            <div class="field"><label>Porta atual</label><input id="mud_portaAtual" type="text"></div>
+            <div class="field full"><label>Novo endereço (instalação)</label><textarea id="mud_novoEndereco"></textarea></div>
+            <div class="field full"><label>Referência do novo endereço</label><input id="mud_referencia" type="text"></div>
+            <div class="field"><label>Novo CTO (instalação)</label><input id="mud_novoCto" type="text"></div>
+            <div class="field"><label>Nova porta</label><input id="mud_novaPorta" type="text"></div>
+          </div>
+          <div class="actions">
+            <button class="primary" onclick="saveDataMudanca()">💾 Salvar preenchimento</button>
+            <button class="secondary" onclick="loadDataMudanca()">↻ Recuperar dados</button>
+            <button class="dangerbtn" onclick="clearAllMudanca()">🗑 Limpar tudo</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sub-aba Scripts -->
+      <section id="scriptsMudanca" class="subtabcontent">
+        <div class="card" style="padding:20px;">
+          <h2>💬 Script automático — MUDANÇA DE ENDEREÇO</h2>
+          <p class="small">O texto abaixo é montado automaticamente com os dados preenchidos.</p>
+          <div id="scriptMudancaText" class="script"></div>
+          <textarea id="editScriptMudanca" style="display:none;min-height:360px" aria-label="Editar script de Mudança de Endereço"></textarea>
+          <div class="actions">
+            <button class="secondary" onclick="toggleEditMud('MudancaText')">✏️ Editar script</button>
+            <button class="primary" onclick="copyScriptMud('scriptMudancaText')">📋 Copiar script</button>
+            <button class="successbtn" id="saveMudancaText" style="display:none" onclick="saveEditedScriptMud('MudancaText')">💾 Salvar edição</button>
+            <button class="secondary" id="cancelMudancaText" style="display:none" onclick="cancelEditMud('MudancaText')">↩️ Cancelar</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding:20px;">
+          <h2>🚚 Script automático — RETIRADA DE EQUIPAMENTO</h2>
+          <p class="small">Script conforme a estrutura apresentada no manual.</p>
+          <div id="scriptRetiradaText" class="script"></div>
+          <textarea id="editScriptRetirada" style="display:none;min-height:300px" aria-label="Editar script de Retirada de Equipamentos"></textarea>
+          <div class="actions">
+            <button class="secondary" onclick="toggleEditMud('RetiradaText')">✏️ Editar script</button>
+            <button class="primary" onclick="copyScriptMud('scriptRetiradaText')">📋 Copiar script</button>
+            <button class="successbtn" id="saveRetiradaText" style="display:none" onclick="saveEditedScriptMud('RetiradaText')">💾 Salvar edição</button>
+            <button class="secondary" id="cancelRetiradaText" style="display:none" onclick="cancelEditMud('RetiradaText')">↩️ Cancelar</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding:20px;">
+          <h2>💬 Script para encaminhar ao cliente</h2>
+          <p class="small">Texto de confirmação e orientações para envio ao cliente.</p>
+          <div id="scriptClienteMudText" class="script"></div>
+          <textarea id="editScriptClienteMud" style="display:none;min-height:300px" aria-label="Editar script do Cliente"></textarea>
+          <div class="actions">
+            <button class="secondary" onclick="toggleEditMud('ClienteMudText')">✏️ Editar script</button>
+            <button class="primary" onclick="copyScriptMud('scriptClienteMudText')">📋 Copiar script</button>
+            <button class="successbtn" id="saveClienteMudText" style="display:none" onclick="saveEditedScriptMud('ClienteMudText')">💾 Salvar edição</button>
+            <button class="secondary" id="cancelClienteMudText" style="display:none" onclick="cancelEditMud('ClienteMudText')">↩️ Cancelar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sub-aba Orientações -->
+      <section id="orientacoesMudanca" class="subtabcontent">
+        <div class="card" style="padding:20px;">
+          <h2>📘 Orientações gerais do manual</h2>
+          <h3>Solicitação</h3>
+          <p>A solicitação pode ser iniciada pelo Aplicativo Minha Você, e-mail, lojas físicas ou WhatsApp/AKIVA Chat. A tratativa inicial, após as confirmações, é realizada no CRM; quando o CRM não permite concluir, segue-se o fluxo manual no Integrator Web.</p>
+
+          <h3>📑 Documentação</h3>
+          <p><b>PF:</b> RG e CPF do titular ou procurador, comprovante do novo endereço com CEP válido e procuração se terceiro. No WhatsApp, selfie segurando o RG é obrigatória.</p>
+          <p><b>PJ:</b> Cartão CNPJ, registro de constituição, RG/CPF do responsável e comprovante do novo endereço com CEP válido. No WhatsApp, selfie segurando o RG é obrigatória.</p>
+
+          <h3>💰 Taxas, parcelamento e cálculo</h3>
+          <p>O sistema considera somente duas condições: <b>R$ 99,90 para plano SEM MESH</b> ou <b>R$ 149,90 para plano COM MESH</b>. O parcelamento é de até <b>5x sem juros</b>. O valor de cada parcela é calculated automaticamente dividindo a taxa escolhida pela quantidade de parcelas.</p>
+          <p><b>Exemplos:</b> R$ 99,90 em 1x = R$ 99,90; 2x = R$ 49,95; 3x = R$ 33,30; 4x = R$ 24,98; 5x = R$ 19,98. R$ 149,90 em 1x = R$ 149,90; 2x = R$ 74,95; 3x = R$ 49,97; 4x = R$ 37,48; 5x = R$ 29,98.</p>
+          <p>Plano sem Mesh: <b>R$ 99,90</b>. Plano com Mesh: <b>R$ 149,90</b>. Até 5 parcelas sem juros. Prazo informado: até 5 dias úteis após validação da solicitação.</p>
+
+          <h3>📦 Equipamento</h3>
+          <p>O cliente deve levar a ONU/conversor óptico ao novo endereço. Se não estiver no local, o manual informa cobrança de taxa de extravio de <b>R$ 350,00</b>, ou devolução do equipamento para não lançar a taxa.</p>
+
+          <h3>🔁 Fluxo resumido</h3>
+          <p><b>Validação → Outros Endereços → 3 cadastros do novo endereço → Alteração nos planos → Suspensão temporária → Imagens/validação → Mudança de endereço + Retirada → Agendamento FTTH → Instalação → Encerramento.</b></p>
+
+          <h3>🚨 Regra de encerramento</h3>
+          <p>O atendimento só deve ser fechado como <b>Problema Resolvido</b> se a instalação no novo endereço tiver acontecido. Se não acontecer, o manual orienta o encerramento como <b>Sem solução</b>, evitando cobrança indevida e alteração incorreta do endereço.</p>
+
+          <h3>🔙 Desistência/impossibilidade</h3>
+          <p>Em caso de desistência ou impossibilidade de execução, o endereço deve ser revertido ao original. O plano deve ser reabilitado e a situação de faturamento alinhada conforme o caso.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+
 </main>
 <div id="toast" class="toast"></div>
 
@@ -1116,6 +1278,7 @@ function openTab(evt, tabId) {
     if (tabId === 'tabFluxoAtendimento') document.getElementById('btnNavSuporte').classList.add('active');
     if (tabId === 'tabScriptAnálise') document.getElementById('btnNavGlpi').classList.add('active');
     if (tabId === 'tabNegociacao') document.getElementById('btnNavNegociacao').classList.add('active');
+    if (tabId === 'tabMudancaEndereco') document.getElementById('btnNavMudanca').classList.add('active');
   }
 
   if (tabId === 'tabFluxoAtendimento') {
@@ -1839,6 +2002,164 @@ document.addEventListener('DOMContentLoaded', function(){
   
   gerarScriptClienteN1();
 });
+
+// --- LÓGICA DE MUDANÇA DE ENDEREÇO ---
+const fieldsMudanca=['mud_cliente','mud_plano','mud_telefone','mud_tipoCliente','mud_data','mud_planoTaxa','mud_parcelas','mud_referencia','mud_enderecoAtual','mud_ctoAtual','mud_portaAtual','mud_novoEndereco','mud_novoCto','mud_novaPorta'];
+
+function vMud(id){return document.getElementById(id)?.value.trim() || '[PREENCHER]';}
+
+function getTaxaInfoMud(){
+ const tipo=document.getElementById('mud_planoTaxa')?.value || '';
+ const parcelas=parseInt(document.getElementById('mud_parcelas')?.value || '0',10);
+ let valor=0, descricao='';
+ if(tipo==='sem-mesh'){valor=99.90; descricao='SEM MESH';}
+ if(tipo==='com-mesh'){valor=149.90; descricao='COM MESH';}
+ const valorParcela=(valor && parcelas)?valor/parcelas:0;
+ const calc=document.getElementById('mud_calculoTaxa');
+ if(calc){
+   if(valor && parcelas){
+     calc.style.display='block';
+     calc.textContent=`${descricao}: R$ ${valor.toFixed(2).replace('.',',')} ÷ ${parcelas}x = R$ ${valorParcela.toFixed(2).replace('.',',')} por parcela`;
+   }else{
+     calc.style.display='none';
+     calc.textContent='';
+   }
+ }
+ return {valor, parcelas, descricao, valorParcela};
+}
+
+function scriptsMudanca(){
+ const info=getTaxaInfoMud();
+ const taxa=info.valor ? `R$ ${info.valor.toFixed(2).replace('.',',')}` : '[SELECIONAR TAXA]';
+ const parcelas=info.parcelas || '[SELECIONAR]';
+ const valorParcela=info.valorParcela ? `R$ ${info.valorParcela.toFixed(2).replace('.',',')}` : '[CALCULAR]';
+
+ const scriptMud = document.getElementById('scriptMudancaText');
+ if(scriptMud){
+   scriptMud.textContent =
+`MUDANÇA DE ENDEREÇO
+PLANO INTERNET: ${vMud('mud_plano')}
+ENDEREÇO ATUAL (RETIRADA): ${vMud('mud_enderecoAtual')}
+CTO ATUAL (RETIRADA): CTO: ${vMud('mud_ctoAtual')}| PORTA: ${vMud('mud_portaAtual')}
+NOVO ENDEREÇO (INSTALAÇÃO): ${vMud('mud_novoEndereco')}
+FICOU AGENDADA A GERAÇÃO DE UM EVENTO DE FATURAMENTO NO VALOR DE ${taxa} EM ${parcelas} PARCELA(S) DE ${valorParcela} SEM JUROS
+REFERENCIA: ${vMud('mud_referencia')}
+NOVO CTO (INSTALAÇÃO): ${vMud('mud_novoCto')}| PORTA: ${vMud('mud_novaPorta')}
+
+CUIDADO: O ATENDIMENTO SÓ DEVE SER FECHADO COMO 'PROBLEMA RESOLVIDO' SE A INSTALAÇÃO NO NOVO ENDEREÇO TIVER ACONTECIDO. CASO CONTRÁRIO, UM FATURAMENTO INDEVIDO SERÁ GERADO`;
+ }
+
+ const scriptRet = document.getElementById('scriptRetiradaText');
+ if(scriptRet){
+   scriptRet.textContent =
+`RETIRADA DE EQUIPAMENTOS
+ENDEREÇO ATUAL (RETIRADA): ${vMud('mud_enderecoAtual')}
+ATUAL CTO (RETIRADA): CTO: ${vMud('mud_ctoAtual')}| PORTA: ${vMud('mud_portaAtual')}
+NOVO ENDEREÇO (INSTALAÇÃO): ${vMud('mud_novoEndereco')}
+NOVO CTO (INSTALAÇÃO): ${vMud('mud_novoCto')}| PORTA: ${vMud('mud_novaPorta')}`;
+ }
+
+ const scriptCli = document.getElementById('scriptClienteMudText');
+ if(scriptCli){
+   scriptCli.textContent =
+`Sr(a) ${vMud('mud_cliente')}, ao confirmar a solicitação de mudança de endereço de seu plano, está ciente que deverá facilitar a execução do serviço para conclusão do mesmo, sendo que, se por qualquer impedimento por parte do cliente este atendimento não for possível de ser realizado, o plano seguirá habilitado até que o titular procure a empresa realizar nova solicitação. Para a realização do serviço é obrigatório que o conversor ótico (roteador Wi-Fi Ultra) esteja no novo endereço, caso contrário será instalado outro equipamento e gerada uma cobrança por extravio do equipamento anterior no valor de R$ 350,00.`;
+ }
+}
+
+function saveDataMudanca(){
+ const data={}; fieldsMudanca.forEach(id=>data[id]=document.getElementById(id).value);
+ localStorage.setItem('mudancaEnderecoData',JSON.stringify(data)); scriptsMudanca(); toast('Dados salvos neste navegador.');
+}
+
+function loadDataMudanca(){
+ try{
+  const data=JSON.parse(localStorage.getItem('mudancaEnderecoData')||'{}');
+  fieldsMudanca.forEach(id=>{if(data[id]!==undefined)document.getElementById(id).value=data[id]});
+  scriptsMudanca(); toast('Dados recuperados.');
+ }catch(e){toast('Não foi possível recuperar os dados.');}
+}
+
+function clearAllMudanca(){
+ if(!confirm('Limpar dados, checklist e preenchimentos?'))return;
+ localStorage.removeItem('mudancaEnderecoData');
+ fieldsMudanca.forEach(id => {
+   const el = document.getElementById(id);
+   if(el) {
+     if(el.tagName === 'SELECT') el.selectedIndex = 0;
+     else el.value = '';
+   }
+ });
+ scriptsMudanca();
+ toast('Formulário limpo com sucesso.');
+}
+
+function toggleEditMud(tipo){
+ const scriptId='script'+tipo;
+ const editId='editScript'+tipo.replace('Text','');
+ const saveId='save'+tipo;
+ const cancelId='cancel'+tipo;
+ const script=document.getElementById(scriptId);
+ const edit=document.getElementById(editId);
+ const editing=edit.style.display!=='none';
+
+ if(!editing){
+   edit.value=script.textContent;
+   script.style.display='none';
+   edit.style.display='block';
+   document.getElementById(saveId).style.display='inline-block';
+   document.getElementById(cancelId).style.display='inline-block';
+   event.currentTarget.textContent='✏️ Editando...';
+ }else{
+   saveEditedScriptMud(tipo);
+ }
+}
+
+function saveEditedScriptMud(tipo){
+ const scriptId='script'+tipo;
+ const editId='editScript'+tipo.replace('Text','');
+ const saveId='save'+tipo;
+ const cancelId='cancel'+tipo;
+ const edit=document.getElementById(editId);
+ const script=document.getElementById(scriptId);
+ script.textContent=edit.value;
+ script.style.display='block';
+ edit.style.display='none';
+ document.getElementById(saveId).style.display='none';
+ document.getElementById(cancelId).style.display='none';
+ const btn=script.parentElement.querySelector('.actions button.secondary');
+ if(btn)btn.textContent='✏️ Editar script';
+}
+
+function cancelEditMud(tipo){
+ const scriptId='script'+tipo;
+ const editId='editScript'+tipo.replace('Text','');
+ const saveId='save'+tipo;
+ const cancelId='cancel'+tipo;
+ document.getElementById(editId).style.display='none';
+ document.getElementById(scriptId).style.display='block';
+ document.getElementById(saveId).style.display='none';
+ document.getElementById(cancelId).style.display='none';
+ const btn=document.getElementById(scriptId).parentElement.querySelector('.actions button.secondary');
+ if(btn)btn.textContent='✏️ Editar script';
+}
+
+function copyScriptMud(id){
+ navigator.clipboard.writeText(document.getElementById(id).textContent)
+ .then(()=>toast('Script copiado!'))
+ .catch(()=>toast('Não foi possível copiar automaticamente.'));
+}
+
+function openSubTab(id,btn){
+ document.querySelectorAll('.subtabcontent').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.subtab').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active'); btn.classList.add('active');
+}
+
+fieldsMudanca.forEach(id => {
+  document.getElementById(id)?.addEventListener('input', scriptsMudanca);
+  document.getElementById(id)?.addEventListener('change', scriptsMudanca);
+});
+scriptsMudanca();
 </script>
 </body>
 </html>
