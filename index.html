@@ -498,49 +498,47 @@
       .result-neg { grid-template-columns: 1fr; }
     }
   
-.script-cliente-box{background:var(--summary-bg);border:1px solid var(--card-border);border-radius:14px;padding:18px;margin-top:0}
-.script-cliente-box textarea{width:100%;min-height:155px;resize:vertical;border:1px solid var(--input-border);border-radius:10px;padding:14px;font:inherit;line-height:1.6;background:var(--input-bg);color:var(--input-text)}
-.script-cliente-box .script-data{margin-bottom:12px}
-.script-cliente-box .script-data label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
-.script-cliente-box .script-data input{width:100%;padding:11px;border:1px solid var(--input-border);border-radius:9px;font-size:15px;background:var(--input-bg);color:var(--input-text)}
+    .script-cliente-box{background:var(--summary-bg);border:1px solid var(--card-border);border-radius:14px;padding:18px;margin-top:0}
+    .script-cliente-box textarea{width:100%;min-height:155px;resize:vertical;border:1px solid var(--input-border);border-radius:10px;padding:14px;font:inherit;line-height:1.6;background:var(--input-bg);color:var(--input-text)}
+    .script-cliente-box .script-data{margin-bottom:12px}
+    .script-cliente-box .script-data label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
+    .script-cliente-box .script-data input{width:100%;padding:11px;border:1px solid var(--input-border);border-radius:9px;font-size:15px;background:var(--input-bg);color:var(--input-text)}
 
-#dataVencimentoCalculadora{margin-top:12px}
-#dataVencimentoCalculadora label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
-#dataVencimentoCalculadora input{width:100%;padding:11px;border:1px solid var(--input-border);border-radius:9px;font-size:15px;background:var(--input-bg);color:var(--input-text)}
+    #dataVencimentoCalculadora{margin-top:12px}
+    #dataVencimentoCalculadora label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
+    #dataVencimentoCalculadora input{width:100%;padding:11px;border:1px solid var(--input-border);border-radius:9px;font-size:15px;background:var(--input-bg);color:var(--input-text)}
 
-
-.campo-data-negociacao{
-  display:block !important;
-  width:100%;
-  margin:12px 0 0;
-  padding:0;
-  background:transparent !important;
-  border:0 !important;
-  border-radius:0;
-  box-shadow:none !important;
-}
-.campo-data-negociacao label{
-  display:block !important;
-  margin:13px 0 6px !important;
-  padding:0;
-  font-weight:700 !important;
-  font-size:13px !important;
-  color:inherit !important;
-}
-.campo-data-negociacao input{
-  display:block !important;
-  width:100% !important;
-  min-height:0;
-  padding:12px 13px !important;
-  border:1px solid var(--input-border) !important;
-  border-radius:9px !important;
-  background:inherit !important;
-  color:inherit !important;
-  font-size:15px !important;
-  box-shadow:none !important;
-}
-
-</style>
+    .campo-data-negociacao{
+      display:block !important;
+      width:100%;
+      margin:12px 0 0;
+      padding:0;
+      background:transparent !important;
+      border:0 !important;
+      border-radius:0;
+      box-shadow:none !important;
+    }
+    .campo-data-negociacao label{
+      display:block !important;
+      margin:13px 0 6px !important;
+      padding:0;
+      font-weight:700 !important;
+      font-size:13px !important;
+      color:inherit !important;
+    }
+    .campo-data-negociacao input{
+      display:block !important;
+      width:100% !important;
+      min-height:0;
+      padding:12px 13px !important;
+      border:1px solid var(--input-border) !important;
+      border-radius:9px !important;
+      background:inherit !important;
+      color:inherit !important;
+      font-size:15px !important;
+      box-shadow:none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -1158,8 +1156,7 @@ function parseOcrMetrics(text) {
   const regexDb = /([+-]?\d+[\.,]\d+)/;
   const regexNumerico = /(\d+[\.,]?\d*)/;
 
-  const lines = text.split('
-');
+  const lines = text.split('\n');
 
   lines.forEach(line => {
     const l = line.toLowerCase();
@@ -1239,8 +1236,7 @@ function generateScript1() {
   const checkboxes = document.querySelectorAll('#proceduresGroup input[type="checkbox"]:checked');
   let procedimentosText = "";
   checkboxes.forEach(cb => {
-    procedimentosText += `- ${cb.value}
-`;
+    procedimentosText += `- ${cb.value}\n`;
   });
 
   const script = `CLIENTE: ${cliente}
@@ -1424,75 +1420,47 @@ function gerarTextoOrientacao() {
     return "Selecione um aparelho na seção 'PARTE DO CLIENTE' para gerar instruções customizadas.";
   }
 
-  let text = "📌 ORIENTAÇÕES PERSONALIZADAS POR APARELHO:
-
-";
+  let text = "📌 ORIENTAÇÕES PERSONALIZADAS POR APARELHO:\n\n";
 
   aparelhos.forEach(ap => {
     let baseNome = ap.split(' ')[0].toUpperCase();
-    text += `🔹 [ ${ap.toUpperCase()} ]
-`;
+    text += `🔹 [ ${ap.toUpperCase()} ]\n`;
 
     if (baseNome.includes("CELULAR")) {
-      text += "   • Verifique se o Wi-Fi está conectado na frequência correta (5GHz para maior velocidade ou 2.4GHz para maior alcance).
-";
-      text += "   • Desative temporariamente o modo de economia de bateria ou dados móveis para evitar interferência na medição.
-";
-      if(nav) text += `   • Abra o navegador (${nav}) em aba anônima e realize o teste de velocidade.
-`;
-      if(app) text += `   • Feche o aplicativo (${app}) em segundo plano, limpe o cache e tente novamente.
-`;
+      text += "   • Verifique se o Wi-Fi está conectado na frequência correta (5GHz para maior velocidade ou 2.4GHz para maior alcance).\n";
+      text += "   • Desative temporariamente o modo de economia de bateria ou dados móveis para evitar interferência na medição.\n";
+      if(nav) text += `   • Abra o navegador (${nav}) em aba anônima e realize o teste de velocidade.\n`;
+      if(app) text += `   • Feche o aplicativo (${app}) em segundo plano, limpe o cache e tente novamente.\n`;
     } else if (baseNome.includes("TV")) {
-      text += "   • Verifique nas configurações da Smart TV se o sinal Wi-Fi está com boa intensidade ou se o cabo de rede está firme.
-";
-      text += "   • Desconecte a TV da tomada por 10 segundos e reinicie para limpar o buffer de rede.
-";
-      if(app) text += `   • No aplicativo (${app}), verifique se há atualizações pendentes na loja de apps da TV.
-`;
+      text += "   • Verifique nas configurações da Smart TV se o sinal Wi-Fi está com boa intensidade ou se o cabo de rede está firme.\n";
+      text += "   • Desconecte a TV da tomada por 10 segundos e reinicie para limpar o buffer de rede.\n";
+      if(app) text += `   • No aplicativo (${app}), verifique se há atualizações pendentes na loja de apps da TV.\n`;
     } else if (baseNome.includes("BOX")) {
-      text += "   • Certifique-se de que a TV Box está conectada preferencialmente via cabo de rede ou próxima ao roteador.
-";
-      text += "   • Reinicie a TV Box retirando a fonte de alimentação da tomada e aguardando 15 segundos.
-";
-      if(app) text += `   • Teste a estabilidade abrindo o aplicativo (${app}) e monitorando se há travamentos.
-`;
+      text += "   • Certifique-se de que a TV Box está conectada preferencialmente via cabo de rede ou próxima ao roteador.\n";
+      text += "   • Reinicie a TV Box retirando a fonte de alimentação da tomada e aguardando 15 segundos.\n";
+      if(app) text += `   • Teste a estabilidade abrindo o aplicativo (${app}) e monitorando se há travamentos.\n`;
     } else if (baseNome.includes("COMPUTADOR") || baseNome.includes("NOTEBOOK")) {
-      text += "   • Utilize preferencialmente um cabo de rede CAT5e ou CAT6 conectado diretamente na porta LAN do roteador para evitar perda de pacotes por Wi-Fi.
-";
-      text += "   • Desative temporariamente VPNs, proxies ou antivírus de terceiros que possam limitar a banda.
-";
-      if(nav) text += `   • Acesse o navegador (${nav}) e entre no site de teste de velocidade para validar os megas contratados.
-`;
-      if(jogo) text += `   • Verifique a latência (ping) diretamente no jogo (${jogo}) em servidores locais.
-`;
+      text += "   • Utilize preferencialmente um cabo de rede CAT5e ou CAT6 conectado diretamente na porta LAN do roteador para evitar perda de pacotes por Wi-Fi.\n";
+      text += "   • Desative temporariamente VPNs, proxies ou antivírus de terceiros que possam limitar a banda.\n";
+      if(nav) text += `   • Acesse o navegador (${nav}) e entre no site de teste de velocidade para validar os megas contratados.\n`;
+      if(jogo) text += `   • Verifique a latência (ping) diretamente no jogo (${jogo}) em servidores locais.\n`;
     } else if (baseNome.includes("VÍDEO") || baseNome.includes("GAME")) {
-      text += "   • Verifique o status da conexão de rede nas configurações do console (NAT aberto/moderado).
-";
-      text += "   • Dê preferência ao uso de cabo de rede Ethernet para diminuir o ping durante as partidas.
-";
-      if(jogo) text += `   • Teste o desempenho do jogo (${jogo}) após reiniciar a conexão.
-`;
+      text += "   • Verifique o status da conexão de rede nas configurações do console (NAT aberto/moderado).\n";
+      text += "   • Dê preferência ao uso de cabo de rede Ethernet para diminuir o ping durante as partidas.\n";
+      if(jogo) text += `   • Teste o desempenho do jogo (${jogo}) após reiniciar a conexão.\n`;
     } else {
-      text += "   • Certifique-se de que o equipamento está devidamente configurado e próximo à fonte de sinal.
-";
-      text += "   • Reinicie o dispositivo para restabelecer os sockets de rede.
-";
+      text += "   • Certifique-se de que o equipamento está devidamente configurado e próximo à fonte de sinal.\n";
+      text += "   • Reinicie o dispositivo para restabelecer os sockets de rede.\n";
     }
-    text += "
-";
+    text += "\n";
   });
 
   if (nav || app || site || jogo) {
-    text += "🌐 PARÂMETROS GERAIS INFORMADOS PELO CLIENTE:
-";
-    if(nav) text += `   • Navegador/Ferramenta: ${nav}
-`;
-    if(app) text += `   • Aplicativo em uso: ${app}
-`;
-    if(site) text += `   • Site testado: ${site}
-`;
-    if(jogo) text += `   • Jogo monitorado: ${jogo}
-`;
+    text += "🌐 PARÂMETROS GERAIS INFORMADOS PELO CLIENTE:\n";
+    if(nav) text += `   • Navegador/Ferramenta: ${nav}\n`;
+    if(app) text += `   • Aplicativo em uso: ${app}\n`;
+    if(site) text += `   • Site testado: ${site}\n`;
+    if(jogo) text += `   • Jogo monitorado: ${jogo}\n`;
   }
 
   return text.trim();
@@ -1590,100 +1558,59 @@ function gerarScript2() {
   }
 
   let out = "";
-  out += "CLIENTE: " + val("clienteInput") + "
-";
-  out += "TELL: " + val("tellInput") + "
-";
-  out += "CANAL DE ATENDIMENTO: " + (state.canal || "") + "
-
-";
+  out += "CLIENTE: " + val("clienteInput") + "\n";
+  out += "TELL: " + val("tellInput") + "\n";
+  out += "CANAL DE ATENDIMENTO: " + (state.canal || "") + "\n\n";
 
   let glpiText = state.glpi || "";
   if (state.glpi === "Sim" && val("ticketGLPIInput")) {
     glpiText += ` (Ticket: ${val("ticketGLPIInput")})`;
   }
-  out += "GLPI: " + glpiText + "
-";
-  out += "HISTÓRICO DOS ÚLTIMOS ATENDIMENTOS: " + (state.historico || "") + "
-";
-  out += "STATUS: " + (state.statusCliente.join(" / ") || "") + "
-";
-  out += "CRM: " + (state.statusCRM.join(" / ") || "") + "
+  out += "GLPI: " + glpiText + "\n";
+  out += "HISTÓRICO DOS ÚLTIMOS ATENDIMENTOS: " + (state.historico || "") + "\n";
+  out += "STATUS: " + (state.statusCliente.join(" / ") || "") + "\n";
+  out += "CRM: " + (state.statusCRM.join(" / ") || "") + "\n\n";
 
-";
-
-  out += "Potência de Recepção - ONU: " + val("potRecepcao") + "
-";
-  out += "Potência (OLT): " + val("potOLT") + "
-";
-  out += "Temperatura: " + val("temperatura") + "
-";
-  out += "Potência de Transmissão: " + val("potTransmissao") + "
-";
-  out += "Uptime: " + val("uptime") + "
-
-";
+  out += "Potência de Recepção - ONU: " + val("potRecepcao") + "\n";
+  out += "Potência (OLT): " + val("potOLT") + "\n";
+  out += "Temperatura: " + val("temperatura") + "\n";
+  out += "Potência de Transmissão: " + val("potTransmissao") + "\n";
+  out += "Uptime: " + val("uptime") + "\n\n";
 
   let modAp = val("modulacaoAparelho");
   if (modAp === "OUTROS" && val("modulacaoOutro")) modAp += ` (${val("modulacaoOutro")})`;
-  out += "MODULAÇÃO DE PORTA LAN REALIZADO EM: " + (modAp || "") + "
-";
-  out += "(quantidade de mega via cabeado): " + val("megaCabeado") + "
+  out += "MODULAÇÃO DE PORTA LAN REALIZADO EM: " + (modAp || "") + "\n";
+  out += "(quantidade de mega via cabeado): " + val("megaCabeado") + "\n\n";
 
-";
-
-  out += "O CLIENTE ESTÁ RECLAMANDO NO APARELHO: " + (state.aparelhoReclamacao.join(" / ") || "") + "
-";
-  out += "Navegador: " + val("testeNavegador") + "
-";
-  out += "Aplicativo: " + val("testeAplicativo") + "
-";
-  out += "Site: " + val("testeSite") + "
-";
-  out += "Jogo: " + val("testeJogo") + "
-";
+  out += "O CLIENTE ESTÁ RECLAMANDO NO APARELHO: " + (state.aparelhoReclamacao.join(" / ") || "") + "\n";
+  out += "Navegador: " + val("testeNavegador") + "\n";
+  out += "Aplicativo: " + val("testeAplicativo") + "\n";
+  out += "Site: " + val("testeSite") + "\n";
+  out += "Jogo: " + val("testeJogo") + "\n";
 
   let bandaAntes = val("testeBandaAntes");
   let bandaDepois = val("testeBandaDepois");
   if (bandaAntes || bandaDepois) {
-    out += "TESTE DE BANDA:
-";
-    out += "- Antes: " + (bandaAntes || "Não informado") + "
-";
-    out += "- Depois: " + (bandaDepois || "Não informado") + "
-";
+    out += "TESTE DE BANDA:\n";
+    out += "- Antes: " + (bandaAntes || "Não informado") + "\n";
+    out += "- Depois: " + (bandaDepois || "Não informado") + "\n";
   }
 
-  out += "O SINAL DOS APARELHOS ESTÃO: " + (state.sinal || "") + "
+  out += "O SINAL DOS APARELHOS ESTÃO: " + (state.sinal || "") + "\n\n";
 
-";
+  out += "DISPOSITIVOS CONECTADOS (ANTES DO REBOOT): " + val("dispositivosConectados") + "\n";
+  out += "PROCEDIMENTO REALIZADO: " + (procs.join(" / ") || "") + "\n\n";
 
-  out += "DISPOSITIVOS CONECTADOS (ANTES DO REBOOT): " + val("dispositivosConectados") + "
-";
-  out += "PROCEDIMENTO REALIZADO: " + (procs.join(" / ") || "") + "
+  out += "IP DE TESTE: " + (ipsFinais.join(" / ") || "") + "\n";
+  out += "RESULTADO: " + (state.resultadoDiag || "") + "\n\n";
 
-";
-
-  out += "IP DE TESTE: " + (ipsFinais.join(" / ") || "") + "
-";
-  out += "RESULTADO: " + (state.resultadoDiag || "") + "
-
-";
-
-  out += "TESTE DE MTU: " + val("testeMTU") + "
-";
-  out += "MTR/TRACERT: " + val("mtrTracert") + "
-
-";
+  out += "TESTE DE MTU: " + val("testeMTU") + "\n";
+  out += "MTR/TRACERT: " + val("mtrTracert") + "\n\n";
 
   const resultadosTestes = [...document.querySelectorAll(".resultado-teste")]
     .map(sel => `${sel.dataset.teste}: ${sel.value}`)
     .filter(x => !x.endsWith(": "));
-  out += "RESULTADOS DOS TESTES:
-" + (resultadosTestes.join("
-") || "Não informado") + "
-
-";
+  out += "RESULTADOS DOS TESTES:\n" + (resultadosTestes.join("\n") || "Não informado") + "\n\n";
 
   out += "ENCERRAMENTO: " + (state.statusFinal || "");
 
@@ -1895,7 +1822,6 @@ function copiarScriptClienteN1(){
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', function(){
   ['debito','entrada','parcelas'].forEach(function(id){
     const el=document.getElementById(id);
@@ -1904,19 +1830,15 @@ document.addEventListener('DOMContentLoaded', function(){
       el.addEventListener('change', gerarScriptClienteN1);
     }
   });
-  gerarScriptClienteN1();
-});
 
-
-document.addEventListener('DOMContentLoaded', function(){
   const data = document.getElementById('vencimentoCliente');
   if(data){
     data.addEventListener('input', gerarScriptClienteN1);
     data.addEventListener('change', gerarScriptClienteN1);
   }
+  
   gerarScriptClienteN1();
 });
-
 </script>
 </body>
 </html>
