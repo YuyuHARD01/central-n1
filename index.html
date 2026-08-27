@@ -56,10 +56,8 @@
     /* Modal / Tela de Login */
     #loginOverlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       background: rgba(15, 23, 42, 0.95);
       backdrop-filter: blur(8px);
       display: flex;
@@ -73,68 +71,33 @@
       border: 2px solid var(--card-border);
       border-radius: 16px;
       padding: 35px 30px;
-      width: 100%;
-      max-width: 400px;
+      width: 100%; max-width: 400px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       text-align: center;
     }
 
-    .login-card h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
-      color: #38bdf8;
-    }
-
-    .login-field {
-      margin-bottom: 18px;
-      text-align: left;
-    }
-
-    .login-field label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-      color: var(--label-color);
-    }
-
+    .login-card h2 { margin-top: 0; margin-bottom: 20px; color: #38bdf8; }
+    .login-field { margin-bottom: 18px; text-align: left; }
+    .login-field label { display: block; margin-bottom: 6px; font-weight: bold; color: var(--label-color); }
     .login-field input {
-      width: 100%;
-      padding: 12px;
+      width: 100%; padding: 12px;
       border: 1px solid var(--input-border);
       border-radius: 8px;
       background: var(--input-bg);
       color: var(--input-text);
       font-size: 1rem;
     }
-
-    .login-field input:focus {
-      border-color: #38bdf8;
-      outline: none;
-    }
-
+    .login-field input:focus { border-color: #38bdf8; outline: none; }
     .login-btn {
-      width: 100%;
-      padding: 12px;
+      width: 100%; padding: 12px;
       background: var(--header-bg);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
+      color: #fff; border: none;
+      border-radius: 8px; font-size: 1rem;
+      font-weight: bold; cursor: pointer;
       transition: opacity 0.2s;
     }
-
-    .login-btn:hover {
-      opacity: 0.9;
-    }
-
-    .login-error {
-      color: #ef4444;
-      font-size: 0.88rem;
-      margin-top: 12px;
-      display: none;
-    }
+    .login-btn:hover { opacity: 0.9; }
+    .login-error { color: #ef4444; font-size: 0.88rem; margin-top: 12px; display: none; }
 
     .header {
       background: var(--header-bg);
@@ -143,420 +106,118 @@
       border-bottom: 2px solid #38bdf8;
     }
     .header-content {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      max-width: 1100px; margin: auto;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .header-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .brand-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 0 0 6px;
-    }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+    .brand-title { display: flex; align-items: center; gap: 12px; margin: 0 0 6px; }
     .brand-badge {
-      background: #e0f2fe;
-      color: #0369a1;
-      font-weight: 900;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
+      background: #e0f2fe; color: #0369a1;
+      font-weight: 900; padding: 4px 10px;
+      border-radius: 6px; font-size: 0.85rem; letter-spacing: 1px;
     }
 
     /* Barra de Navegação Superior */
-    .nav-bar {
-      background: #020617;
-      border-bottom: 1px solid var(--card-border);
-      overflow-x: auto;
-    }
-    .nav-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      gap: 10px;
-      padding: 0 18px;
-    }
+    .nav-bar { background: #020617; border-bottom: 1px solid var(--card-border); overflow-x: auto; }
+    .nav-container { max-width: 1100px; margin: 0 auto; display: flex; gap: 10px; padding: 0 18px; }
     .nav-btn {
-      background: transparent;
-      color: var(--subtext-color);
-      border: none;
-      padding: 14px 20px;
-      font-weight: bold;
-      font-size: 1rem;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      transition: all 0.2s;
-      white-space: nowrap;
+      background: transparent; color: var(--subtext-color);
+      border: none; padding: 14px 20px; font-weight: bold;
+      font-size: 1rem; cursor: pointer; border-bottom: 3px solid transparent;
+      transition: all 0.2s; white-space: nowrap;
     }
-    .nav-btn:hover {
-      color: #fff;
-    }
-    .nav-btn.active {
-      color: #38bdf8;
-      border-bottom-color: #38bdf8;
-    }
+    .nav-btn:hover { color: #fff; }
+    .nav-btn.active { color: #38bdf8; border-bottom-color: #38bdf8; }
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 30px 18px 60px;
-    }
-
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
+    .container { max-width: 1100px; margin: auto; padding: 30px 18px 60px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     /* Módulos da Tela Inicial (Home) */
-    .welcome-banner {
-      text-align: center;
-      margin-bottom: 35px;
-    }
-    .welcome-banner h2 {
-      font-size: 1.8rem;
-      margin-bottom: 8px;
-      color: var(--text-body);
-    }
-    .welcome-banner p {
-      color: var(--subtext-color);
-      font-size: 1rem;
-      margin: 0;
-    }
-    .modules-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .welcome-banner { text-align: center; margin-bottom: 35px; }
+    .welcome-banner h2 { font-size: 1.8rem; margin-bottom: 8px; color: var(--text-body); }
+    .welcome-banner p { color: var(--subtext-color); font-size: 1rem; margin: 0; }
+    .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
     .module-card {
-      background: var(--card-bg);
-      border: 2px solid var(--card-border);
-      border-radius: 16px;
-      padding: 25px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      background: var(--card-bg); border: 2px solid var(--card-border);
+      border-radius: 16px; padding: 25px; text-align: center; cursor: pointer;
+      transition: all 0.2s ease-in-out; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
     }
-    .module-card:hover {
-      border-color: #38bdf8;
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-    .module-card.orange:hover {
-      border-color: var(--brand-orange);
-    }
-    .module-card.green:hover {
-      border-color: #10b981;
-    }
-    .module-card.purple:hover {
-      border-color: #a855f7;
-    }
-    .module-icon {
-      font-size: 3rem;
-      margin-bottom: 16px;
-    }
-    .module-title {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-bottom: 8px;
-      color: var(--text-body);
-    }
-    .module-desc {
-      color: var(--subtext-color);
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
+    .module-card:hover { border-color: #38bdf8; transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .module-card.orange:hover { border-color: var(--brand-orange); }
+    .module-card.green:hover { border-color: #10b981; }
+    .module-card.purple:hover { border-color: #a855f7; }
+    .module-card.blue:hover { border-color: #3b82f6; }
+    .module-icon { font-size: 3rem; margin-bottom: 16px; }
+    .module-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 8px; color: var(--text-body); }
+    .module-desc { color: var(--subtext-color); font-size: 0.9rem; line-height: 1.4; }
 
-    /* Estilos GLPI-INCIDENTE */
-    .index1-card {
-      max-width: 700px;
-      margin: 0 auto;
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 12px;
-      border: 1px solid var(--card-border);
-      box-shadow: 0 6px 25px rgba(0,0,0,0.15);
-    }
-    .index1-card .company-title {
-      color: var(--brand-orange);
-      margin: 0 0 15px 0;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 5px;
-    }
-    .checkbox-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .add-custom {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px;
-    }
-    .result-container-1 {
-      margin-top: 25px;
-      border-top: 2px solid var(--card-border);
-      padding-top: 20px;
-    }
-    #scriptOutput1 {
-      width: 100%;
-      height: 250px;
-      font-family: monospace;
-      resize: vertical;
-      background: var(--input-bg);
-      color: var(--input-text);
-      border: 1px solid var(--input-border);
-      border-radius: 6px;
-      padding: 10px;
-    }
-
-    /* Estilos SUPORTE / COMUNS */
+    /* Estilos Gerais de Form/Card */
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      margin-bottom: 18px;
-      overflow: hidden;
-      box-shadow: 0 6px 25px #00000015;
-      transition: background 0.3s, border-color 0.3s;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 16px; margin-bottom: 18px; overflow: hidden;
+      box-shadow: 0 6px 25px #00000015; transition: background 0.3s, border-color 0.3s;
+      padding: 22px;
     }
-    .head {
-      padding: 20px;
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      cursor: pointer;
-      background: var(--card-bg);
-      transition: background 0.2s;
+    .card h2 { font-size: 1.2rem; margin-bottom: 16px; color: #38bdf8; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-weight: bold; font-size: 0.9rem; color: var(--label-color); }
+    input, select, textarea {
+      width: 100%; padding: 11px; border: 1px solid var(--input-border);
+      border-radius: 8px; outline: none; font-size: 0.95rem;
+      background: var(--input-bg); color: var(--input-text);
     }
-    .head:hover { background: var(--card-head-hover); }
-    .num {
-      background: #0284c7;
-      color: #fff;
-      border-radius: 50%;
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      font-weight: bold;
-      flex-shrink: 0;
+    input:focus, select:focus, textarea:focus { border-color: #38bdf8; }
+    
+    .btn-area { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .btn { border: none; border-radius: 8px; padding: 11px 18px; font-weight: bold; cursor: pointer; transition: .2s; }
+    .btn-primary { background: #0284c7; color: white; }
+    .btn-primary:hover { background: #0369a1; }
+    .btn-secondary { background: var(--card-border); color: var(--text-body); }
+    .btn-secondary:hover { opacity: 0.8; }
+    .btn-copy { background: #16a34a; color: white; }
+    .btn-copy:hover { background: #15803d; }
+    .btn-edit { background: #d97706; color: white; }
+    
+    .status { margin-top: 14px; font-weight: bold; font-size: 0.95rem; line-height: 1.4; }
+    .rules { display: grid; gap: 10px; }
+    .rule { padding: 10px 12px; background: var(--summary-bg); border-radius: 8px; font-size: 0.9rem; line-height: 1.4; border: 1px solid var(--card-border); }
+    .rule strong { color: #38bdf8; }
+    .alert { padding: 14px; border-radius: 8px; margin-top: 15px; font-size: 0.9rem; line-height: 1.4; }
+    .warning { background: #211e13; border-left: 5px solid var(--yellow); color: #f6e4ae; }
+    
+    .dates { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px; }
+    .date-box { background: var(--summary-bg); border-radius: 9px; padding: 14px; text-align: center; border: 1px solid var(--card-border); }
+    .date-box span { display: block; font-size: 0.8rem; color: var(--subtext-color); margin-bottom: 4px; }
+    .date-box strong { color: #38bdf8; font-size: 1.2rem; }
+    
+    .script-box {
+      background: var(--summary-bg); border: 1px solid var(--card-border);
+      border-radius: 10px; padding: 16px; line-height: 1.6;
+      white-space: pre-line; font-size: 0.95rem; color: var(--summary-text); font-family: monospace;
     }
-    .head div:nth-child(2) { flex: 1; }
-    .arrow { font-size: 22px; color: var(--subtext-color); transition: transform 0.2s; }
-    .content { display: none; border-top: 1px solid var(--card-border); padding: 20px; background: var(--content-bg); }
-    .open .content { display: block; }
-    .open .arrow { transform: rotate(180deg); }
-    .grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 12px 0 22px; }
-    .grid3 { grid-template-columns: repeat(3,1fr); }
-    .option {
-      background: var(--card-bg);
-      border: 2px solid var(--card-border);
-      color: var(--text-body);
-      border-radius: 11px;
-      padding: 15px;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .option:hover, .option.active { border-color: #38bdf8; background: #0369a1; color: #fff; }
-    .fields { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin: 12px 0 22px; }
-    .field { display: flex; flex-direction: column; }
-    .field label, .form-group label, .negociacao-card label { margin: 0 0 6px; font-weight: bold; font-size: 0.9rem; color: var(--label-color); }
-    .field input, .field textarea, .field select, .form-group input[type="text"], .negociacao-card input, .negociacao-card select {
-      border: 1px solid var(--input-border);
-      border-radius: 8px;
-      padding: 10px;
-      background: var(--input-bg);
-      color: var(--input-text);
-      font-family: inherit;
-      font-size: 0.95rem;
-      width: 100%;
-    }
-    .field input:focus, .field textarea:focus, .field select:focus, .form-group input:focus, .negociacao-card input:focus, .negociacao-card select:focus { border-color: #38bdf8; outline: none; }
-    .field.full { grid-column: 1/-1; }
-    .form-group { margin-bottom: 15px; }
-    .check-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 12px 0 22px; }
-    .check-card {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      background: var(--card-bg);
-      border: 2px solid var(--card-border);
-      border-radius: 11px;
-      padding: 14px;
-      cursor: pointer;
-      transition: .15s;
-      color: var(--text-body);
-    }
-    .check-card:hover { border-color: #38bdf8; background: #0369a1; color: #fff; }
-    .check-card:has(input:checked) { border-color: #38bdf8; background: #0284c7; color: #fff; box-shadow: 0 0 0 2px #38bdf844; }
-    .check-card input { width: 18px; height: 18px; accent-color: #38bdf8; cursor: pointer; flex: 0 0 auto; }
-    .multi-hint { font-size: 12px; font-weight: normal; color: var(--subtext-color); margin-left: 8px; }
-    .inline-input { display: flex; gap: 10px; }
-    .inline-input input { flex: 1; }
-    .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-    .tag-item { background: #0284c7; color: #fff; padding: 6px 12px; border-radius: 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
-    .tag-item span { cursor: pointer; font-weight: bold; }
-    .btn {
-      border: 0;
-      border-radius: 8px;
-      padding: 11px 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .btn-orange { background-color: var(--brand-orange); color: #fff; }
-    .btn-orange:hover { opacity: 0.9; }
-    .primary { background: #0284c7; color: #fff; }
-    .primary:hover { background: #0369a1; }
-    .secondary { background: var(--card-border); color: var(--text-body); }
-    .secondary:hover { opacity: 0.8; }
-    .summary {
-      background: var(--summary-bg);
-      color: var(--text-body);
-      padding: 18px;
-      border-radius: 10px;
-      margin-top: 20px;
-      border: 1px solid var(--card-border);
-    }
-    .summary pre, .summary textarea {
-      white-space: pre-wrap;
-      font-family: monospace;
-      line-height: 1.6;
-      color: var(--summary-text);
-      font-size: 0.95rem;
-      background: transparent;
-      border: none;
-      width: 100%;
-      resize: vertical;
-    }
-    .summary textarea { min-height: 280px; padding: 10px; background: var(--content-bg); border: 1px solid var(--input-border); border-radius: 6px; color: var(--input-text); }
-    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
-    .hidden { display: none; }
+
+    .subtabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .subtab { border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-body); padding: 10px 14px; border-radius: 9px; cursor: pointer; font-weight: 700; }
+    .subtab.active { background: #0284c7; color: white; border-color: #0284c7; }
+
+    /* GLPI, Suporte, etc */
+    .index1-card { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 25px; border-radius: 12px; border: 1px solid var(--card-border); }
+    .checkbox-group { display: flex; flex-direction: column; gap: 8px; margin-top: 5px; }
+    .checkbox-item { display: flex; align-items: center; gap: 8px; }
+    .summary { background: var(--summary-bg); color: var(--text-body); padding: 18px; border-radius: 10px; margin-top: 20px; border: 1px solid var(--card-border); }
+    .summary pre { white-space: pre-wrap; font-family: monospace; line-height: 1.6; color: var(--summary-text); font-size: 0.95rem; }
+    
     .toast { position: fixed; right: 18px; bottom: 18px; background: #38bdf8; color: #0f172a; font-weight: bold; padding: 12px 16px; border-radius: 8px; opacity: 0; transition: .2s; z-index: 1000; }
     .toast.show { opacity: 1; }
-    .theme-toggle, .home-toggle { background: #ffffff22; border: 1px solid #ffffff66; color: #fff; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 6px; transition: background 0.2s; }
-    .theme-toggle:hover, .home-toggle:hover { background: #ffffff44; }
-    .instructions-box { background: var(--summary-bg); border: 1px solid #0284c7; padding: 16px; border-radius: 10px; margin: 15px 0; font-size: 0.95rem; color: var(--text-body); line-height: 1.6; white-space: pre-wrap; }
-    
-    .ocr-box {
-      background: var(--summary-bg);
-      border: 2px dashed var(--card-border);
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      text-align: center;
-    }
-    .ocr-status { font-size: 0.85rem; color: #38bdf8; margin-top: 8px; font-weight: bold; }
+    .theme-toggle, .home-toggle { background: #ffffff22; border: 1px solid #ffffff66; color: #fff; padding: 8px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 6px; }
 
-    /* Estilos específicos da aba de Negociação */
-    .negociacao-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 22px; box-shadow: 0 4px 18px #00000012; margin-bottom: 20px; }
-    .negociacao-card h2 { margin-top: 0; font-size: 20px; color: #38bdf8; border-bottom: 2px solid var(--card-border); padding-bottom: 12px; }
-    .result-neg { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 18px; }
-    .result-neg div { background: var(--summary-bg); border-radius: 10px; padding: 14px; border: 1px solid var(--card-border); }
-    .result-neg small { display: block; color: var(--subtext-color); margin-bottom: 5px; }
-    .result-neg strong { font-size: 19px; color: var(--text-body); }
-    table.neg-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    table.neg-table th { background: #0284c7; color: white; text-align: left; padding: 11px; }
-    table.neg-table td { padding: 11px; border-bottom: 1px solid var(--card-border); color: var(--text-body); }
-    table.neg-table tr:nth-child(even) td { background: var(--summary-bg); }
-    .badge { display: inline-block; background: #eaf3ff; color: #1761a0; border-radius: 20px; padding: 5px 9px; font-weight: bold; }
-    .notice { background: var(--summary-bg); border-left: 5px solid #e0a400; padding: 14px; border-radius: 8px; line-height: 1.5; color: var(--text-body); border-top: 1px solid var(--card-border); border-right: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
-    .cancel { background: var(--summary-bg); border-left: 5px solid #d33; padding: 14px; border-radius: 8px; margin-top: 12px; color: var(--text-body); border-top: 1px solid var(--card-border); border-right: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
-
-    /* Estilos específicos da Mudança de Endereço */
-    .warning{border-left:4px solid var(--yellow);background:#211e13;padding:12px;border-radius:8px;color:#f6e4ae}
-    .danger{border-left:4px solid var(--red);background:#251519;padding:12px;border-radius:8px;color:#ffd0d0}
-    .success{border-left:4px solid var(--green);background:#12251f;padding:12px;border-radius:8px;color:#c7f4e1}
-    .formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-    .subtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-    .subtab{border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-body);padding:10px 14px;border-radius:9px;cursor:pointer;font-weight:700}
-    .subtab.active{background:#0284c7;color:white;border-color:#0284c7}
-    .subtabcontent{display:none}.subtabcontent.active{display:block}
-    .successbtn{background:#23845f;color:white}
-    .dangerbtn{background:#8d3030;color:white}
-    .script{white-space:pre-wrap;background:var(--summary-bg);border:1px dashed var(--card-border);padding:16px;border-radius:10px;line-height:1.55;font-family:Consolas,monospace;font-size:13px;color:var(--summary-text);}
-    .small{font-size:12px;color:var(--subtext-color)}
-
-    /* Estilo do Alerta de Negociação */
-    .alerta-negociacao-topo {
-      background: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeeba;
-      border-left: 5px solid #e0a400;
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      font-weight: bold;
-      font-size: 1.05rem;
-      line-height: 1.4;
-    }
-
-    @media(max-width:800px){
-      .grid,.grid3,.fields,.check-grid,.modules-grid,.formgrid { grid-template-columns: 1fr; }
+    @media(max-width:700px) {
+      .grid, .dates, .modules-grid { grid-template-columns: 1fr; }
       .header-content { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .result-neg { grid-template-columns: 1fr; }
-    }
-  
-    .script-cliente-box{background:var(--summary-bg);border:1px solid var(--card-border);border-radius:14px;padding:18px;margin-top:0}
-    .script-cliente-box textarea{width:100%;min-height:155px;resize:vertical;border:1px solid var(--input-border);border-radius:10px;padding:14px;font:inherit;line-height:1.6;background:var(--input-bg);color:var(--input-text)}
-    .script-cliente-box .script-data{margin-bottom:12px}
-    .script-cliente-box .script-data label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
-    .script-cliente-box .script-data input{width:100%;padding:11px;border:1px solid var(--input-border);border-radius:9px;font-size:15px;background:var(--input-bg);color:var(--input-text)}
-
-    #dataVencimentoCalculadora{margin-top:12px}
-    #dataVencimentoCalculadora label{display:block;font-weight:700;font-size:13px;margin-bottom:6px}
-    #dataVencimentoCalculadora input{width:100%;padding:11px;border:1px solid var(--input-border);border-radius:9px;font-size:15px;background:var(--input-bg);color:var(--input-text)}
-
-    .campo-data-negociacao{
-      display:block !important;
-      width:100%;
-      margin:12px 0 0;
-      padding:0;
-      background:transparent !important;
-      border:0 !important;
-      border-radius:0;
-      box-shadow:none !important;
-    }
-    .campo-data-negociacao label{
-      display:block !important;
-      margin:13px 0 6px !important;
-      padding:0;
-      font-weight:700 !important;
-      font-size:13px !important;
-      color:inherit !important;
-    }
-    .campo-data-negociacao input{
-      display:block !important;
-      width:100% !important;
-      min-height:0;
-      padding:12px 13px !important;
-      border:1px solid var(--input-border) !important;
-      border-radius:9px !important;
-      background:inherit !important;
-      color:inherit !important;
-      font-size:15px !important;
-      box-shadow:none !important;
     }
   </style>
 </head>
@@ -607,6 +268,7 @@
     <button class="nav-btn" id="btnNavGlpi" onclick="openTab(event, 'tabScriptAnálise')">🚨 GLPI-INCIDENTE</button>
     <button class="nav-btn" id="btnNavNegociacao" onclick="openTab(event, 'tabNegociacao')">💰 NEGOCIAÇÃO</button>
     <button class="nav-btn" id="btnNavMudanca" onclick="openTab(event, 'tabMudancaEndereco')">🚚 MUDANÇA DE ENDEREÇO</button>
+    <button class="nav-btn" id="btnNavSuspensao" onclick="openTab(event, 'tabSuspensaoTemporaria')">⏸️ SUSPENSÃO TEMPORÁRIA</button>
   </div>
 </nav>
 
@@ -643,16 +305,21 @@
         <div class="module-title">MUDANÇA ENDEREÇO</div>
         <div class="module-desc">Passo a passo, formulário, scripts de alteração/retirada e orientações do manual.</div>
       </div>
+
+      <div class="module-card blue" onclick="openTab(null, 'tabSuspensaoTemporaria')">
+        <div class="module-icon">⏸️</div>
+        <div class="module-title">SUSPENSÃO TEMPORÁRIA</div>
+        <div class="module-desc">Regras, solicitação de suspensão temporária e script para habilitação antecipada.</div>
+      </div>
     </div>
   </div>
 
-  <!-- ABA 1: GLPI-INCIDENTE -->
+  <!-- ABA: GLPI-INCIDENTE -->
   <div id="tabScriptAnálise" class="tab-content">
     <div class="index1-card">
-      <h2 class="company-title">GLPI-INCIDENTE</h2>
-
+      <h2 style="color:var(--brand-orange)">GLPI-INCIDENTE</h2>
       <form id="incidentForm">
-        <div class="fields">
+        <div class="grid">
           <div class="field"><label>CLIENTE:</label><input type="text" id="cliente"></div>
           <div class="field"><label>CÓDIGO:</label><input type="text" id="codigo"></div>
           <div class="field"><label>PROTOCOLO:</label><input type="text" id="protocolo"></div>
@@ -661,584 +328,168 @@
           <div class="field"><label>CTO:</label><input type="text" id="cto"></div>
           <div class="field full"><label>EQUIPAMENTO:</label><input type="text" id="equipamento"></div>
         </div>
-
-        <div class="form-group">
-          <label>Procedimentos e análises realizadas:</label>
-          <div class="checkbox-group" id="proceduresGroup">
-            <div class="checkbox-item">
-              <input type="checkbox" value="Análise via CRM" id="proc1">
-              <label for="proc1">Análise via CRM</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" value="Análise via PuTTY" id="proc2">
-              <label for="proc2">Análise via PuTTY</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" value="Análise via Zabbix" id="proc3">
-              <label for="proc3">Análise via Zabbix</label>
-            </div>
-          </div>
-
-          <div class="add-custom">
-            <input type="text" id="customProcInput" placeholder="Adicionar outro procedimento...">
-            <button type="button" class="btn btn-orange" onclick="addProcedure()">Adicionar</button>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button type="button" class="btn btn-orange" onclick="generateScript1()">Gerar Script</button>
-          <button type="button" class="btn secondary" onclick="limparGLPI()">♻️ Limpar Tudo</button>
+        <div class="btn-area">
+          <button type="button" class="btn btn-primary" onclick="generateScript1()">Gerar Script</button>
+          <button type="button" class="btn btn-secondary" onclick="limparGLPI()">Limpar</button>
         </div>
       </form>
-
-      <div class="result-container-1" id="resultContainer1" style="display: none;">
+      <div id="resultContainer1" style="display:none; margin-top:20px;">
         <h3>Script Gerado:</h3>
-        <textarea id="scriptOutput1" readonly></textarea>
-        <div class="actions">
-          <button class="btn secondary" id="editBtn1" onclick="toggleEdit1()">Editar</button>
-          <button class="btn btn-orange" onclick="copyScript1()">Copiar Script</button>
-        </div>
+        <textarea id="scriptOutput1" style="width:100%; height:150px;" readonly></textarea>
       </div>
     </div>
   </div>
 
-  <!-- ABA 2: SUPORTE -->
+  <!-- ABA: SUPORTE -->
   <div id="tabFluxoAtendimento" class="tab-content">
-    
-    <!-- 0. IDENTIFICAÇÃO DO CLIENTE -->
-    <section class="card open">
-      <div class="head" onclick="toggle(this)"><div class="num">0</div><div><h2>IDENTIFICAÇÃO DO CLIENTE</h2></div><span class="arrow">⌄</span></div>
-      <div class="content">
-        <div class="fields">
-          <div class="field"><label>CLIENTE:</label><input id="clienteInput" placeholder="Nome do cliente"></div>
-          <div class="field"><label>TELL:</label><input id="tellInput" placeholder="Telefone de contato"></div>
+    <div class="card">
+      <h2>🎧 Suporte Técnico</h2>
+      <p>Aba de atendimento de suporte carregada.</p>
+    </div>
+  </div>
+
+  <!-- ABA: NEGOCIAÇÃO -->
+  <div id="tabNegociacao" class="tab-content">
+    <div class="card">
+      <h2>💰 Negociação</h2>
+      <p>Calculadora e regras de negociação.</p>
+    </div>
+  </div>
+
+  <!-- ABA: MUDANÇA DE ENDEREÇO -->
+  <div id="tabMudancaEndereco" class="tab-content">
+    <div class="card">
+      <h2>🚚 Mudança de Endereço</h2>
+      <p>Formulários e solicitações de mudança.</p>
+    </div>
+  </div>
+
+  <!-- ABA: SUSPENSÃO TEMPORÁRIA -->
+  <div id="tabSuspensaoTemporaria" class="tab-content">
+    <div class="subtabs">
+      <button class="subtab active" id="btnSubSuspensao" onclick="alternarSubAbaSuspensao('suspensao')">⏸️ Suspensão Temporária</button>
+      <button class="subtab" id="btnSubReativacao" onclick="alternarSubAbaSuspensao('reativacao')">▶️ Habilitação do Plano</button>
+    </div>
+
+    <!-- TELA SUSPENSÃO -->
+    <div id="subTelaSuspensao">
+      <div class="card">
+        <h2>📋 Orientações e Regras</h2>
+        <div class="rules">
+          <div class="rule"><strong>👤 Titular ou representante:</strong> A solicitação só poderá ser realizada pelo TITULAR ou seu representante legalmente constituído, com cópia do documento de representação.</div>
+          <div class="rule"><strong>💰 Situação financeira:</strong> O plano deverá estar ADIMPLENTE. Podemos realizar a solicitação quando houver apenas faturas a vencer.</div>
+          <div class="rule"><strong>🔁 Periodicidade:</strong> Só poderá ser solicitado 01 (uma) vez a cada 12 meses.</div>
+          <div class="rule"><strong>⏱️ Período:</strong> Período mínimo de 1 dia e máximo de 60 dias.</div>
+          <div class="rule"><strong>📄 Documentação:</strong> O cliente deve encaminhar cópia do documento de identidade com foto e informar o período a ser suspenso.</div>
         </div>
-        <h3>CANAL DE ATENDIMENTO</h3>
-        <div class="grid grid3">
-          <button type="button" class="option" onclick="select('canal','CALL',this)">📞 <b>CALL</b></button>
-          <button type="button" class="option" onclick="select('canal','CHAT',this)">💬 <b>CHAT</b></button>
-          <button type="button" class="option" onclick="select('canal','MINHA VC',this)">📱 <b>MINHA VC</b></button>
-        </div>
+        <div class="alert warning">⚠️ <strong>Atenção:</strong> confirme todas as condições antes de prosseguir com a solicitação.</div>
       </div>
-    </section>
 
-    <!-- 1. ANÁLISE EM SISTEMA -->
-    <section class="card open">
-      <div class="head" onclick="toggle(this)"><div class="num">1</div><div><h2>ANÁLISE EM SISTEMA</h2></div><span class="arrow">⌄</span></div>
-      <div class="content">
-        <h3>GLPI:</h3>
+      <div class="card" id="formularioSuspensao">
+        <h2>📝 Dados da Suspensão</h2>
         <div class="grid">
-          <button type="button" class="option" onclick="selectGLPI('Sim', this)">✅ <b>Sim</b></button>
-          <button type="button" class="option" onclick="selectGLPI('Não', this)">❌ <b>Não</b></button>
-        </div>
-        <div id="boxTicketGLPI" class="fields hidden">
+          <div class="field"><label for="clienteSuspensao">SR(A):</label><input type="text" id="clienteSuspensao" placeholder="Nome do cliente"></div>
+          <div class="field"><label for="telefoneSuspensao">TELL:</label><input type="text" id="telefoneSuspensao" placeholder="Telefone"></div>
           <div class="field full">
-            <label>Número do Ticket (GLPI):</label>
-            <input id="ticketGLPIInput" placeholder="Informe o número do ticket">
-          </div>
-        </div>
-
-        <h3>HISTÓRICO DOS ÚLTIMOS ATENDIMENTOS:</h3>
-        <div class="grid">
-          <button type="button" class="option" onclick="selectHistorico('SEM', this)">🚫 <b>SEM</b></button>
-          <button type="button" class="option" onclick="selectHistorico('OUTRO', this)">📝 <b>OUTRO</b></button>
-        </div>
-        <div id="boxHistoricoOutro" class="fields hidden">
-          <div class="field full">
-            <label>Informe o histórico:</label>
-            <input id="infoHistoricoOutro" placeholder="Descreva os últimos atendimentos">
-          </div>
-        </div>
-
-        <h3>STATUS: <small class="multi-hint">Marque as opções aplicáveis</small></h3>
-        <div class="check-grid">
-          <label class="check-card"><input type="checkbox" class="multi-option" data-field="statusCliente" value="Serviço habilitado"> 🟢 <b>Serviço habilitado</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option" data-field="statusCliente" value="Desconexão"> 🔌 <b>Desconexão</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option" data-field="statusCliente" value="Velocidade reduzida"> 🔴 <b>Velocidade reduzida</b></label>
-        </div>
-
-        <h3>CRM: <small class="multi-hint">Marque as opções aplicáveis</small></h3>
-        <div class="check-grid">
-          <label class="check-card"><input type="checkbox" class="multi-option" data-field="statusCRM" value="Tudo normal"> 🟢 <b>Tudo normal</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option" data-field="statusCRM" value="Potência fora do padrão"> ⚠️ <b>Potência fora do padrão</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option" data-field="statusCRM" value="Possível incidente"> 🚨 <b>Possível incidente</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option" data-field="statusCRM" value="Temperatura fora do padrão"> 🌡️ <b>Temperatura fora do padrão</b></label>
-          <label class="check-card"><input type="checkbox" id="chkVariosAlarmes" class="multi-option" data-field="statusCRM" value="Vários alarmes"> 🔔 <b>Vários alarmes</b></label>
-        </div>
-
-        <div id="boxVariosAlarmes" class="fields hidden">
-          <div class="field full">
-            <label>Registros de Alarmes (Máximo 3):</label>
-            <input id="inputVariosAlarmes" placeholder="Ex.: Alarme 1, Alarme 2, Alarme 3">
-          </div>
-        </div>
-
-        <h3>MÉTRICAS DO CRM (PREENCHER SEPARADO)</h3>
-
-        <!-- Anexo de Imagem e OCR Leitura Automática -->
-        <div class="ocr-box">
-          <label style="font-weight:bold; color:var(--label-color);">📷 Leitura Automática por Imagem (OCR)</label>
-          <input type="file" id="crmImageInput" accept="image/*" style="margin-top: 10px;" onchange="readCrmImage(this)">
-          <div id="ocrStatus" class="ocr-status"></div>
-        </div>
-
-        <div class="fields">
-          <div class="field"><label>Potência de Recepção - ONU</label><input id="potRecepcao" placeholder="Ex.: -20.22 dBm"></div>
-          <div class="field"><label>Potência (OLT)</label><input id="potOLT" placeholder="Ex.: -25.55 dBm"></div>
-          <div class="field"><label>Temperatura</label><input id="temperatura" placeholder="Ex.: 45"></div>
-          <div class="field"><label>Potência de Transmissão</label><input id="potTransmissao" placeholder="Ex.: 2.10 dBm"></div>
-          <div class="field full"><label>Uptime</label><input id="uptime" placeholder="Ex.: 3 dias, 04:12:30"></div>
-        </div>
-
-        <!-- MODULAÇÃO MANTIDA EM ANÁLISE EM SISTEMA -->
-        <h3>MODULAÇÃO DE PORTA LAN REALIZADO EM:</h3>
-        <div class="fields">
-          <div class="field">
-            <label>Dispositivo:</label>
-            <select id="modulacaoAparelho">
-              <option value="">Selecione...</option>
-              <option value="COMPUTADOR">COMPUTADOR</option>
-              <option value="NOTEBOOK">NOTEBOOK</option>
-              <option value="OUTROS">OUTROS</option>
+            <label for="titularSuspensao">Quem está solicitando? É o titular?</label>
+            <select id="titularSuspensao">
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Nao">Não</option>
             </select>
           </div>
           <div class="field">
-            <label>Se Outros (Informar):</label>
-            <input id="modulacaoOutro" placeholder="Especifique o equipamento">
+            <label for="documentoSuspensao">Documento de identidade com foto</label>
+            <select id="documentoSuspensao">
+              <option value="">Selecione</option>
+              <option value="Sim">Apresentado/encaminhado</option>
+              <option value="Nao">Não apresentado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="adimplenteSuspensao">Plano está adimplente?</label>
+            <select id="adimplenteSuspensao">
+              <option value="">Selecione</option>
+              <option value="Sim">Sim</option>
+              <option value="Nao">Não</option>
+            </select>
           </div>
           <div class="field full">
-            <label>Quantidade de Mega via cabeado:</label>
-            <input id="megaCabeado" placeholder="Ex.: 950 Mbps">
+            <label for="ultimaSuspensao">Já realizou suspensão temporária nos últimos 12 meses?</label>
+            <select id="ultimaSuspensao">
+              <option value="">Selecione</option>
+              <option value="Nao">Não</option>
+              <option value="Sim">Sim</option>
+            </select>
           </div>
+          <div class="field"><label for="dataSuspensao">Dia de início da suspensão</label><input type="date" id="dataSuspensao"></div>
+          <div class="field"><label for="diasSuspensao">Quantidade de dias de suspensão</label><input type="number" id="diasSuspensao" min="1" max="60" placeholder="Digite de 1 a 60"></div>
         </div>
-
+        <div class="btn-area">
+          <button class="btn btn-primary" onclick="gerarSuspensao()">Gerar Script</button>
+          <button class="btn btn-secondary" onclick="limparSuspensao()">Limpar</button>
+        </div>
+        <div id="statusSuspensao" class="status"></div>
       </div>
-    </section>
 
-    <!-- 2. PARTE DO CLIENTE -->
-    <section class="card open">
-      <div class="head" onclick="toggle(this)"><div class="num">2</div><div><h2>PARTE DO CLIENTE</h2></div><span class="arrow">⌄</span></div>
-      <div class="content">
-
-        <h3>RECLAMAÇÃO NO APARELHO:</h3>
-        <div class="check-grid">
-          <label class="check-card"><input type="checkbox" class="multi-option aparelho-trigger" data-field="aparelhoReclamacao" value="Celular"> 📱 <b>Celular</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option aparelho-trigger" data-field="aparelhoReclamacao" value="TV"> 📺 <b>TV</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option aparelho-trigger" data-field="aparelhoReclamacao" value="TV Box"> 📦 <b>TV Box</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option aparelho-trigger" data-field="aparelhoReclamacao" value="Computador"> 💻 <b>Computador</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option aparelho-trigger" data-field="aparelhoReclamacao" value="Notebook"> 💻 <b>Notebook</b></label>
-          <label class="check-card"><input type="checkbox" class="multi-option aparelho-trigger" data-field="aparelhoReclamacao" value="Vídeo game"> 🎮 <b>Vídeo game</b></label>
-          <label class="check-card"><input type="checkbox" id="chkOutroAparelho" class="multi-option aparelho-trigger" data-field="aparelhoReclamacao" value="Outros"> 🛠️ <b>Outros</b></label>
+      <div class="card result" id="resultadoSuspensao" style="display:none;">
+        <h2>💬 Script para Atendimento</h2>
+        <div class="dates">
+          <div class="date-box"><span>📅 DIA DE SUSPENSÃO</span><strong id="resultadoDataSuspensao">--/--/----</strong></div>
+          <div class="date-box"><span>📅 DIA DE HABILITAÇÃO</span><strong id="resultadoDataHabilitacao">--/--/----</strong></div>
         </div>
-
-        <div id="boxOutroAparelho" class="fields hidden">
-          <div class="field full">
-            <label>Especifique outro aparelho:</label>
-            <input id="inputOutroAparelho" class="local-trigger" placeholder="Ex.: Tablet, DVR, Smartwatch">
-          </div>
+        <br>
+        <div class="script-box" id="scriptSuspensao"></div>
+        <div class="btn-area">
+          <button class="btn btn-copy" onclick="copiarSuspensao()">📋 Copiar Script</button>
+          <button class="btn btn-edit" onclick="editarSuspensao()">✏️ Editar</button>
+          <button class="btn btn-secondary" onclick="novoAtendimentoSuspensao()">🔄 Novo Atendimento</button>
         </div>
+      </div>
+    </div>
 
-        <h3>TESTE DO CLIENTE:</h3>
-        <div class="fields">
-          <div class="field"><label>Navegador:</label><input id="testeNavegador" class="local-trigger" placeholder="Ex.: Chrome, Speedtest"></div>
-          <div class="field"><label>Aplicativo:</label><input id="testeAplicativo" class="local-trigger" placeholder="Ex.: YouTube, Netflix"></div>
-          <div class="field"><label>Site:</label><input id="testeSite" class="local-trigger" placeholder="Ex.: fast.com"></div>
-          <div class="field"><label>Jogo:</label><input id="testeJogo" class="local-trigger" placeholder="Ex.: Valorant, Warzone"></div>
+    <!-- TELA REATIVAÇÃO -->
+    <div id="subTelaReativacao" style="display:none;">
+      <div class="card">
+        <h2>📋 Habilitação do Plano</h2>
+        <div class="rules">
+          <div class="rule"><strong>▶️ Reativação antecipada:</strong> Utilize esta opção quando o cliente solicitar a reativação do plano antes do término da suspensão temporária.</div>
+          <div class="rule"><strong>🔁 Periodicidade:</strong> A suspensão temporária só pode ser solicitada uma vez a cada 12 meses.</div>
+          <div class="rule"><strong>✅ Habilitação:</strong> Após a realização da reativação, o plano deverá ser confirmado como habilitado com sucesso.</div>
         </div>
+      </div>
 
-        <!-- TESTE DE BANDA ABAIXO DE TESTE DO CLIENTE -->
-        <h3>TESTE DE BANDA:</h3>
-        <div class="fields">
-          <div class="field"><label>Antes do procedimento:</label><input id="testeBandaAntes" class="local-trigger" placeholder="Ex.: 45 Mbps / 20 Mbps"></div>
-          <div class="field"><label>Depois do procedimento:</label><input id="testeBandaDepois" class="local-trigger" placeholder="Ex.: 300 Mbps / 150 Mbps"></div>
-        </div>
-
-        <h3>SINAL DOS APARELHOS:</h3>
+      <div class="card" id="formularioReativacao">
+        <h2>📝 Dados da Reativação</h2>
         <div class="grid">
-          <button type="button" class="option" onclick="select('sinal','OTIMO',this)">🟢 <b>ÓTIMO</b></button>
-          <button type="button" class="option" onclick="select('sinal','BOM',this)">🔵 <b>BOM</b></button>
-          <button type="button" class="option" onclick="select('sinal','MEDIO',this)">🟡 <b>MÉDIO</b></button>
-          <button type="button" class="option" onclick="select('sinal','RUIM',this)">🔴 <b>RUIM</b></button>
+          <div class="field"><label for="clienteReativacao">SR(A):</label><input type="text" id="clienteReativacao" placeholder="Nome do cliente"></div>
+          <div class="field"><label for="telefoneReativacao">TELL:</label><input type="text" id="telefoneReativacao" placeholder="Telefone"></div>
         </div>
-      </div>
-    </section>
-
-    <!-- 3. ORIENTAÇÃO AO CLIENTE -->
-    <section class="card open">
-      <div class="head" onclick="toggle(this)"><div class="num">3</div><div><h2>ORIENTAÇÃO AO CLIENTE</h2></div><span class="arrow">⌄</span></div>
-      <div class="content">
-        
-        <h3>🧪 RESULTADO INDIVIDUAL DOS TESTES</h3>
-        <p><small class="multi-hint">Selecione o resultado de cada teste realizado:</small></p>
-        <div id="containerNovosTestes" class="check-grid"></div>
-
-        <label style="font-weight:bold;display:block;margin-top:10px">Adicionar teste personalizado:</label>
-        <div class="inline-input" style="margin-top:6px">
-          <input id="inputNovoTeste" placeholder="Ex.: Teste de ping direto na ONU via cabo curto CAT6">
-          <button type="button" class="btn primary" onclick="adicionarNovoTeste()">➕ Adicionar</button>
+        <div class="btn-area">
+          <button class="btn btn-primary" onclick="gerarReativacao()">Gerar Script</button>
+          <button class="btn btn-secondary" onclick="limparReativacao()">Limpar</button>
         </div>
-      </div>
-    </section>
-
-    <!-- 4. GERÊNCIA -->
-    <section class="card open">
-      <div class="head" onclick="toggle(this)"><div class="num">4</div><div><h2>GERÊNCIA</h2></div><span class="arrow">⌄</span></div>
-      <div class="content">
-        <div class="fields">
-          <div class="field full">
-            <label>DISPOSITIVOS CONECTADOS (ANTES DO REBOOT):</label>
-            <input id="dispositivosConectados" placeholder="Ex.: 6 dispositivos">
-          </div>
-        </div>
-
-        <h3>TESTE DIAGNÓSTICO:</h3>
-        <div class="fields">
-          <div class="field full">
-            <label>IP DE TESTE:</label>
-            <div class="inline-input">
-              <input id="ipTesteInput" placeholder="Ex.: 8.8.8.8, 1.1.1.1 ou IP de destino">
-              <button type="button" class="btn primary" onclick="adicionarIpTeste()">➕ Adicionar IP</button>
-            </div>
-            <div id="listaIpsContainer" class="tag-container"></div>
-          </div>
-        </div>
-
-        <label style="font-weight:bold;font-size:0.9rem;color:var(--label-color)">RESULTADO DO DIAGNÓSTICO:</label>
-        <div class="grid grid3" style="margin-top:6px">
-          <button type="button" class="option" onclick="select('resultadoDiag','SUCESSO',this)">🟢 <b>SUCESSO</b></button>
-          <button type="button" class="option" onclick="select('resultadoDiag','INTERFERÊNCIA',this)">🟡 <b>INTERFERÊNCIA</b></button>
-          <button type="button" class="option" onclick="select('resultadoDiag','INSUCESSO',this)">🔴 <b>INSUCESSO</b></button>
-        </div>
-
-        <h3>AVALIAÇÃO DE ROTA E MTU:</h3>
-        <div class="fields">
-          <div class="field full">
-            <label>TESTE DE MTU:</label>
-            <input id="testeMTU" value="PING COM PACOTE DE 1472 BYTES REALIZADO COM SUCESSO.">
-          </div>
-          <div class="field full">
-            <label>MTR / TRACERT:</label>
-            <input id="mtrTracert" value="ROTA ANALISADA PARA SITE DE STREAMING UTILIZADO PELO CLIENTE.">
-          </div>
-        </div>
-
-        <h3>PROCEDIMENTO REALIZADO:</h3>
-        <div class="check-grid">
-          <label class="check-card"><input type="checkbox" class="procedimentoCheck" value="REBOOT"> 🔄 <b>REBOOT</b></label>
-          <label class="check-card"><input type="checkbox" class="procedimentoCheck" value="FACTORY"> ⚙️ <b>FACTORY</b></label>
-          <label class="check-card"><input type="checkbox" class="procedimentoCheck" value="DESPROVISIONAMENTO"> 🔧 <b>DESPROVISIONAMENTO</b></label>
-          <label class="check-card"><input type="checkbox" class="procedimentoCheck" value="RESET FISICO"> 🔘 <b>RESET FÍSICO</b></label>
-          <label class="check-card"><input type="checkbox" class="procedimentoCheck" value="DELETE"> 🗑️ <b>DELETE</b></label>
-          <label class="check-card"><input type="checkbox" class="procedimentoCheck" value="OUTRO"> 📝 <b>OUTRO</b></label>
-        </div>
-
-        <div id="boxOutroProcedimento" class="fields hidden">
-          <div class="field full">
-            <label>Outro procedimento (Informar):</label>
-            <input id="infoOutroProcedimento" placeholder="Descreva o procedimento realizado">
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 5. ENCERRAMENTO -->
-    <section class="card open">
-      <div class="head" onclick="toggle(this)"><div class="num">5</div><div><h2>ENCERRAMENTO</h2></div><span class="arrow">⌄</span></div>
-      <div class="content">
-        <h3>STATUS FINAL:</h3>
-        <div class="grid grid3">
-          <button type="button" class="option" onclick="select('statusFinal','Problema resolvido',this)">✅ <b>Problema resolvido</b></button>
-          <button type="button" class="option" onclick="select('statusFinal','Necessário análise de suporte N2',this)">👨‍💻 <b>Necessário análise de suporte N2</b></button>
-          <button type="button" class="option" onclick="select('statusFinal','Solicitação de Visita técnica',this)">🛠️ <b>Solicitação de Visita técnica</b></button>
-        </div>
-
-        <div class="summary">
-          <h3>📄 SCRIPT FINAL AUTOMÁTICO</h3>
-          <pre id="scriptOutput2">Preencha os campos para gerar o script...</pre>
-          <textarea id="scriptEditArea2" class="hidden" placeholder="Edite o script manualmente aqui..."></textarea>
-          
-          <div class="actions" style="margin-top:12px">
-            <button type="button" class="btn primary" onclick="copiarScript2()">📋 Copiar Script</button>
-            <button type="button" class="btn secondary" id="btnToggleEdit2" onclick="toggleEdicaoManual2()">✏️ Modo Edição</button>
-          </div>
-        </div>
-
-        <div class="actions">
-          <button type="button" class="btn secondary" onclick="abrirTodas(true)">📂 Abrir todas</button>
-          <button type="button" class="btn secondary" onclick="abrirTodas(false)">📁 Fechar todas</button>
-          <button type="button" class="btn secondary" onclick="reiniciar()">♻️ Limpar Tudo</button>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ABA 3: NEGOCIAÇÃO -->
-  <div id="tabNegociacao" class="tab-content">
-    <div style="max-width: 1200px; margin: 0 auto;">
-      <div class="negociacao-card" style="background: linear-gradient(135deg,#0284c7,#0369a1); color: #fff; border-radius: 18px; padding: 25px 30px; margin-bottom: 20px;">
-        <h1 style="margin:0 0 7px; font-size:28px;">💰 Cálculo para Negociação</h1>
-        <p style="margin:0; opacity:.9;">Calculadora baseada nas regras da planilha de negociação.</p>
+        <div id="statusReativacao" class="status"></div>
       </div>
 
-      <!-- AVISO SOLICITADO -->
-      <div class="alerta-negociacao-topo">
-        Atenção: Confirme se o plano do cliente está habilitado ou cancelado antes de seguir a regra de negociação.
+      <div class="card result" id="resultadoReativacao" style="display:none;">
+        <h2>💬 Script para Atendimento</h2>
+        <div class="script-box" id="scriptReativacao"></div>
+        <div class="btn-area">
+          <button class="btn btn-copy" onclick="copiarReativacao()">📋 Copiar Script</button>
+          <button class="btn btn-edit" onclick="editarReativacao()">✏️ Editar</button>
+          <button class="btn btn-secondary" onclick="novoAtendimentoReativacao()">🔄 Novo Atendimento</button>
+        </div>
       </div>
-
-      <div class="grid">
-        <section class="negociacao-card">
-          <h2>🧮 Calculadora</h2>
-          <label for="debito">Valor do débito</label>
-          <input id="debito" type="number" min="0" step="0.01" placeholder="Ex.: 500,00" oninput="calcularNegociacao();gerarScriptClienteN1()">
-
-          <label for="entrada">Percentual de entrada <span class="small" style="font-weight:400">(selecione para recalcular)</span></label>
-          <select id="entrada" onchange="calcularNegociacao(true);gerarScriptClienteN1()">
-            <option value="0.60">60%</option>
-            <option value="0.50" selected>50%</option>
-            <option value="0.40">40%</option>
-            <option value="0.30">30%</option>
-          </select>
-
-          <label for="parcelas">Quantidade de parcelas</label>
-          <select id="parcelas" onchange="calcularNegociacao();gerarScriptClienteN1()">
-            <option value="1">1X</option><option value="2">2X</option><option value="3">3X</option>
-            <option value="4">4X</option><option value="5">5X</option>
-          </select>
-
-          <div id="dataVencimentoCalculadora" class="campo-data-negociacao">
-            <label for="vencimentoCliente">📅 Data de vencimento da entrada</label>
-            <input id="vencimentoCliente" type="text" value="09/12/2025"
-                   placeholder="DD/MM/AAAA" maxlength="10"
-                   oninput="gerarScriptClienteN1()">
-          </div>
-
-          <div class="result-neg">
-            <div><small>Entrada</small><strong id="vEntrada">R$ 0,00</strong></div>
-            <div><small>Restante</small><strong id="vRestante">R$ 0,00</strong></div>
-            <div><small>Valor/parcela</small><strong id="vParcela">R$ 0,00</strong></div>
-          </div>
-          <div class="actions">
-            <button class="primary" onclick="copiarResumoNegociacao()">📋 Copiar negociação</button>
-            <button class="secondary" onclick="limparNegociacao()">Limpar</button>
-          </div>
-        </section>
-
-        <!-- SCRIPT CLIENTE REALOCADO PARA FICAR ABAIXO DA CALCULADORA -->
-        <section class="negociacao-card">
-          <h2>💬 Script para encaminhar ao cliente</h2>
-          <div class="script-cliente-box">
-            <label for="scriptClienteN1" style="display:block;font-weight:700;font-size:13px;margin:0 0 6px">
-              Mensagem para o cliente
-            </label>
-            <textarea id="scriptClienteN1" readonly>Preencha os dados da negociação para gerar a mensagem.</textarea>
-
-            <div class="actions" style="margin-top:12px">
-              <button class="primary" type="button" onclick="copiarScriptClienteN1()">📋 Copiar mensagem</button>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <section class="negociacao-card">
-        <h2>📌 Regra aplicável ao valor</h2>
-        <div id="regraAtual" class="notice">Informe o valor do débito para visualizar a regra.</div>
-      </section>
-
-      <section class="negociacao-card">
-        <h2>📋 Regras de valores e parcelas</h2>
-        <table class="neg-table">
-          <thead><tr><th>Faixa de débito</th><th>Regra de entrada + parcelas</th></tr></thead>
-          <tbody>
-            <tr><td>De R$ 100,00 a R$ 300,00</td><td><span class="badge">60%</span> + 2 parcelas no boleto bancário</td></tr>
-            <tr><td>De R$ 300,01 a R$ 500,00</td><td><span class="badge">50%</span> + 3 parcelas no boleto bancário</td></tr>
-            <tr><td>De R$ 500,01 a R$ 700,00</td><td><span class="badge">40%</span> + 4 parcelas no boleto bancário</td></tr>
-            <tr><td>Acima de R$ 700,00</td><td><span class="badge">30%</span> + 5 parcelas no boleto bancário</td></tr>
-            <tr><td>Pagamento à vista</td><td>Isentar de multas e juros, somente para inadimplência com mais de 30 dias.</td></tr>
-          </tbody>
-        </table>
-      </section>
-
-      <div class="grid">
-        <section class="negociacao-card">
-          <h2>🚫 Planos cancelados</h2>
-          <div class="cancel">
-            <strong>Limites de aceitação:</strong>
-            <ul>
-              <li>Até 50% para a primeira faixa de negociação.</li>
-              <li>Até 40% para a segunda faixa.</li>
-              <li>Até 30% para a terceira faixa.</li>
-              <li>Até 20% para a quarta faixa.</li>
-              <li>Isenção de multas e juros.</li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="negociacao-card">
-          <h2>⚠️ Observações</h2>
-          <div class="notice">
-            O valor a ser negociado deve ser retirado do <strong>Integrator</strong> e as formas negociáveis devem seguir a tabela de regras.
-          </div>
-          <p style="margin-top: 15px;">
-  <strong style="color: #d9534f; font-size: 1.1em;">Atenção:</strong> 
-  Não é permitida a negociação com parcelas inferiores a R$ 30,00.
-</p>
-          <p style="margin-top: 10px;"><strong>Negociação em parcelas iguais:</strong> para situações de valores acima de R$ 1.000,00 e plano cancelado.</p>
-        </section>
-      </div>
-
-      <section class="negociacao-card">
-        <h2>📊 Parcelamento para valores acima de R$ 1.000,00 — exemplo</h2>
-        <table class="neg-table">
-          <thead><tr><th>Valor</th><th>2X</th><th>3X</th><th>4X</th><th>5X</th><th>6X</th><th>7X</th></tr></thead>
-          <tbody>
-            <tr><td><strong>R$ 1.503,16</strong></td><td>R$ 751,58</td><td>R$ 501,05</td><td>R$ 375,79</td><td>R$ 300,63</td><td>R$ 250,53</td><td>R$ 214,74</td></tr>
-          </tbody>
-        </table>
-      </section>
     </div>
-  </div>
 
-  <!-- ABA 4: MUDANÇA DE ENDEREÇO -->
-  <div id="tabMudancaEndereco" class="tab-content">
-    <div style="max-width: 1200px; margin: 0 auto;">
-      <div class="negociacao-card" style="background: linear-gradient(135deg,#0284c7,#0369a1); color: #fff; border-radius: 18px; padding: 25px 30px; margin-bottom: 20px;">
-        <h1 style="margin:8px 0 7px; font-size:28px;">🔄 Mudança de Endereço — Passo a Passo + script</h1>
-        <p style="margin:0; opacity:.9;">Mudança de endereço Manual</p>
-      </div>
-
-      <div class="subtabs">
-        <button class="subtab active" onclick="openSubTab('dadosMudanca',this)">👤 Dados</button>
-        <button class="subtab" onclick="openSubTab('scriptsMudanca',this)">💬 Scripts</button>
-        <button class="subtab" onclick="openSubTab('orientacoesMudanca',this)">📘 Orientações</button>
-      </div>
-
-      <!-- Sub-aba Dados -->
-      <section id="dadosMudanca" class="subtabcontent active">
-        <div class="card" style="padding:20px;">
-          <h2>👤 Dados para preencher</h2>
-          <div class="formgrid">
-            <div class="field"><label>Cliente</label><input id="mud_cliente" type="text"></div>
-            <div class="field"><label>Plano Internet</label><input id="mud_plano" type="text" placeholder="Ex.: 1"></div>
-            <div class="field"><label>Telefone</label><input id="mud_telefone" type="text"></div>
-            <div class="field"><label>Tipo de cliente</label><select id="mud_tipoCliente"><option value="">Selecione</option><option>Pessoa Física</option><option>Pessoa Jurídica</option></select></div>
-            <div class="field"><label>Data da solicitação</label><input id="mud_data" type="date"></div>
-            <div class="field full">
-              <label>💰 Taxa e forma de pagamento</label>
-              <select id="mud_planoTaxa">
-                <option value="">Selecione a condição</option>
-                <option value="sem-mesh">R$ 99,90 — SEM MESH</option>
-                <option value="com-mesh">R$ 149,90 — COM MESH</option>
-              </select>
-              <div class="small" style="margin-top:6px">Até 5 parcelas sem juros, conforme o manual.</div>
-            </div>
-            <div class="field full">
-              <label>📊 Parcelamento</label>
-              <select id="mud_parcelas">
-                <option value="">Selecione a quantidade de parcelas</option>
-                <option value="1">1x — à vista</option>
-                <option value="2">2x sem juros</option>
-                <option value="3">3x sem juros</option>
-                <option value="4">4x sem juros</option>
-                <option value="5">5x sem juros</option>
-              </select>
-              <div id="mud_calculoTaxa" class="success" style="margin-top:10px;display:none"></div>
-            </div>
-            <div class="field full"><label>Endereço atual (retirada)</label><textarea id="mud_enderecoAtual"></textarea></div>
-            <div class="field"><label>CTO atual (retirada)</label><input id="mud_ctoAtual" type="text"></div>
-            <div class="field"><label>Porta atual</label><input id="mud_portaAtual" type="text"></div>
-            <div class="field full"><label>Novo endereço (instalação)</label><textarea id="mud_novoEndereco"></textarea></div>
-            <div class="field full"><label>Referência do novo endereço</label><input id="mud_referencia" type="text"></div>
-            <div class="field"><label>Novo CTO (instalação)</label><input id="mud_novoCto" type="text"></div>
-            <div class="field"><label>Nova porta</label><input id="mud_novaPorta" type="text"></div>
-          </div>
-          <div class="actions">
-            <button class="primary" onclick="saveDataMudanca()">💾 Salvar preenchimento</button>
-            <button class="secondary" onclick="loadDataMudanca()">↻ Recuperar dados</button>
-            <button class="dangerbtn" onclick="clearAllMudanca()">🗑 Limpar tudo</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sub-aba Scripts -->
-      <section id="scriptsMudanca" class="subtabcontent">
-        <div class="card" style="padding:20px;">
-          <h2>💬 Script automático — MUDANÇA DE ENDEREÇO</h2>
-          <p class="small">O texto abaixo é montado automaticamente com os dados preenchidos.</p>
-          <div id="scriptMudancaText" class="script"></div>
-          <textarea id="editScriptMudanca" style="display:none;min-height:360px" aria-label="Editar script de Mudança de Endereço"></textarea>
-          <div class="actions">
-            <button class="secondary" onclick="toggleEditMud('MudancaText')">✏️ Editar script</button>
-            <button class="primary" onclick="copyScriptMud('scriptMudancaText')">📋 Copiar script</button>
-            <button class="successbtn" id="saveMudancaText" style="display:none" onclick="saveEditedScriptMud('MudancaText')">💾 Salvar edição</button>
-            <button class="secondary" id="cancelMudancaText" style="display:none" onclick="cancelEditMud('MudancaText')">↩️ Cancelar</button>
-          </div>
-        </div>
-
-        <div class="card" style="padding:20px;">
-          <h2>🚚 Script automático — RETIRADA DE EQUIPAMENTO</h2>
-          <p class="small">Script conforme a estrutura apresentada no manual.</p>
-          <div id="scriptRetiradaText" class="script"></div>
-          <textarea id="editScriptRetirada" style="display:none;min-height:300px" aria-label="Editar script de Retirada de Equipamentos"></textarea>
-          <div class="actions">
-            <button class="secondary" onclick="toggleEditMud('RetiradaText')">✏️ Editar script</button>
-            <button class="primary" onclick="copyScriptMud('scriptRetiradaText')">📋 Copiar script</button>
-            <button class="successbtn" id="saveRetiradaText" style="display:none" onclick="saveEditedScriptMud('RetiradaText')">💾 Salvar edição</button>
-            <button class="secondary" id="cancelRetiradaText" style="display:none" onclick="cancelEditMud('RetiradaText')">↩️ Cancelar</button>
-          </div>
-        </div>
-
-        <div class="card" style="padding:20px;">
-          <h2>💬 Script para encaminhar ao cliente</h2>
-          <p class="small">Texto de confirmação e orientações para envio ao cliente.</p>
-          <div id="scriptClienteMudText" class="script"></div>
-          <textarea id="editScriptClienteMud" style="display:none;min-height:300px" aria-label="Editar script do Cliente"></textarea>
-          <div class="actions">
-            <button class="secondary" onclick="toggleEditMud('ClienteMudText')">✏️ Editar script</button>
-            <button class="primary" onclick="copyScriptMud('scriptClienteMudText')">📋 Copiar script</button>
-            <button class="successbtn" id="saveClienteMudText" style="display:none" onclick="saveEditedScriptMud('ClienteMudText')">💾 Salvar edição</button>
-            <button class="secondary" id="cancelClienteMudText" style="display:none" onclick="cancelEditMud('ClienteMudText')">↩️ Cancelar</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sub-aba Orientações -->
-      <section id="orientacoesMudanca" class="subtabcontent">
-        <div class="card" style="padding:20px;">
-          <h2>📘 Orientações gerais do manual</h2>
-          <h3>Solicitação</h3>
-          <p>A solicitação pode ser iniciada pelo Aplicativo Minha Você, e-mail, lojas físicas ou WhatsApp/AKIVA Chat. A tratativa inicial, após as confirmações, é realizada no CRM; quando o CRM não permite concluir, segue-se o fluxo manual no Integrator Web.</p>
-
-          <h3>📑 Documentação</h3>
-          <p><b>PF:</b> RG e CPF do titular ou procurador, comprovante do novo endereço com CEP válido e procuração se terceiro. No WhatsApp, selfie segurando o RG é obrigatória.</p>
-          <p><b>PJ:</b> Cartão CNPJ, registro de constituição, RG/CPF do responsável e comprovante do novo endereço com CEP válido. No WhatsApp, selfie segurando o RG é obrigatória.</p>
-
-          <h3>💰 Taxas, parcelamento e cálculo</h3>
-          <p>O sistema considera somente duas condições: <b>R$ 99,90 para plano SEM MESH</b> ou <b>R$ 149,90 para plano COM MESH</b>. O parcelamento é de até <b>5x sem juros</b>. O valor de cada parcela é calculated automaticamente dividindo a taxa escolhida pela quantidade de parcelas.</p>
-          <p><b>Exemplos:</b> R$ 99,90 em 1x = R$ 99,90; 2x = R$ 49,95; 3x = R$ 33,30; 4x = R$ 24,98; 5x = R$ 19,98. R$ 149,90 em 1x = R$ 149,90; 2x = R$ 74,95; 3x = R$ 49,97; 4x = R$ 37,48; 5x = R$ 29,98.</p>
-          <p>Plano sem Mesh: <b>R$ 99,90</b>. Plano com Mesh: <b>R$ 149,90</b>. Até 5 parcelas sem juros. Prazo informado: até 5 dias úteis após validação da solicitação.</p>
-
-          <h3>📦 Equipamento</h3>
-          <p>O cliente deve levar a ONU/conversor óptico ao novo endereço. Se não estiver no local, o manual informa cobrança de taxa de extravio de <b>R$ 350,00</b>, ou devolução do equipamento para não lançar a taxa.</p>
-
-          <h3>🔁 Fluxo resumido</h3>
-          <p><b>Validação → Outros Endereços → 3 cadastros do novo endereço → Alteração nos planos → Suspensão temporária → Imagens/validação → Mudança de endereço + Retirada → Agendamento FTTH → Instalação → Encerramento.</b></p>
-
-          <h3>🚨 Regra de encerramento</h3>
-          <p>O atendimento só deve ser fechado como <b>Problema Resolvido</b> se a instalação no novo endereço tiver acontecido. Se não acontecer, o manual orienta o encerramento como <b>Sem solução</b>, evitando cobrança indevida e alteração incorreta do endereço.</p>
-
-          <h3>🔙 Desistência/impossibilidade</h3>
-          <p>Em caso de desistência ou impossibilidade de execução, o endereço deve ser revertido ao original. O plano deve ser reabilitado e a situação de faturamento alinhada conforme o caso.</p>
-        </div>
-      </section>
-    </div>
   </div>
 
 </main>
 <div id="toast" class="toast"></div>
 
 <script>
-// --- FUNÇÃO DE AUTENTICAÇÃO / LOGIN ---
+// --- FUNÇÕES DE AUTENTICAÇÃO E TEMA ---
 function autenticarUsuario() {
   const user = document.getElementById('loginUser').value.trim();
   const pass = document.getElementById('loginPass').value.trim();
@@ -1253,15 +504,21 @@ function autenticarUsuario() {
   }
 }
 
-// Suporte para apertar Enter na tela de login
-document.getElementById('loginPass')?.addEventListener('keyup', function(e) {
-  if (e.key === 'Enter') autenticarUsuario();
-});
-document.getElementById('loginUser')?.addEventListener('keyup', function(e) {
-  if (e.key === 'Enter') autenticarUsuario();
-});
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.innerText = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
 
-// --- FUNÇÃO DE ABAS E NAVEGAÇÃO HOME ---
+function toggleTheme() {
+  document.body.classList.toggle("light-mode");
+  const isLight = document.body.classList.contains("light-mode");
+  document.getElementById("themeIcon").textContent = isLight ? "☀️" : "🌙";
+  document.getElementById("themeText").textContent = isLight ? "Modo Claro" : "Modo Escuro";
+}
+
+// --- CONTROLE DE ABAS PRINCIPAIS ---
 function openTab(evt, tabId) {
   const contents = document.querySelectorAll(".tab-content");
   contents.forEach(c => c.classList.remove("active"));
@@ -1279,112 +536,175 @@ function openTab(evt, tabId) {
     if (tabId === 'tabScriptAnálise') document.getElementById('btnNavGlpi').classList.add('active');
     if (tabId === 'tabNegociacao') document.getElementById('btnNavNegociacao').classList.add('active');
     if (tabId === 'tabMudancaEndereco') document.getElementById('btnNavMudanca').classList.add('active');
+    if (tabId === 'tabSuspensaoTemporaria') document.getElementById('btnNavSuspensao').classList.add('active');
   }
-
-  if (tabId === 'tabFluxoAtendimento') {
-    abrirTodas(true);
-  }
-  
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// --- FUNÇÃO DE LEITURA AUTOMÁTICA DE IMAGEM (OCR) ---
-function readCrmImage(input) {
-  const file = input.files[0];
-  const status = document.getElementById('ocrStatus');
-  if (!file) return;
-
-  status.textContent = "Processando imagem... por favor aguarde.";
-
-  Tesseract.recognize(
-    file,
-    'por',
-    { logger: m => {
-        if(m.status === 'recognizing text'){
-          status.textContent = `Lendo imagem: ${Math.round(m.progress * 100)}%`;
-        }
-      } 
-    }
-  ).then(({ data: { text } }) => {
-    status.textContent = "Leitura concluída!";
-    parseOcrMetrics(text);
-    setTimeout(() => { status.textContent = ""; }, 3000);
-  }).catch(err => {
-    console.error(err);
-    status.textContent = "Erro ao ler a imagem. Tente preencher manualmente.";
-  });
-}
-
-function parseOcrMetrics(text) {
-  const regexDb = /([+-]?\d+[\.,]\d+)/;
-  const regexNumerico = /(\d+[\.,]?\d*)/;
-
-  const lines = text.split('\n');
-
-  lines.forEach(line => {
-    const l = line.toLowerCase();
-
-    if ((l.includes('rx') || l.includes('recep') || l.includes('onu')) && !l.includes('olt') && !l.includes('tx') && !l.includes('transm')) {
-      const match = line.match(regexDb);
-      if (match) document.getElementById('potRecepcao').value = match[0].trim() + " dBm";
-    }
-    
-    if (l.includes('olt')) {
-      const match = line.match(regexDb);
-      if (match) document.getElementById('potOLT').value = match[0].trim() + " dBm";
-    }
-    
-    if (l.includes('temp') || l.includes('°c') || l.includes('celsius') || l.includes('temperature')) {
-      const match = line.match(regexNumerico);
-      if (match) document.getElementById('temperatura').value = match[0].trim();
-    }
-    
-    if (l.includes('tx') || l.includes('transm') || l.includes('power tx') || l.includes('transmit')) {
-      const match = line.match(regexDb) || line.match(regexNumerico);
-      if (match) document.getElementById('potTransmissao').value = match[0].trim() + " dBm";
-    }
-
-    if (l.includes('uptime') || l.includes('tempo ligado') || l.includes('tempo de atividade')) {
-      const parts = line.split(':');
-      if (parts.length > 1) {
-        document.getElementById('uptime').value = parts.slice(1).join(':').trim();
-      }
-    }
-  });
-
-  gerarScript2();
-}
-
-// --- CONTROLE DE TEMA ---
-function toggleTheme() {
-  document.body.classList.toggle("light-mode");
-  const isLight = document.body.classList.contains("light-mode");
-  document.getElementById("themeIcon").textContent = isLight ? "☀️" : "🌙";
-  document.getElementById("themeText").textContent = isLight ? "Modo Claro" : "Modo Escuro";
-  localStorage.setItem("themePreference", isLight ? "light" : "dark");
-}
-
-if (localStorage.getItem("themePreference") === "light") {
-  toggleTheme();
-}
-
-// --- LÓGICA DO GLPI-INCIDENTE ---
-function addProcedure() {
-  const input = document.getElementById('customProcInput');
-  const value = input.value.trim();
-  if (value !== "") {
-    const group = document.getElementById('proceduresGroup');
-    const id = 'proc_' + Date.now();
-    
-    const item = document.createElement('div');
-    item.className = 'checkbox-item';
-    item.innerHTML = `
-      <input type="checkbox" value="${value}" id="${id}" checked>
-      <label for="${id}">${value}</label>
-    `;
-    group.appendChild(item);
-    input.value = "";
+// --- SUB-ABAS DA SUSPENSÃO TEMPORÁRIA ---
+function alternarSubAbaSuspensao(tipo) {
+  if (tipo === 'suspensao') {
+    document.getElementById('subTelaSuspensao').style.display = 'block';
+    document.getElementById('subTelaReativacao').style.display = 'none';
+    document.getElementById('btnSubSuspensao').classList.add('active');
+    document.getElementById('btnSubReativacao').classList.remove('active');
+  } else {
+    document.getElementById('subTelaSuspensao').style.display = 'none';
+    document.getElementById('subTelaReativacao').style.display = 'block';
+    document.getElementById('btnSubSuspensao').classList.remove('active');
+    document.getElementById('btnSubReativacao').classList.add('active');
   }
+}
+
+// --- LÓGICA DE SUSPENSÃO TEMPORÁRIA ---
+function formatarData(data) {
+  const dia = String(data.getDate()).padStart(2, "0");
+  const mes = String(data.getMonth() + 1).padStart(2, "0");
+  const ano = data.getFullYear();
+  return `${dia}/${mes}/${ano}`;
+}
+
+function obterDataSuspensao() {
+  const valor = document.getElementById("dataSuspensao").value;
+  if (!valor) return null;
+  const partes = valor.split("-");
+  return new Date(Number(partes[0]), Number(partes[1]) - 1, Number(partes[2]));
+}
+
+function gerarSuspensao() {
+  const cliente = document.getElementById("clienteSuspensao").value.trim();
+  const telefone = document.getElementById("telefoneSuspensao").value.trim();
+  const titular = document.getElementById("titularSuspensao").value;
+  const documento = document.getElementById("documentoSuspensao").value;
+  const adimplente = document.getElementById("adimplenteSuspensao").value;
+  const ultimaSuspensao = document.getElementById("ultimaSuspensao").value;
+  const dataSuspensao = obterDataSuspensao();
+  const dias = Number(document.getElementById("diasSuspensao").value);
+  const status = document.getElementById("statusSuspensao");
+
+  status.innerHTML = "";
+
+  if (!cliente || !telefone) {
+    status.innerHTML = "⚠️ Preencha o nome do cliente e o telefone.";
+    status.style.color = "#ef4444";
+    return;
+  }
+  if (titular !== "Sim") {
+    status.innerHTML = "❌ A solicitação só poderá ser realizada pelo TITULAR ou representante legal.";
+    status.style.color = "#ef4444";
+    return;
+  }
+  if (documento !== "Sim") {
+    status.innerHTML = "❌ A cópia do documento de identidade com foto deve ser apresentada.";
+    status.style.color = "#ef4444";
+    return;
+  }
+  if (adimplente !== "Sim") {
+    status.innerHTML = "❌ O plano não está adimplente.";
+    status.style.color = "#ef4444";
+    return;
+  }
+  if (ultimaSuspensao === "Sim") {
+    status.innerHTML = "❌ Já houve suspensão temporária nos últimos 12 meses.";
+    status.style.color = "#ef4444";
+    return;
+  }
+  if (!dataSuspensao) {
+    status.innerHTML = "⚠️ Informe a data de início da suspensão.";
+    status.style.color = "#ef4444";
+    return;
+  }
+  if (!dias || dias < 1 || dias > 60) {
+    status.innerHTML = "❌ A suspensão deve ser entre 1 e 60 dias.";
+    status.style.color = "#ef4444";
+    return;
+  }
+
+  const dataHabilitacao = new Date(dataSuspensao);
+  dataHabilitacao.setDate(dataHabilitacao.getDate() + dias);
+
+  const dataSuspensaoFormatada = formatarData(dataSuspensao);
+  const dataHabilitacaoFormatada = formatarData(dataHabilitacao);
+
+  document.getElementById("resultadoDataSuspensao").textContent = dataSuspensaoFormatada;
+  document.getElementById("resultadoDataHabilitacao").textContent = dataHabilitacaoFormatada;
+
+  const script = `SR(A): ${cliente}\nTELL: ${telefone}\n\nSOLICITOU SUSPENSÃO TEMPORÁRIA DE SEU PLANO POR ${dias} ${dias === 1 ? "DIA" : "DIAS"} - CLIENTE CIENTE QUE ESSA SOLICITAÇÃO SÓ PODE SER REALIZADA UMA VEZ A CADA 12 MESES NO PERÍODO MÁXIMO DE 60 DIAS.\n\nDIA DE SUSPENSÃO: ${dataSuspensaoFormatada}\nDIA DE HABILITAÇÃO: ${dataHabilitacaoFormatada}.`;
+
+  document.getElementById("scriptSuspensao").textContent = script;
+  document.getElementById("formularioSuspensao").style.display = "none";
+  document.getElementById("resultadoSuspensao").style.display = "block";
+}
+
+function copiarSuspensao() {
+  const script = document.getElementById("scriptSuspensao").innerText;
+  navigator.clipboard.writeText(script).then(() => toast("✅ Script copiado com sucesso!"));
+}
+
+function editarSuspensao() {
+  document.getElementById("resultadoSuspensao").style.display = "none";
+  document.getElementById("formularioSuspensao").style.display = "block";
+}
+
+function novoAtendimentoSuspensao() {
+  limparSuspensao();
+  document.getElementById("resultadoSuspensao").style.display = "none";
+  document.getElementById("formularioSuspensao").style.display = "block";
+}
+
+function limparSuspensao() {
+  document.getElementById("clienteSuspensao").value = "";
+  document.getElementById("telefoneSuspensao").value = "";
+  document.getElementById("titularSuspensao").value = "";
+  document.getElementById("documentoSuspensao").value = "";
+  document.getElementById("adimplenteSuspensao").value = "";
+  document.getElementById("ultimaSuspensao").value = "";
+  document.getElementById("dataSuspensao").value = "";
+  document.getElementById("diasSuspensao").value = "";
+  document.getElementById("statusSuspensao").innerHTML = "";
+}
+
+// --- LÓGICA DE REATIVAÇÃO ---
+function gerarReativacao() {
+  const cliente = document.getElementById("clienteReativacao").value.trim();
+  const telefone = document.getElementById("telefoneReativacao").value.trim();
+  const status = document.getElementById("statusReativacao");
+
+  status.innerHTML = "";
+
+  if (!cliente || !telefone) {
+    status.innerHTML = "⚠️ Preencha o nome do cliente e o telefone.";
+    status.style.color = "#ef4444";
+    return;
+  }
+
+  const script = `SR(A): ${cliente}\nTELL: ${telefone}\n\nSOLICITA REATIVAÇÃO ANTECIPADA DE SEU PLANO QUE ESTÁ COM SUSPENSÃO TEMPORÁRIA - CLIENTE CIENTE QUE A SOLICITAÇÃO DE SUSPENSÃO TEMPORÁRIA SÓ PODE SER SOLICITADA UMA VEZ A CADA 12 MESES NO PERÍODO MÁXIMO DE 60 DIAS. PLANO HABILITADO COM SUCESSO.`;
+
+  document.getElementById("scriptReativacao").textContent = script;
+  document.getElementById("formularioReativacao").style.display = "none";
+  document.getElementById("resultadoReativacao").style.display = "block";
+}
+
+function copiarReativacao() {
+  const script = document.getElementById("scriptReativacao").innerText;
+  navigator.clipboard.writeText(script).then(() => toast("✅ Script copiado com sucesso!"));
+}
+
+function editarReativacao() {
+  document.getElementById("resultadoReativacao").style.display = "none";
+  document.getElementById("formularioReativacao").style.display = "block";
+}
+
+function novoAtendimentoReativacao() {
+  limparReativacao();
+  document.getElementById("resultadoReativacao").style.display = "none";
+  document.getElementById("formularioReativacao").style.display = "block";
+}
+
+function limparReativacao() {
+  document.getElementById("clienteReativacao").value = "";
+  document.getElementById("telefoneReativacao").value = "";
+  document.getElementById("statusReativacao").innerHTML = "";
 }
 
 function generateScript1() {
@@ -1396,770 +716,16 @@ function generateScript1() {
   const cto = document.getElementById('cto').value;
   const equipamento = document.getElementById('equipamento').value;
 
-  const checkboxes = document.querySelectorAll('#proceduresGroup input[type="checkbox"]:checked');
-  let procedimentosText = "";
-  checkboxes.forEach(cb => {
-    procedimentosText += `- ${cb.value}\n`;
-  });
-
-  const script = `CLIENTE: ${cliente}
-CÓDIGO: ${codigo}
-PROTOCOLO: ${protocolo}
-PLANO: ${plano}
-POP: ${pop}
-CTO: ${cto}
-EQUIPAMENTO: ${equipamento}
-
-SOLICITO ANÁLISE DO PONTO DE ACESSO, POIS O CLIENTE, ENTROU EM CONTATO INFORMANDO DESCONEXÃO, REALIZADO O TESTE DE U.M E IDENTIFICADO MAIS CLIENTES DESCONECTADOS.
-
-Procedimentos e análises realizadas:
-${procedimentosText}`.trim();
-
-  const output = document.getElementById('scriptOutput1');
-  output.value = script;
-  output.readOnly = true;
-  document.getElementById('editBtn1').innerText = "Editar";
+  const script = `CLIENTE: ${cliente}\nCÓDIGO: ${codigo}\nPROTOCOLO: ${protocolo}\nPLANO: ${plano}\nPOP: ${pop}\nCTO: ${cto}\nEQUIPAMENTO: ${equipamento}`;
+  document.getElementById('scriptOutput1').value = script;
   document.getElementById('resultContainer1').style.display = 'block';
-}
-
-function toggleEdit1() {
-  const output = document.getElementById('scriptOutput1');
-  const editBtn = document.getElementById('editBtn1');
-  
-  if (output.readOnly) {
-    output.readOnly = false;
-    editBtn.innerText = "Bloquear Edição";
-    output.focus();
-  } else {
-    output.readOnly = true;
-    editBtn.innerText = "Editar";
-  }
-}
-
-function copyScript1() {
-  const output = document.getElementById('scriptOutput1');
-  output.select();
-  document.execCommand('copy');
-  toast('Script copiado para a área de transferência!');
 }
 
 function limparGLPI() {
   document.getElementById('incidentForm').reset();
-  document.getElementById('scriptOutput1').value = '';
   document.getElementById('resultContainer1').style.display = 'none';
-  toast('Formulário do GLPI limpo!');
 }
-
-// --- LÓGICA DO SUPORTE ---
-const state = {
-  canal: "", glpi: "", ticketGLPI: "", historico: "", statusCliente: [], statusCRM: [],
-  aparelhoReclamacao: [], sinal: "", resultadoDiag: "", statusFinal: ""
-};
-
-let listaIps = [];
-let testesManuais = [];
-let editandoManualmente = false;
-
-function toggle(el) { el.parentElement.classList.toggle("open"); }
-
-function select(campo, valor, btn) {
-  state[campo] = valor;
-  btn.parentElement.querySelectorAll(".option").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  gerarScript2();
-}
-
-function selectGLPI(valor, btn) {
-  btn.parentElement.querySelectorAll(".option").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  state.glpi = valor;
-  
-  const boxTicket = document.getElementById("boxTicketGLPI");
-  if (valor === "Sim") {
-    boxTicket.classList.remove("hidden");
-  } else {
-    boxTicket.classList.add("hidden");
-    document.getElementById("ticketGLPIInput").value = "";
-  }
-  gerarScript2();
-}
-
-function selectHistorico(tipo, btn) {
-  btn.parentElement.querySelectorAll(".option").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-  
-  const boxOutro = document.getElementById("boxHistoricoOutro");
-  if (tipo === "OUTRO") {
-    boxOutro.classList.remove("hidden");
-    state.historico = val("infoHistoricoOutro") || "OUTRO";
-  } else {
-    boxOutro.classList.add("hidden");
-    state.historico = "SEM";
-  }
-  gerarScript2();
-}
-
-function getMulti(campo) {
-  return [...document.querySelectorAll(`.multi-option[data-field="${campo}"]:checked`)].map(x => x.value);
-}
-
-function val(id) { return (document.getElementById(id)?.value || "").trim(); }
-
-function adicionarIpTeste() {
-  const input = document.getElementById("ipTesteInput");
-  const valor = input.value.trim();
-  if (valor) {
-    if (!listaIps.includes(valor)) {
-      listaIps.push(valor);
-      renderizarIps();
-      gerarScript2();
-    }
-    input.value = "";
-  }
-}
-
-function removerIpTeste(index) {
-  listaIps.splice(index, 1);
-  renderizarIps();
-  gerarScript2();
-}
-
-function renderizarIps() {
-  const container = document.getElementById("listaIpsContainer");
-  container.innerHTML = listaIps.map((ip, idx) => `
-    <div class="tag-item">
-      ${esc(ip)} <span onclick="removerIpTeste(${idx})">✕</span>
-    </div>
-  `).join("");
-}
-
-function getProcedimentos() {
-  let list = [];
-  document.querySelectorAll(".procedimentoCheck:checked").forEach(cb => {
-    let v = cb.value;
-    if (v === "OUTRO") {
-      const info = val("infoOutroProcedimento");
-      v += info ? ` (${info})` : "";
-    }
-    list.push(v);
-  });
-  return list;
-}
-
-function getAparelhosReclamacaoFormatados() {
-  let list = [];
-  document.querySelectorAll('.multi-option[data-field="aparelhoReclamacao"]:checked').forEach(cb => {
-    let v = cb.value;
-    if (v === "Outros") {
-      const info = val("inputOutroAparelho");
-      v = info ? `Outros (${info})` : "Outros";
-    }
-    list.push(v);
-  });
-  return list;
-}
-
-function getCrmFormatado() {
-  let list = [];
-  document.querySelectorAll('.multi-option[data-field="statusCRM"]:checked').forEach(cb => {
-    let v = cb.value;
-    if (v === "Vários alarmes") {
-      const info = val("inputVariosAlarmes");
-      v = info ? `Vários alarmes (${info})` : "Vários alarmes";
-    }
-    list.push(v);
-  });
-  return list;
-}
-
-function gerarTextoOrientacao() {
-  const aparelhos = getAparelhosReclamacaoFormatados();
-  const nav = val("testeNavegador");
-  const app = val("testeAplicativo");
-  const site = val("testeSite");
-  const jogo = val("testeJogo");
-
-  if (aparelhos.length === 0 && !nav && !app && !site && !jogo) {
-    return "Selecione um aparelho na seção 'PARTE DO CLIENTE' para gerar instruções customizadas.";
-  }
-
-  let text = "📌 ORIENTAÇÕES PERSONALIZADAS POR APARELHO:\n\n";
-
-  aparelhos.forEach(ap => {
-    let baseNome = ap.split(' ')[0].toUpperCase();
-    text += `🔹 [ ${ap.toUpperCase()} ]\n`;
-
-    if (baseNome.includes("CELULAR")) {
-      text += "   • Verifique se o Wi-Fi está conectado na frequência correta (5GHz para maior velocidade ou 2.4GHz para maior alcance).\n";
-      text += "   • Desative temporariamente o modo de economia de bateria ou dados móveis para evitar interferência na medição.\n";
-      if(nav) text += `   • Abra o navegador (${nav}) em aba anônima e realize o teste de velocidade.\n`;
-      if(app) text += `   • Feche o aplicativo (${app}) em segundo plano, limpe o cache e tente novamente.\n`;
-    } else if (baseNome.includes("TV")) {
-      text += "   • Verifique nas configurações da Smart TV se o sinal Wi-Fi está com boa intensidade ou se o cabo de rede está firme.\n";
-      text += "   • Desconecte a TV da tomada por 10 segundos e reinicie para limpar o buffer de rede.\n";
-      if(app) text += `   • No aplicativo (${app}), verifique se há atualizações pendentes na loja de apps da TV.\n`;
-    } else if (baseNome.includes("BOX")) {
-      text += "   • Certifique-se de que a TV Box está conectada preferencialmente via cabo de rede ou próxima ao roteador.\n";
-      text += "   • Reinicie a TV Box retirando a fonte de alimentação da tomada e aguardando 15 segundos.\n";
-      if(app) text += `   • Teste a estabilidade abrindo o aplicativo (${app}) e monitorando se há travamentos.\n`;
-    } else if (baseNome.includes("COMPUTADOR") || baseNome.includes("NOTEBOOK")) {
-      text += "   • Utilize preferencialmente um cabo de rede CAT5e ou CAT6 conectado diretamente na porta LAN do roteador para evitar perda de pacotes por Wi-Fi.\n";
-      text += "   • Desative temporariamente VPNs, proxies ou antivírus de terceiros que possam limitar a banda.\n";
-      if(nav) text += `   • Acesse o navegador (${nav}) e entre no site de teste de velocidade para validar os megas contratados.\n`;
-      if(jogo) text += `   • Verifique a latência (ping) diretamente no jogo (${jogo}) em servidores locais.\n`;
-    } else if (baseNome.includes("VÍDEO") || baseNome.includes("GAME")) {
-      text += "   • Verifique o status da conexão de rede nas configurações do console (NAT aberto/moderado).\n";
-      text += "   • Dê preferência ao uso de cabo de rede Ethernet para diminuir o ping durante as partidas.\n";
-      if(jogo) text += `   • Teste o desempenho do jogo (${jogo}) após reiniciar a conexão.\n`;
-    } else {
-      text += "   • Certifique-se de que o equipamento está devidamente configurado e próximo à fonte de sinal.\n";
-      text += "   • Reinicie o dispositivo para restabelecer os sockets de rede.\n";
-    }
-    text += "\n";
-  });
-
-  if (nav || app || site || jogo) {
-    text += "🌐 PARÂMETROS GERAIS INFORMADOS PELO CLIENTE:\n";
-    if(nav) text += `   • Navegador/Ferramenta: ${nav}\n`;
-    if(app) text += `   • Aplicativo em uso: ${app}\n`;
-    if(site) text += `   • Site testado: ${site}\n`;
-    if(jogo) text += `   • Jogo monitorado: ${jogo}\n`;
-  }
-
-  return text.trim();
-}
-
-function atualizarTestesDinâmicos() {
-  const aparelhos = getAparelhosReclamacaoFormatados();
-  
-  const locaisObj = [
-    { tipo: "Navegador", valor: val("testeNavegador") },
-    { tipo: "Aplicativo", valor: val("testeAplicativo") },
-    { tipo: "Site", valor: val("testeSite") },
-    { tipo: "Jogo", valor: val("testeJogo") }
-  ].filter(l => l.valor !== "");
-
-  let combinacoes = [];
-
-  if (aparelhos.length > 0) {
-    aparelhos.forEach(ap => {
-      if (locaisObj.length > 0) {
-        locaisObj.forEach(loc => {
-          combinacoes.push(`Teste no ${ap} via ${loc.tipo} (${loc.valor})`);
-        });
-      } else {
-        combinacoes.push(`Teste de conexão no ${ap}`);
-      }
-    });
-  } else if (locaisObj.length > 0) {
-    locaisObj.forEach(loc => {
-      combinacoes.push(`Teste direcionado no ${loc.tipo} (${loc.valor})`);
-    });
-  }
-
-  const todos = [...new Set([...combinacoes, ...testesManuais])];
-  const container = document.getElementById("containerNovosTestes");
-
-  const resultadosAtuais = {};
-  document.querySelectorAll(".resultado-teste").forEach(sel => {
-    resultadosAtuais[sel.dataset.teste] = sel.value;
-  });
-
-  if (todos.length === 0) {
-    container.innerHTML = "<p><small class='multi-hint'>Selecione os aparelhos ou preencha a seção TESTE DO CLIENTE para gerar os testes.</small></p>";
-  } else {
-    const opcoes = ["", "Normal", "Falha", "Parcial", "Inconclusivo", "Não realizado"];
-    container.innerHTML = todos.map(t => {
-      const atual = resultadosAtuais[t] || "";
-      return `<label class="check-card" style="display:flex;align-items:center;gap:10px;justify-content:space-between">
-        <span>🧪 <b>${esc(t)}</b></span>
-        <select class="resultado-teste" data-teste="${esc(t)}">${opcoes.map(o => `<option value="${esc(o)}" ${o===atual?'selected':''}>${o || 'Selecionar resultado'}</option>`).join('')}</select>
-      </label>`;
-    }).join("");
-  }
-
-  document.querySelectorAll(".resultado-teste").forEach(sel => sel.addEventListener("change", gerarScript2));
-  
-  const orientacoes = document.getElementById("orientacoesTexto");
-  if (orientacoes) orientacoes.textContent = gerarTextoOrientacao();
-}
-
-function copiarOrientacao() {
-  const txt = document.getElementById("orientacoesTexto").textContent;
-  navigator.clipboard.writeText(txt).then(() => toast("Orientações copiadas!"));
-}
-
-function adicionarNovoTeste() {
-  const input = document.getElementById("inputNovoTeste");
-  const v = input.value.trim();
-  if (v && !testesManuais.includes(v)) {
-    testesManuais.push(v);
-    input.value = "";
-    atualizarTestesDinâmicos();
-    gerarScript2();
-    toast("Teste personalizado adicionado!");
-  }
-}
-
-function gerarScript2() {
-  if (editandoManualmente) return;
-
-  state.statusCliente = getMulti("statusCliente");
-  state.statusCRM = getCrmFormatado();
-  state.aparelhoReclamacao = getAparelhosReclamacaoFormatados();
-  
-  if (document.getElementById("boxHistoricoOutro").classList.contains("hidden") === false) {
-    state.historico = val("infoHistoricoOutro") ? `OUTRO: ${val("infoHistoricoOutro")}` : "OUTRO";
-  }
-
-  const procs = getProcedimentos();
-
-  let ipTesteConsolidado = val("ipTesteInput");
-  let ipsFinais = [...listaIps];
-  if (ipTesteConsolidado && !ipsFinais.includes(ipTesteConsolidado)) {
-    ipsFinais.push(ipTesteConsolidado);
-  }
-
-  let out = "";
-  out += "CLIENTE: " + val("clienteInput") + "\n";
-  out += "TELL: " + val("tellInput") + "\n";
-  out += "CANAL DE ATENDIMENTO: " + (state.canal || "") + "\n\n";
-
-  let glpiText = state.glpi || "";
-  if (state.glpi === "Sim" && val("ticketGLPIInput")) {
-    glpiText += ` (Ticket: ${val("ticketGLPIInput")})`;
-  }
-  out += "GLPI: " + glpiText + "\n";
-  out += "HISTÓRICO DOS ÚLTIMOS ATENDIMENTOS: " + (state.historico || "") + "\n";
-  out += "STATUS: " + (state.statusCliente.join(" / ") || "") + "\n";
-  out += "CRM: " + (state.statusCRM.join(" / ") || "") + "\n\n";
-
-  out += "Potência de Recepção - ONU: " + val("potRecepcao") + "\n";
-  out += "Potência (OLT): " + val("potOLT") + "\n";
-  out += "Temperatura: " + val("temperatura") + "\n";
-  out += "Potência de Transmissão: " + val("potTransmissao") + "\n";
-  out += "Uptime: " + val("uptime") + "\n\n";
-
-  let modAp = val("modulacaoAparelho");
-  if (modAp === "OUTROS" && val("modulacaoOutro")) modAp += ` (${val("modulacaoOutro")})`;
-  out += "MODULAÇÃO DE PORTA LAN REALIZADO EM: " + (modAp || "") + "\n";
-  out += "(quantidade de mega via cabeado): " + val("megaCabeado") + "\n\n";
-
-  out += "O CLIENTE ESTÁ RECLAMANDO NO APARELHO: " + (state.aparelhoReclamacao.join(" / ") || "") + "\n";
-  out += "Navegador: " + val("testeNavegador") + "\n";
-  out += "Aplicativo: " + val("testeAplicativo") + "\n";
-  out += "Site: " + val("testeSite") + "\n";
-  out += "Jogo: " + val("testeJogo") + "\n";
-
-  let bandaAntes = val("testeBandaAntes");
-  let bandaDepois = val("testeBandaDepois");
-  if (bandaAntes || bandaDepois) {
-    out += "TESTE DE BANDA:\n";
-    out += "- Antes: " + (bandaAntes || "Não informado") + "\n";
-    out += "- Depois: " + (bandaDepois || "Não informado") + "\n";
-  }
-
-  out += "O SINAL DOS APARELHOS ESTÃO: " + (state.sinal || "") + "\n\n";
-
-  out += "DISPOSITIVOS CONECTADOS (ANTES DO REBOOT): " + val("dispositivosConectados") + "\n";
-  out += "PROCEDIMENTO REALIZADO: " + (procs.join(" / ") || "") + "\n\n";
-
-  out += "IP DE TESTE: " + (ipsFinais.join(" / ") || "") + "\n";
-  out += "RESULTADO: " + (state.resultadoDiag || "") + "\n\n";
-
-  out += "TESTE DE MTU: " + val("testeMTU") + "\n";
-  out += "MTR/TRACERT: " + val("mtrTracert") + "\n\n";
-
-  const resultadosTestes = [...document.querySelectorAll(".resultado-teste")]
-    .map(sel => `${sel.dataset.teste}: ${sel.value}`)
-    .filter(x => !x.endsWith(": "));
-  out += "RESULTADOS DOS TESTES:\n" + (resultadosTestes.join("\n") || "Não informado") + "\n\n";
-
-  out += "ENCERRAMENTO: " + (state.statusFinal || "");
-
-  document.getElementById("scriptOutput2").textContent = out;
-  document.getElementById("scriptEditArea2").value = out;
-}
-
-function toggleEdicaoManual2() {
-  const pre = document.getElementById("scriptOutput2");
-  const area = document.getElementById("scriptEditArea2");
-  const btn = document.getElementById("btnToggleEdit2");
-
-  editandoManualmente = !editandoManualmente;
-
-  if (editandoManualmente) {
-    area.value = pre.textContent;
-    pre.classList.add("hidden");
-    area.classList.remove("hidden");
-    btn.textContent = "🔒 Travar & Gerar Auto";
-    btn.classList.replace("secondary", "primary");
-    toast("Modo de edição manual ativado.");
-  } else {
-    area.classList.add("hidden");
-    pre.classList.remove("hidden");
-    btn.textContent = "✏️ Modo Edição";
-    btn.classList.replace("primary", "secondary");
-    gerarScript2();
-    toast("Script sincronizado com formulário.");
-  }
-}
-
-function copiarScript2() {
-  const textoFinal = editandoManualmente ? document.getElementById("scriptEditArea2").value : document.getElementById("scriptOutput2").textContent;
-  navigator.clipboard.writeText(textoFinal).then(() => toast("Script copiado com sucesso!"));
-}
-
-function abrirTodas(v) {
-  document.querySelectorAll("#tabFluxoAtendimento .card").forEach(c => c.classList.toggle("open", v));
-}
-
-function reiniciar() {
-  document.querySelectorAll("#tabFluxoAtendimento input, #tabFluxoAtendimento textarea, #tabFluxoAtendimento select").forEach(el => {
-    if (el.type === "checkbox") el.checked = false;
-    else if (el.id === "testeMTU") el.value = "PING COM PACOTE DE 1472 BYTES REALIZADO COM SUCESSO.";
-    else if (el.id === "mtrTracert") el.value = "ROTA ANALISADA PARA SITE DE STREAMING UTILIZADO PELO CLIENTE.";
-    else el.value = "";
-  });
-  document.querySelectorAll("#tabFluxoAtendimento .option").forEach(o => o.classList.remove("active"));
-  document.getElementById("boxHistoricoOutro").classList.add("hidden");
-  document.getElementById("boxTicketGLPI").classList.add("hidden");
-  document.getElementById("boxVariosAlarmes").classList.add("hidden");
-  document.getElementById("boxOutroAparelho").classList.add("hidden");
-  Object.keys(state).forEach(k => state[k] = Array.isArray(state[k]) ? [] : "");
-  listaIps = [];
-  testesManuais = [];
-  editandoManualmente = false;
-  renderizarIps();
-  document.getElementById("scriptOutput2").classList.remove("hidden");
-  document.getElementById("scriptEditArea2").classList.add("hidden");
-  document.getElementById("btnToggleEdit2").textContent = "✏️ Modo Edição";
-  document.getElementById("btnToggleEdit2").classList.replace("primary", "secondary");
-  atualizarTestesDinâmicos();
-  gerarScript2();
-  toast("Campos reiniciados!");
-}
-
-// --- LÓGICA DA CALCULADORA DE NEGOCIAÇÃO ---
-function moeda(v){
- return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-}
-function regraNegociacao(valor){
- if(valor>=100 && valor<=300) return {p:0.60,n:2,text:'De R$ 100,00 a R$ 300,00 → 60% de entrada + 2 parcelas no boleto bancário.'};
- if(valor>300 && valor<=500) return {p:0.50,n:3,text:'De R$ 300,01 a R$ 500,00 → 50% de entrada + 3 parcelas no boleto bancário.'};
- if(valor>500 && valor<=700) return {p:0.40,n:4,text:'De R$ 500,01 a R$ 700,00 → 40% de entrada + 4 parcelas no boleto bancário.'};
- if(valor>700) return {p:0.30,n:5,text:'Acima de R$ 700,00 → 30% de entrada + 5 parcelas no boleto bancário.'};
- return null;
-}
-function calcularNegociacao(manualEntrada=false){
- const valor=parseFloat(document.getElementById('debito').value)||0;
- const campoEntrada=document.getElementById('entrada');
- const campoParcelas=document.getElementById('parcelas');
- const r=regraNegociacao(valor);
-
- if(r && !manualEntrada){
-   campoEntrada.value=String(r.p);
-   campoParcelas.value=String(r.n);
-   document.getElementById('regraAtual').innerHTML='<strong>Regra:</strong> '+r.text;
- } else if(r && manualEntrada){
-   document.getElementById('regraAtual').innerHTML='<strong>Regra da faixa:</strong> '+r.text+
-     '<br><span style="color:#e0a400">Percentual selecionado manualmente: '+(parseFloat(campoEntrada.value)*100)+'%.</span>';
- } else if(!r){
-   document.getElementById('regraAtual').textContent='Informe um valor a partir de R$ 100,00 para aplicar uma regra automática.';
- }
-
- const p=parseFloat(campoEntrada.value)||0;
- const n=parseInt(campoParcelas.value)||1;
- const ent=valor*p;
- const rest=valor-ent;
- const parc=rest/n;
-
- document.getElementById('vEntrada').textContent=moeda(ent);
- document.getElementById('vRestante').textContent=moeda(rest);
- document.getElementById('vParcela').textContent=moeda(parc);
-}
-function limparNegociacao(){
- document.getElementById('debito').value='';
- document.getElementById('entrada').value='0.50';
- document.getElementById('parcelas').value='1';
- document.getElementById('regraAtual').textContent='Informe o valor do débito para visualizar a regra.';
- calcularNegociacao();
-}
-function copiarResumoNegociacao(){
- const valor=parseFloat(document.getElementById('debito').value)||0;
- const ent=document.getElementById('vEntrada').textContent;
- const rest=document.getElementById('vRestante').textContent;
- const parc=document.getElementById('vParcela').textContent;
- const n=document.getElementById('parcelas').value;
- const texto=`NEGOCIAÇÃO
-Valor do débito: ${moeda(valor)}
-Entrada: ${ent}
-Restante: ${rest}
-Parcelamento: ${n}X de ${parc}`;
- navigator.clipboard.writeText(texto).then(()=>toast('Resumo de negociação copiado!'));
-}
-
-function esc(s) { return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
-
-function toast(msg) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2000);
-}
-
-// Event Listeners SUPORTE
-document.querySelectorAll("#tabFluxoAtendimento input, #tabFluxoAtendimento textarea, #tabFluxoAtendimento select").forEach(el => {
-  el.addEventListener("input", () => {
-    if (el.classList.contains("local-trigger")) atualizarTestesDinâmicos();
-    gerarScript2();
-  });
-});
-
-document.querySelectorAll(".aparelho-trigger").forEach(el => {
-  el.addEventListener("change", () => {
-    const isOutroChecked = document.getElementById("chkOutroAparelho").checked;
-    document.getElementById("boxOutroAparelho").classList.toggle("hidden", !isOutroChecked);
-    atualizarTestesDinâmicos();
-    gerarScript2();
-  });
-});
-
-document.getElementById("chkVariosAlarmes").addEventListener("change", (e) => {
-  document.getElementById("boxVariosAlarmes").classList.toggle("hidden", !e.target.checked);
-  gerarScript2();
-});
-
-document.querySelectorAll(".procedimentoCheck").forEach(el => {
-  el.addEventListener("change", () => {
-    const checked = [...document.querySelectorAll(".procedimentoCheck:checked")].map(c => c.value);
-    document.getElementById("boxOutroProcedimento").classList.toggle("hidden", !checked.includes("OUTRO"));
-    gerarScript2();
-  });
-});
-
-atualizarTestesDinâmicos();
-gerarScript2();
-calcularNegociacao();
-
-function gerarScriptClienteN1(){
-  const valorEl = document.getElementById('debito');
-  const entradaEl = document.getElementById('entrada');
-  const parcelasEl = document.getElementById('parcelas');
-  const textoEl = document.getElementById('scriptClienteN1');
-  const vencEl = document.getElementById('vencimentoCliente');
-
-  if(!valorEl || !entradaEl || !parcelasEl || !textoEl) return;
-
-  const valor = parseFloat(valorEl.value) || 0;
-  const entrada = parseFloat(entradaEl.value) || 0;
-  const parcelas = parseInt(parcelasEl.value) || 1;
-  const vencimento = (vencEl && vencEl.value.trim()) ? vencEl.value.trim() : '09/12/2025';
-
-  const valorEntrada = valor * entrada;
-  const restante = valor - valorEntrada;
-  const valorParcela = restante / parcelas;
-
-  if(valor <= 0){
-    textoEl.value = 'Preencha o valor do débito para gerar a mensagem para o cliente.';
-    return;
-  }
-
-  textoEl.value =
-    `Verifiquei que o valor total do seu débito é de ${moeda(valor)}. ` +
-    `O que podemos estar fazendo é você realizar o pagamento de uma entrada de ${(entrada*100).toFixed(0)}% ` +
-    `com vencimento para o dia ${vencimento} no valor de ${moeda(valorEntrada)} ` +
-    `mais ${parcelas} parcela${parcelas === 1 ? '' : 's'} de ${moeda(valorParcela)} ` +
-    `para os meses seguintes. Você aceita essa negociação?`;
-}
-
-function copiarScriptClienteN1(){
-  gerarScriptClienteN1();
-  const texto = document.getElementById('scriptClienteN1');
-  if(!texto) return;
-
-  navigator.clipboard.writeText(texto.value)
-    .then(()=> {
-      if(typeof toast === 'function') toast('Mensagem para o cliente copiada!');
-      else alert('Mensagem copiada!');
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function(){
-  ['debito','entrada','parcelas'].forEach(function(id){
-    const el=document.getElementById(id);
-    if(el){
-      el.addEventListener('input', gerarScriptClienteN1);
-      el.addEventListener('change', gerarScriptClienteN1);
-    }
-  });
-
-  const data = document.getElementById('vencimentoCliente');
-  if(data){
-    data.addEventListener('input', gerarScriptClienteN1);
-    data.addEventListener('change', gerarScriptClienteN1);
-  }
-  
-  gerarScriptClienteN1();
-});
-
-// --- LÓGICA DE MUDANÇA DE ENDEREÇO ---
-const fieldsMudanca=['mud_cliente','mud_plano','mud_telefone','mud_tipoCliente','mud_data','mud_planoTaxa','mud_parcelas','mud_referencia','mud_enderecoAtual','mud_ctoAtual','mud_portaAtual','mud_novoEndereco','mud_novoCto','mud_novaPorta'];
-
-function vMud(id){return document.getElementById(id)?.value.trim() || '[PREENCHER]';}
-
-function getTaxaInfoMud(){
- const tipo=document.getElementById('mud_planoTaxa')?.value || '';
- const parcelas=parseInt(document.getElementById('mud_parcelas')?.value || '0',10);
- let valor=0, descricao='';
- if(tipo==='sem-mesh'){valor=99.90; descricao='SEM MESH';}
- if(tipo==='com-mesh'){valor=149.90; descricao='COM MESH';}
- const valorParcela=(valor && parcelas)?valor/parcelas:0;
- const calc=document.getElementById('mud_calculoTaxa');
- if(calc){
-   if(valor && parcelas){
-     calc.style.display='block';
-     calc.textContent=`${descricao}: R$ ${valor.toFixed(2).replace('.',',')} ÷ ${parcelas}x = R$ ${valorParcela.toFixed(2).replace('.',',')} por parcela`;
-   }else{
-     calc.style.display='none';
-     calc.textContent='';
-   }
- }
- return {valor, parcelas, descricao, valorParcela};
-}
-
-function scriptsMudanca(){
- const info=getTaxaInfoMud();
- const taxa=info.valor ? `R$ ${info.valor.toFixed(2).replace('.',',')}` : '[SELECIONAR TAXA]';
- const parcelas=info.parcelas || '[SELECIONAR]';
- const valorParcela=info.valorParcela ? `R$ ${info.valorParcela.toFixed(2).replace('.',',')}` : '[CALCULAR]';
-
- const scriptMud = document.getElementById('scriptMudancaText');
- if(scriptMud){
-   scriptMud.textContent =
-`MUDANÇA DE ENDEREÇO
-PLANO INTERNET: ${vMud('mud_plano')}
-ENDEREÇO ATUAL (RETIRADA): ${vMud('mud_enderecoAtual')}
-CTO ATUAL (RETIRADA): CTO: ${vMud('mud_ctoAtual')}| PORTA: ${vMud('mud_portaAtual')}
-NOVO ENDEREÇO (INSTALAÇÃO): ${vMud('mud_novoEndereco')}
-FICOU AGENDADA A GERAÇÃO DE UM EVENTO DE FATURAMENTO NO VALOR DE ${taxa} EM ${parcelas} PARCELA(S) DE ${valorParcela} SEM JUROS
-REFERENCIA: ${vMud('mud_referencia')}
-NOVO CTO (INSTALAÇÃO): ${vMud('mud_novoCto')}| PORTA: ${vMud('mud_novaPorta')}
-
-CUIDADO: O ATENDIMENTO SÓ DEVE SER FECHADO COMO 'PROBLEMA RESOLVIDO' SE A INSTALAÇÃO NO NOVO ENDEREÇO TIVER ACONTECIDO. CASO CONTRÁRIO, UM FATURAMENTO INDEVIDO SERÁ GERADO`;
- }
-
- const scriptRet = document.getElementById('scriptRetiradaText');
- if(scriptRet){
-   scriptRet.textContent =
-`RETIRADA DE EQUIPAMENTOS
-ENDEREÇO ATUAL (RETIRADA): ${vMud('mud_enderecoAtual')}
-ATUAL CTO (RETIRADA): CTO: ${vMud('mud_ctoAtual')}| PORTA: ${vMud('mud_portaAtual')}
-NOVO ENDEREÇO (INSTALAÇÃO): ${vMud('mud_novoEndereco')}
-NOVO CTO (INSTALAÇÃO): ${vMud('mud_novoCto')}| PORTA: ${vMud('mud_novaPorta')}`;
- }
-
- const scriptCli = document.getElementById('scriptClienteMudText');
- if(scriptCli){
-   scriptCli.textContent =
-`Sr(a) ${vMud('mud_cliente')}, ao confirmar a solicitação de mudança de endereço de seu plano, está ciente que deverá facilitar a execução do serviço para conclusão do mesmo, sendo que, se por qualquer impedimento por parte do cliente este atendimento não for possível de ser realizado, o plano seguirá habilitado até que o titular procure a empresa realizar nova solicitação. Para a realização do serviço é obrigatório que o conversor ótico (roteador Wi-Fi Ultra) esteja no novo endereço, caso contrário será instalado outro equipamento e gerada uma cobrança por extravio do equipamento anterior no valor de R$ 350,00.`;
- }
-}
-
-function saveDataMudanca(){
- const data={}; fieldsMudanca.forEach(id=>data[id]=document.getElementById(id).value);
- localStorage.setItem('mudancaEnderecoData',JSON.stringify(data)); scriptsMudanca(); toast('Dados salvos neste navegador.');
-}
-
-function loadDataMudanca(){
- try{
-  const data=JSON.parse(localStorage.getItem('mudancaEnderecoData')||'{}');
-  fieldsMudanca.forEach(id=>{if(data[id]!==undefined)document.getElementById(id).value=data[id]});
-  scriptsMudanca(); toast('Dados recuperados.');
- }catch(e){toast('Não foi possível recuperar os dados.');}
-}
-
-function clearAllMudanca(){
- if(!confirm('Limpar dados, checklist e preenchimentos?'))return;
- localStorage.removeItem('mudancaEnderecoData');
- fieldsMudanca.forEach(id => {
-   const el = document.getElementById(id);
-   if(el) {
-     if(el.tagName === 'SELECT') el.selectedIndex = 0;
-     else el.value = '';
-   }
- });
- scriptsMudanca();
- toast('Formulário limpo com sucesso.');
-}
-
-function toggleEditMud(tipo){
- const scriptId='script'+tipo;
- const editId='editScript'+tipo.replace('Text','');
- const saveId='save'+tipo;
- const cancelId='cancel'+tipo;
- const script=document.getElementById(scriptId);
- const edit=document.getElementById(editId);
- const editing=edit.style.display!=='none';
-
- if(!editing){
-   edit.value=script.textContent;
-   script.style.display='none';
-   edit.style.display='block';
-   document.getElementById(saveId).style.display='inline-block';
-   document.getElementById(cancelId).style.display='inline-block';
-   event.currentTarget.textContent='✏️ Editando...';
- }else{
-   saveEditedScriptMud(tipo);
- }
-}
-
-function saveEditedScriptMud(tipo){
- const scriptId='script'+tipo;
- const editId='editScript'+tipo.replace('Text','');
- const saveId='save'+tipo;
- const cancelId='cancel'+tipo;
- const edit=document.getElementById(editId);
- const script=document.getElementById(scriptId);
- script.textContent=edit.value;
- script.style.display='block';
- edit.style.display='none';
- document.getElementById(saveId).style.display='none';
- document.getElementById(cancelId).style.display='none';
- const btn=script.parentElement.querySelector('.actions button.secondary');
- if(btn)btn.textContent='✏️ Editar script';
-}
-
-function cancelEditMud(tipo){
- const scriptId='script'+tipo;
- const editId='editScript'+tipo.replace('Text','');
- const saveId='save'+tipo;
- const cancelId='cancel'+tipo;
- document.getElementById(editId).style.display='none';
- document.getElementById(scriptId).style.display='block';
- document.getElementById(saveId).style.display='none';
- document.getElementById(cancelId).style.display='none';
- const btn=document.getElementById(scriptId).parentElement.querySelector('.actions button.secondary');
- if(btn)btn.textContent='✏️ Editar script';
-}
-
-function copyScriptMud(id){
- navigator.clipboard.writeText(document.getElementById(id).textContent)
- .then(()=>toast('Script copiado!'))
- .catch(()=>toast('Não foi possível copiar automaticamente.'));
-}
-
-function openSubTab(id,btn){
- document.querySelectorAll('.subtabcontent').forEach(x=>x.classList.remove('active'));
- document.querySelectorAll('.subtab').forEach(x=>x.classList.remove('active'));
- document.getElementById(id).classList.add('active'); btn.classList.add('active');
-}
-
-fieldsMudanca.forEach(id => {
-  document.getElementById(id)?.addEventListener('input', scriptsMudanca);
-  document.getElementById(id)?.addEventListener('change', scriptsMudanca);
-});
-scriptsMudanca();
 </script>
+
 </body>
 </html>
