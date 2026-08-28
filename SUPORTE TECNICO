@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Você Telecom — Suporte Técnico</title>
+<!-- Biblioteca OCR Tesseract v5 -->
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<!-- CSS e JS do Cropper.js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+<style>
+:root{
+ --bg-body:#090909;--text-body:#f8fafc;--card-bg:#171717;--card-border:#363636;
+ --card-head-hover:#242424;--content-bg:#0d0d0d;--input-bg:#1c1c1c;
+ --input-text:#f8fafc;--input-border:#444;--label-color:#d1d1d1;
+ --summary-bg:#050505;--summary-text:#ff9a3d;--subtext-color:#aaa;
+ --header-bg:linear-gradient(135deg,#ff7a00,#b84d00);--accent:#ff7a00;
+}
+body.light-mode{
+ --bg-body:#f3f4f6;--text-body:#111827;--card-bg:#fff;--card-border:#d1d5db;
+ --card-head-hover:#f3f4f6;--content-bg:#f9fafb;--input-bg:#fff;
+ --input-text:#111827;--input-border:#cbd5e1;--label-color:#374151;
+ --summary-bg:#111827;--summary-text:#ff9a3d;--subtext-color:#6b7280;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);color:var(--text-body);transition:.25s}
+.header{background:var(--header-bg);color:#fff;padding:24px 20px;border-bottom:2px solid #ffb15c}
+.header-content{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center}
+.container{max-width:1100px;margin:auto;padding:24px 18px 60px}
+.brand-title{display:flex;align-items:center;gap:12px;margin:0 0 6px}
+.brand-badge{background:#111;color:#ff9a3d;font-weight:900;padding:5px 10px;border-radius:6px;font-size:.82rem;letter-spacing:1px}
+.theme-toggle{background:#ffffff22;border:1px solid #ffffff66;color:#fff;padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:bold}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;margin-bottom:18px;overflow:hidden;box-shadow:0 6px 25px #00000020}
+.head{padding:20px;display:flex;gap:14px;align-items:center;cursor:pointer;background:var(--card-bg)}
+.head:hover{background:var(--card-head-hover)}
+.num{background:var(--accent);color:#000;border-radius:50%;width:42px;height:42px;display:grid;place-items:center;font-weight:900;flex-shrink:0}
+.head div:nth-child(2){flex:1}.head h2{margin:0;font-size:1.1rem}
+.arrow{font-size:22px;color:var(--subtext-color);transition:.2s}
+.content{display:none;border-top:1px solid var(--card-border);padding:20px;background:var(--content-bg)}
+.open .content{display:block}.open .arrow{transform:rotate(180deg)}
+.fields{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:12px 0 22px}
+.field{display:flex;flex-direction:column}.field.full{grid-column:1/-1}
+.field label{margin:0 0 6px;font-weight:bold;font-size:.9rem;color:var(--label-color)}
+.field input,.field textarea,.field select{border:1px solid var(--input-border);border-radius:8px;padding:10px;background:var(--input-bg);color:var(--input-text);font:inherit}
+.field textarea{min-height:100px;resize:vertical}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0 22px}.grid3{grid-template-columns:repeat(3,1fr)}
+.option{background:var(--card-bg);border:2px solid var(--card-border);color:var(--text-body);border-radius:11px;padding:15px;text-align:left;cursor:pointer;font:inherit}
+.option:hover,.option.active{border-color:var(--accent);background:#9a4800;color:#fff}
+.check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0 22px}
+.check-card{display:flex;align-items:center;gap:9px;background:var(--card-bg);border:2px solid var(--card-border);border-radius:11px;padding:14px;cursor:pointer}
+.check-card:hover{border-color:var(--accent)}
+.check-card:has(input:checked){border-color:var(--accent);background:#6f3500;color:#fff;box-shadow:0 0 0 2px #ff7a0033}
+.check-card input{width:18px;height:18px;accent-color:var(--accent);cursor:pointer}
+.radio-row{display:flex;gap:28px;align-items:center;margin:12px 0 22px}
+.radio-option{display:flex;align-items:center;gap:9px;cursor:pointer;font-weight:bold}
+.radio-option input{width:18px;height:18px;margin:0;accent-color:var(--accent);cursor:pointer}
+.radio-option span{color:var(--text-body)}
+
+.multi-hint{font-size:12px;font-weight:normal;color:var(--subtext-color);margin-left:8px}
+.instructions-box{background:var(--summary-bg);border:1px solid var(--accent);padding:16px;border-radius:10px;margin:15px 0;font-size:.92rem;color:var(--label-color);line-height:1.55;white-space:pre-wrap}
+.summary{background:var(--summary-bg);padding:18px;border-radius:10px;margin-top:20px;border:1px solid var(--card-border)}
+.summary pre{white-space:pre-wrap;font-family:monospace;line-height:1.55;color:var(--summary-text);font-size:.9rem}
+.summary textarea{width:100%;min-height:360px;padding:12px;background:var(--content-bg);border:1px solid var(--input-border);border-radius:8px;color:var(--input-text);font-family:monospace;line-height:1.55}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.btn{border:0;border-radius:8px;padding:11px 16px;font-weight:bold;cursor:pointer}
+.primary{background:var(--accent);color:#000}.secondary{background:var(--card-border);color:var(--text-body)}
+
+.ocr-box{background:var(--card-bg);border:2px dashed var(--accent);border-radius:10px;padding:15px;text-align:center;margin-bottom:15px}
+.ocr-box input{display:none}
+.ocr-btn{background:var(--accent);color:#000;padding:8px 16px;border-radius:6px;font-weight:bold;cursor:pointer;display:inline-block;margin-top:8px}
+.ocr-status{font-size:.85rem;color:var(--summary-text);margin-top:6px;font-weight:bold}
+
+.test-row{display:grid;grid-template-columns:1.5fr 1fr auto;gap:10px;align-items:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:10px;margin:8px 0}
+.test-row input,.test-row select{border:1px solid var(--input-border);border-radius:8px;padding:9px;background:var(--input-bg);color:var(--input-text);font:inherit}
+.remove-test{background:#7f1d1d;color:#fff;border:0;border-radius:8px;padding:9px 11px;cursor:pointer;font-weight:bold}
+.test-summary-item{margin:4px 0;font-size:.9rem;color:var(--label-color)}
+
+/* Estilos do Modal de Recorte */
+.modal-crop{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2000;padding:20px}
+.crop-container{max-width:90vw;max-height:70vh;background:#000}
+.crop-container img{max-width:100%;max-height:70vh}
+.modal-actions{margin-top:15px;display:flex;gap:15px}
+
+.hidden{display:none!important}
+.toast{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#000;font-weight:bold;padding:12px 16px;border-radius:8px;opacity:0;transition:.2s;z-index:1000}.toast.show{opacity:1}
+@media(max-width:700px){.grid,.grid3,.fields,.check-grid,.test-row{grid-template-columns:1fr}.header-content{flex-direction:column;align-items:flex-start;gap:12px}}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="header-content">
+<div>
+<div class="brand-title"><span class="brand-badge">VOCÊ TELECOM</span><h1 style="margin:0;font-size:1.6rem">Suporte Técnico</h1></div>
+<p style="margin:4px 0;color:#fff3e8">Diagnóstico técnico e gerador de script para atendimento.</p>
+</div>
+<button type="button" class="theme-toggle" onclick="toggleTheme()"><span id="themeIcon">🌙</span> <span id="themeText">Modo Escuro</span></button>
+</div>
+</header>
+
+<main class="container">
+
+<section class="card open">
+<div class="head" onclick="toggle(this)"><div class="num">0</div><div><h2>IDENTIFICAÇÃO DO CLIENTE</h2></div><span class="arrow">⌄</span></div>
+<div class="content">
+<div class="fields">
+<div class="field"><label>CLIENTE:</label><input id="clienteInput"></div>
+<div class="field"><label>TELL:</label><input id="tellInput"></div>
+</div>
+<h3>CANAL DE ATENDIMENTO</h3>
+<div class="grid grid3">
+<button class="option" onclick="select('canal','CALL',this)">📞 <b>CALL</b></button>
+<button class="option" onclick="select('canal','CHAT',this)">💬 <b>CHAT</b></button>
+<button class="option" onclick="select('canal','MINHA VC',this)">📱 <b>MINHA VC</b></button>
+</div>
+</div></section>
+
+<section class="card open">
+<div class="head" onclick="toggle(this)"><div class="num">1</div><div><h2>ANÁLISE EM SISTEMA</h2></div><span class="arrow">⌄</span></div>
+<div class="content">
+<h3>GLPI</h3>
+<div class="radio-row">
+<label class="radio-option"><input type="radio" name="glpi" value="SIM" onchange="selectGLPI('SIM',this)"><span>SIM</span></label>
+<label class="radio-option"><input type="radio" name="glpi" value="NÃO" onchange="selectGLPI('NÃO',this)"><span>NÃO</span></label>
+</div>
+<div id="boxGLPI" class="fields hidden"><div class="field full"><label>NÚMERO DO GLPI:</label><input id="glpiNumero"></div></div>
+
+<h3>HISTÓRICO INTEGRATOR</h3>
+<div class="radio-row">
+<label class="radio-option"><input type="radio" name="historicoTipo" value="SEM" onchange="atualizarHistoricoTipo()"><span>SEM</span></label>
+<label class="radio-option"><input type="radio" name="historicoTipo" value="OUTRO" onchange="atualizarHistoricoTipo()"><span>OUTRO (INFORMAR)</span></label>
+</div>
+<div id="boxOutroHistorico" class="fields hidden">
+<div class="field full"><label>INFORMAR OUTRO:</label><input id="outroHistorico" placeholder="Descreva"></div>
+</div>
+
+<h3>STATUS</h3>
+<div class="grid grid3">
+<button class="option" onclick="select('status','Serviço Habilitado',this)">🟢 <b>Serviço Habilitado</b></button>
+<button class="option" onclick="select('status','Desconexão',this)">🔴 <b>Desconexão</b></button>
+<button class="option" onclick="select('status','Franquia Excedida',this)">🟠 <b>Franquia Excedida</b></button>
+</div>
+
+<h3>CRM</h3>
+<div class="ocr-box">
+  <label><b>📷 Selecionar Área da Imagem (Ctrl+V ou Escolher Arquivo)</b></label><br>
+  <label class="ocr-btn" for="crmImageInput">Escolher Imagem</label>
+  <input type="file" id="crmImageInput" accept="image/*" onchange="carregarImagemParaCrop(this.files[0])">
+  <div id="ocrStatus" class="ocr-status"></div>
+</div>
+
+<div class="fields">
+<div class="field"><label>Potência de Recepção - ONU:</label><input id="potRecepcao"></div>
+<div class="field"><label>Potência (OLT):</label><input id="potOlt"></div>
+<div class="field"><label>Temperatura:</label><input id="temperatura"></div>
+<div class="field"><label>Potência de Transmissão:</label><input id="potTransmissao"></div>
+<div class="field"><label>Uptime:</label><input id="uptime"></div>
+<div class="field"><label>Últimos Alarmes:</label><input id="alarmes"></div>
+</div>
+</div></section>
+
+<section class="card open">
+<div class="head" onclick="toggle(this)"><div class="num">2</div><div><h2>DIAGNÓSTICO COM O CLIENTE</h2></div><span class="arrow">⌄</span></div>
+<div class="content">
+<div class="fields">
+<div class="field"><label>DISPOSITIVOS CONECTADOS (ANTES DO REBOOT):</label><input id="dispositivos"></div>
+<div class="field"><label>MODULAÇÃO DE PORTA LAN:</label><input id="modulacao"></div>
+</div>
+
+<h3>PROBLEMA RELATADO <small class="multi-hint">Pode marcar mais de um</small></h3>
+<div class="check-grid">
+<label class="check-card"><input type="checkbox" class="problema" value="CELULAR">📱 <b>CELULAR</b></label>
+<label class="check-card"><input type="checkbox" class="problema" value="TV">📺 <b>TV</b></label>
+<label class="check-card"><input type="checkbox" class="problema" value="TV BOX">📦 <b>TV BOX</b></label>
+<label class="check-card"><input type="checkbox" class="problema" value="COMPUTADOR">💻 <b>COMPUTADOR</b></label>
+<label class="check-card"><input type="checkbox" class="problema" value="VIDEO GAME">🎮 <b>VIDEO GAME</b></label>
+<label class="check-card"><input type="checkbox" class="problema" value="OUTROS">📝 <b>OUTROS</b></label>
+</div>
+<div id="boxOutroProblema" class="fields hidden"><div class="field full"><label>INFORMAR OUTRO:</label><input id="outroProblema"></div></div>
+<div id="orientacaoProblema" class="instructions-box">Marque um ou mais dispositivos para receber a orientação de atendimento.</div>
+</div></section>
+
+<section class="card open">
+<div class="head" onclick="toggle(this)"><div class="num">3</div><div><h2>TESTE DIAGNÓSTICO</h2></div><span class="arrow">⌄</span></div>
+<div class="content">
+<div class="fields">
+<div class="field full">
+<label>IP E OUTROS TESTES <small class="multi-hint">Pode adicionar mais de um</small></label>
+<div class="actions" style="margin-top:0">
+<button type="button" class="btn secondary" onclick="adicionarOutroTeste()">＋ ADICIONAR OUTRO TESTE</button>
+</div>
+</div>
+</div>
+<div id="outrosTestesContainer"></div>
+
+<h3 style="margin-top:22px">RESULTADO DOS TESTES</h3>
+<div id="resultadosTestes"></div>
+<div class="instructions-box">Para cada teste realizado, informe o resultado: <b>Sucesso</b>, <b>Interferência</b> ou <b>Insucesso</b>.</div>
+</div></section>
+
+<section class="card open">
+<div class="head" onclick="toggle(this)"><div class="num">4</div><div><h2>TESTES DE REDE</h2></div><span class="arrow">⌄</span></div>
+<div class="content">
+<div class="fields">
+<div class="field full"><label>TESTE DE MTU:</label><input id="mtu" value="PING COM PACOTE DE 1472 BYTES REALIZADO COM SUCESSO."></div>
+<div class="field full"><label>MTR / TRACERT:</label><input id="mtr" value="ROTA ANALISADA PARA SITE DE STREAMING UTILIZADO PELO CLIENTE."></div>
+</div>
+</div></section>
+
+<section class="card open">
+<div class="head" onclick="toggle(this)"><div class="num">5</div><div><h2>TESTE REALIZADO</h2></div><span class="arrow">⌄</span></div>
+<div class="content">
+<h3>TESTE REALIZADO <small class="multi-hint">Pode marcar mais de um</small></h3>
+<div class="check-grid">
+<label class="check-card"><input type="checkbox" class="teste" value="REBOOT">🔄 <b>REBOOT</b></label>
+<label class="check-card"><input type="checkbox" class="teste" value="DESPROVISIONAMENTO">🔧 <b>DESPROVISIONAMENTO</b></label>
+<label class="check-card"><input type="checkbox" class="teste" value="RESET FÍSICO">⚙️ <b>RESET FÍSICO</b></label>
+<label class="check-card"><input type="checkbox" class="teste" value="DELETE">🗑️ <b>DELETE</b></label>
+<label class="check-card"><input type="checkbox" class="teste" value="TROCA DE CANAL 2.4G">📶 <b>TROCA DE CANAL 2.4G</b></label>
+<label class="check-card"><input type="checkbox" class="teste" value="OUTRO">📝 <b>OUTRO</b></label>
+</div>
+<div id="boxCanal" class="fields hidden"><div class="field full"><label>ALTERAÇÃO DO CANAL 2.4G:</label><input id="canalAlterado" placeholder="Ex.: Auto para 11 / 6 para Auto"></div></div>
+<div id="boxOutroTeste" class="fields hidden"><div class="field full"><label>OUTRO TESTE — INFORMAR:</label><input id="outroTeste"></div></div>
+
+</div></section>
+
+<section class="card open">
+<div class="head" onclick="toggle(this)"><div class="num">6</div><div><h2>ENCERRAMENTO</h2></div><span class="arrow">⌄</span></div>
+<div class="content">
+<h3>RESULTADO DO DIAGNÓSTICO</h3>
+<div class="grid">
+<button class="option" onclick="select('resultado','CLIENTE CONFIRMAR ACESSO',this)">✅ <b>CLIENTE CONFIRMAR ACESSO</b></button>
+<button class="option" onclick="select('resultado','CLIENTE ABANDONOU NA TRATIVA',this)">⚠️ <b>CLIENTE ABANDONOU NA TRATIVA</b></button>
+<button class="option" onclick="select('resultado','NECESSARIO ANALISE DO SUPORTE AVANÇADO',this)">🛠️ <b>NECESSÁRIO ANÁLISE DO SUPORTE AVANÇADO</b></button>
+<button class="option" onclick="select('resultado','SOLICITAÇÃO DE VISITA TECNICA',this)">🚗 <b>SOLICITAÇÃO DE VISITA TÉCNICA</b></button>
+</div>
+
+<div class="summary">
+<h3>📄 SCRIPT AUTOMÁTICO</h3>
+<pre id="scriptOutput">Preencha os campos para gerar o script...</pre>
+<textarea id="scriptEdit" class="hidden"></textarea>
+<div class="actions">
+<button class="btn primary" onclick="copiarScript()">📋 COPIAR SCRIPT</button>
+<button class="btn secondary" id="editBtn" onclick="toggleEdit()">✏️ EDITAR</button>
+<button class="btn secondary" onclick="reiniciar()">♻️ LIMPAR</button>
+</div>
+</div>
+</div></section>
+
+</main>
+
+<!-- Modal de Recorte de Imagem -->
+<div id="cropModal" class="modal-crop hidden">
+  <div class="crop-container">
+    <img id="imageToCrop" src="" alt="Imagem para selecionar área">
+  </div>
+  <div class="modal-actions">
+    <button type="button" class="btn primary" onclick="confirmarRecorte()">✂️ Processar Área Selecionada</button>
+    <button type="button" class="btn secondary" onclick="fecharModalCrop()">Cancelar</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const state={canal:"",glpi:"",status:"",resultado:""};
+let editando=false;
+let cropper = null;
+
+const val=id=>(document.getElementById(id)?.value||"").trim();
+function toggle(el){el.parentElement.classList.toggle("open")}
+function select(c,v,b){state[c]=v;b.parentElement.querySelectorAll(".option").forEach(x=>x.classList.remove("active"));b.classList.add("active");gerarScript()}
+function selectGLPI(v,b){state.glpi=v;document.getElementById("boxGLPI").classList.toggle("hidden",v!=="SIM");if(v!=="SIM")document.getElementById("glpiNumero").value="";gerarScript()}
+
+const orientacoesProblema={
+"CELULAR":"CELULAR: testar próximo ao roteador, esquecer e reconectar à rede Wi-Fi, validar navegação e comparar com outro celular/dispositivo.",
+"TV":"TV: confirmar conexão Wi-Fi/cabo, testar aplicativos e validar se outros dispositivos navegam normalmente.",
+"TV BOX":"TV BOX: verificar conexão, testar aplicativo/streaming, validar Wi-Fi/cabo e comparar com outro dispositivo.",
+"COMPUTADOR":"COMPUTADOR: priorizar teste cabeado, verificar modulação da LAN, executar MTU e validar navegação.",
+"VIDEO GAME":"VIDEO GAME: testar conexão do console, verificar latência/NAT quando aplicável e comparar com outros dispositivos.",
+"OUTROS":"OUTROS: identificar o dispositivo, reproduzir o problema e comparar o comportamento com outro equipamento."
+};
+
+function atualizarHistoricoTipo(){
+ const tipo=document.querySelector('input[name="historicoTipo"]:checked')?.value||"";
+ document.getElementById("boxOutroHistorico").classList.toggle("hidden",tipo!=="OUTRO");
+ gerarScript();
+}
+
+function atualizarOrientacoes(){
+ const ps=[...document.querySelectorAll(".problema:checked")].map(x=>x.value);
+ const ts=[...document.querySelectorAll(".teste:checked")].map(x=>x.value);
+ document.getElementById("orientacaoProblema").textContent=ps.length?ps.map(p=>p+" — "+orientacoesProblema[p]).join("\n\n"):"Marque um ou mais dispositivos para receber a orientação de atendimento.";
+ 
+ document.getElementById("boxOutroProblema").classList.toggle("hidden",!ps.includes("OUTROS"));
+ document.getElementById("boxCanal").classList.toggle("hidden",!ts.includes("TROCA DE CANAL 2.4G"));
+ document.getElementById("boxOutroTeste").classList.toggle("hidden",!ts.includes("OUTRO"));
+}
+
+let outrosTestes=[];
+
+function adicionarOutroTeste(){
+ const id=Date.now();
+ outrosTestes.push(id);
+ renderOutrosTestes();
+ gerarScript();
+}
+
+function removerOutroTeste(id){
+ outrosTestes=outrosTestes.filter(x=>x!==id);
+ renderOutrosTestes();
+ gerarScript();
+}
+
+function renderOutrosTestes(){
+ const c=document.getElementById("outrosTestesContainer");
+ c.innerHTML=outrosTestes.map((id,i)=>`
+ <div class="test-row" data-test-id="${id}">
+   <input id="testeNome${id}" placeholder="Nome do teste ${i+1}">
+   <select id="testeResultado${id}" onchange="renderResultadosSummary(); gerarScript();">
+     <option value="">Resultado</option>
+     <option value="SUCESSO">Sucesso</option>
+     <option value="INTERFERÊNCIA">Interferência</option>
+     <option value="INSUCESSO">Insucesso</option>
+   </select>
+   <button type="button" class="remove-test" onclick="removerOutroTeste(${id})">✕</button>
+ </div>`).join("");
+
+ c.querySelectorAll("input").forEach(x=>x.addEventListener("input",()=>{ renderResultadosSummary(); gerarScript(); }));
+ renderResultadosSummary();
+}
+
+function renderResultadosSummary(){
+ const r=document.getElementById("resultadosTestes");
+ const items=outrosTestes.map(id=>({
+   nome:val("testeNome"+id),
+   res:val("testeResultado"+id)
+ })).filter(x=>x.nome);
+ 
+ if(items.length===0){
+   r.innerHTML='<div class="test-summary-item">Nenhum teste personalizado adicionado.</div>';
+ } else {
+   r.innerHTML=items.map(x=>`<div class="test-summary-item">📌 <b>${x.nome}</b>: ${x.res||"Pendente"}</div>`).join("");
+ }
+}
+
+// CAPTURA POR PASTE (CTRL+V)
+document.addEventListener('paste', function (e) {
+  const items = e.clipboardData?.items;
+  if (!items) return;
+
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].type.indexOf('image') !== -1) {
+      const file = items[i].getAsFile();
+      carregarImagemParaCrop(file);
+      toast("Imagem capturada! Selecione a área desejada.");
+      break;
+    }
+  }
+});
+
+function carregarImagemParaCrop(file){
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const imgEl = document.getElementById('imageToCrop');
+    imgEl.src = e.target.result;
+    document.getElementById('cropModal').classList.remove('hidden');
+    
+    if(cropper) cropper.destroy();
+    
+    cropper = new Cropper(imgEl, {
+      viewMode: 1,
+      autoCropArea: 0.8,
+      responsive: true
+    });
+  };
+  reader.readAsDataURL(file);
+}
+
+function fecharModalCrop(){
+  document.getElementById('cropModal').classList.add('hidden');
+  if(cropper) {
+    cropper.destroy();
+    cropper = null;
+  }
+}
+
+function confirmarRecorte(){
+  if(!cropper) return;
+  
+  const canvas = cropper.getCroppedCanvas();
+  canvas.toBlob((blob) => {
+    fecharModalCrop();
+    processarArquivoOCR(blob);
+  });
+}
+
+// PROCESSAMENTO OCR COM TRATAMENTO DE ERROS E CONFIGURAÇÃO TESSERACT V5
+async function processarArquivoOCR(file){
+ if(!file) return;
+ const status=document.getElementById("ocrStatus");
+ status.textContent="⏳ Inicializando Leitor OCR...";
+ 
+ try {
+   const worker = await Tesseract.createWorker('por', 1, {
+     logger: m => {
+       if(m.status === 'recognizing text') {
+         status.textContent = `⏳ Processando recorte: ${Math.round(m.progress * 100)}%`;
+       }
+     }
+   });
+   
+   const ret = await worker.recognize(file);
+   await worker.terminate();
+   
+   status.textContent = "✅ Leitura concluída!";
+   extrairDadosCRM(ret.data.text);
+   setTimeout(() => status.textContent = "", 3000);
+ } catch(err) {
+   console.error("Erro OCR:", err);
+   status.textContent = "❌ Falha ao processar imagem (Verifique se há conexão com a internet).";
+ }
+}
+
+function extrairDadosCRM(texto){
+  const t = texto.toLowerCase();
+
+  const extrairValor = (padrao) => {
+    const match = t.match(padrao);
+    return match ? (match[1] || match[2]).replace(',', '.') : null;
+  };
+
+  // 1. Potência de Recepção - ONU
+  const rx = extrairValor(/(?:pot[eê]ncia\s*de\s*)?recep[çc][ãa]o[^\d\-]*(-?\d+[\.,]?\d*)|(?:rx|onu)[^\d\-]*(-?\d+[\.,]?\d*)/);
+  if (rx) {
+    document.getElementById("potRecepcao").value = rx + " dBm";
+  }
+
+  // 2. Potência (OLT)
+  const olt = extrairValor(/olt[^\d\-]*(-?\d+[\.,]?\d*)/);
+  if (olt) {
+    document.getElementById("potOlt").value = olt;
+  }
+
+  // 3. Temperatura
+  const temp = extrairValor(/(?:temperatura|temp)[^\d\-]*(\d+[\.,]?\d*)/);
+  if (temp) {
+    document.getElementById("temperatura").value = temp + " °C";
+  }
+
+  // 4. Potência de Transmissão
+  const tx = extrairValor(/(?:transmiss[ãa]o|trans|tx)[^\d\-]*(-?\d+[\.,]?\d*)/);
+  if (tx) {
+    document.getElementById("potTransmissao").value = tx + " dBm";
+  }
+
+  // 5. Uptime
+  const uptimeMatch = t.match(/uptime[^\r\n]*?(\d+d\s*\d+h\s*\d+m\s*\d+s|\d+d:\d+h:\d+m:\d+s)/);
+  if (uptimeMatch) {
+    document.getElementById("uptime").value = uptimeMatch[1].replace(/\s+/g, '');
+  }
+
+  gerarScript();
+}
+
+function gerarScript(){
+ if(editando)return;
+ const linhas=[];
+ const add=(label,value)=>{if(value)linhas.push(label+value)};
+ add("CLIENTE: ",val("clienteInput"));
+ add("TELL: ",val("tellInput"));
+ add("CANAL DE ATENDIMENTO: ",state.canal);
+ if(state.glpi){let g=state.glpi;if(g==="SIM"&&val("glpiNumero"))g+=" (GLPI: "+val("glpiNumero")+")";add("GLPI: ",g)}
+ const histTipo=document.querySelector('input[name="historicoTipo"]:checked')?.value||"";
+ if(histTipo==="SEM")linhas.push("HISTÓRICO INTEGRATOR: SEM");
+ if(histTipo==="OUTRO")linhas.push("HISTÓRICO INTEGRATOR: OUTRO: "+(val("outroHistorico")||"não informado"));
+ if(state.status)linhas.push("STATUS: "+state.status);
+
+ const crm=[];
+ if(val("potRecepcao"))crm.push("Potência de Recepção - ONU: "+val("potRecepcao"));
+ if(val("potOlt"))crm.push("Potência (OLT): "+val("potOlt"));
+ if(val("temperatura"))crm.push("Temperatura: "+val("temperatura"));
+ if(val("potTransmissao"))crm.push("Potência de Transmissão: "+val("potTransmissao"));
+ if(val("uptime"))crm.push("Uptime: "+val("uptime"));
+ if(val("alarmes"))crm.push("ÚLTIMOS ALARMES: "+val("alarmes"));
+ if(crm.length)linhas.push("\nCRM\n"+crm.join("\n"));
+
+ const ps=[...document.querySelectorAll(".problema:checked")].map(x=>x.value);
+ if(ps.length){let p=ps.map(x=>x==="OUTROS"?"OUTROS: "+(val("outroProblema")||"não informado"):x).join(" / ");linhas.push("\nDIAGNOSTICO COM O CLIENTE\nDISPOSITIVOS CONECTADOS (ANTES DO REBOOT): "+val("dispositivos")+"\nMODULAÇÃO DE PORTA LAN: "+val("modulacao")+"\nPROBLEMA RELATADO: "+p)}
+
+ const ts=[...document.querySelectorAll(".teste:checked")].map(x=>x.value);
+ if(ts.length){let t=ts.map(x=>x==="TROCA DE CANAL 2.4G"?"TROCA DE CANAL 2.4G ("+(val("canalAlterado")||"não informado")+")":x==="OUTRO"?"OUTRO: "+(val("outroTeste")||"não informado"):x).join(" / ");linhas.push("\nTESTE REALIZADO\n"+t)}
+
+ const outros=outrosTestes.map(id=>({
+   nome:val("testeNome"+id),
+   resultado:val("testeResultado"+id)
+ })).filter(x=>x.nome);
+ if(outros.length){
+   linhas.push("\nOUTROS TESTES:");
+   outros.forEach(x=>linhas.push(x.nome+(x.resultado?" — "+x.resultado:"")));
+ }
+ if(val("mtu"))linhas.push("\nTESTE DE MTU: "+val("mtu"));
+ if(val("mtr"))linhas.push("MTR/TRACERT: "+val("mtr"));
+ if(state.resultado)linhas.push("\nRESULTADO DO DIAGNÓSTICO\n"+state.resultado);
+
+ const out=linhas.join("\n");
+ document.getElementById("scriptOutput").textContent=out||"Preencha os campos para gerar o script...";
+ document.getElementById("scriptEdit").value=out;
+}
+
+function toggleEdit(){
+ const pre=document.getElementById("scriptOutput"),area=document.getElementById("scriptEdit"),btn=document.getElementById("editBtn");
+ editando=!editando;
+ if(editando){area.value=pre.textContent;pre.classList.add("hidden");area.classList.remove("hidden");btn.textContent="🔒 SALVAR EDIÇÃO";btn.classList.replace("secondary","primary")}
+ else{area.classList.add("hidden");pre.classList.remove("hidden");btn.textContent="✏️ EDITAR";btn.classList.replace("primary","secondary");pre.textContent=area.value}
+}
+function copiarScript(){const t=editando?val("scriptEdit"):document.getElementById("scriptOutput").textContent;navigator.clipboard.writeText(t).then(()=>toast("Script copiado com sucesso!"))}
+function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+function toggleTheme(){document.body.classList.toggle("light-mode");const l=document.body.classList.contains("light-mode");document.getElementById("themeIcon").textContent=l?"☀️":"🌙";document.getElementById("themeText").textContent=l?"Modo Claro":"Modo Escuro";localStorage.setItem("theme",l?"light":"dark")}
+if(localStorage.getItem("theme")==="light")toggleTheme();
+
+document.querySelectorAll("input,textarea,select").forEach(e=>e.addEventListener("input",()=>{atualizarOrientacoes();gerarScript()}));
+document.querySelectorAll(".problema,.teste").forEach(e=>e.addEventListener("change",()=>{atualizarOrientacoes();gerarScript()}));
+document.querySelectorAll('input[name="historicoTipo"]').forEach(e=>e.addEventListener("change",atualizarHistoricoTipo));
+
+function reiniciar(){
+ document.querySelectorAll("input,textarea,select").forEach(e=>{
+   if(e.type==="checkbox"||e.type==="radio")e.checked=false;
+   else if(e.id==="mtu")e.value="PING COM PACOTE DE 1472 BYTES REALIZADO COM SUCESSO.";
+   else if(e.id==="mtr")e.value="ROTA ANALISADA PARA SITE DE STREAMING UTILIZADO PELO CLIENTE.";
+   else e.value="";
+ });
+ document.querySelectorAll(".option").forEach(x=>x.classList.remove("active"));
+ outrosTestes=[];renderOutrosTestes();
+ state.canal="";state.glpi="";state.status="";state.resultado="";editando=false;
+ document.getElementById("scriptOutput").classList.remove("hidden");
+ document.getElementById("scriptEdit").classList.add("hidden");
+ document.getElementById("editBtn").textContent="✏️ EDITAR";
+ document.getElementById("editBtn").classList.remove("primary");
+ document.getElementById("editBtn").classList.add("secondary");
+ document.getElementById("boxGLPI").classList.add("hidden");
+ document.getElementById("boxOutroHistorico").classList.add("hidden");
+ document.getElementById("crmImageInput").value="";
+ document.getElementById("ocrStatus").textContent="";
+ fecharModalCrop();
+ atualizarOrientacoes();gerarScript();toast("Campos limpos!");
+}
+atualizarOrientacoes();renderOutrosTestes();gerarScript();
+</script>
+</body>
+</html>
