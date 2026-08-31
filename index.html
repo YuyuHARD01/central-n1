@@ -126,7 +126,7 @@
                 <div class="flex space-x-3 overflow-x-auto pb-2">
                     <button onclick="filterCategory('all')" class="cat-btn bg-brand-500 text-white px-5 py-2 rounded-full text-sm font-bold tracking-wide whitespace-nowrap">TODAS</button>
                     <button onclick="filterCategory('suporte')" class="cat-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-5 py-2 rounded-full text-sm font-bold tracking-wide hover:bg-gray-300 dark:hover:bg-gray-600 whitespace-nowrap">SUPORTE</button>
-                    <button onclick="filterCategory('financeiro')" class="cat-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-5 py-2 rounded-full text-sm font-bold tracking-wide hover:bg-gray-300 dark:hover:bg-gray-600 whitespace-nowrap">FINANCEIRO</button>
+                    <button onclick="filterCategory('negociação')" class="cat-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-5 py-2 rounded-full text-sm font-bold tracking-wide hover:bg-gray-300 dark:hover:bg-gray-600 whitespace-nowrap">FINANCEIRO</button>
                     <button onclick="filterCategory('outros')" class="cat-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-5 py-2 rounded-full text-sm font-bold tracking-wide hover:bg-gray-300 dark:hover:bg-gray-600 whitespace-nowrap">OUTROS ASSUNTOS</button>
                 </div>
 
@@ -180,15 +180,15 @@
                     </div>
 
                     <!-- Card Financeiro -->
-                    <div class="script-card bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="financeiro">
+                    <div class="script-negociação.html bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="financeiro">
                         <div>
                             <div class="flex justify-between items-start mb-4">
                                 <span class="bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-300 text-sm font-extrabold px-3 py-1.5 rounded-lg tracking-wider">FINANCEIRO</span>
                             </div>
-                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Consulta de Faturas & Débitos</h3>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Negociação</h3>
                             <div class="bg-green-50 dark:bg-green-950/40 p-4 rounded-xl border border-green-100 dark:border-green-900/50 mb-6">
                                 <p class="text-xs sm:text-sm text-green-900 dark:text-green-200 leading-relaxed">
-                                    Atendimento relacionado a faturas, pagamentos, cobranças, negociação de débitos, vencimentos, valores e cancelamentos.
+                                    Atendimento relacionado a negociação de débitos.
                                 </p>
                             </div>
                         </div>
@@ -202,16 +202,41 @@
                         </div>
                     </div>
 
-                    <!-- Card Outros Assuntos -->
-                    <div class="script-card bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="outros">
+                    <!-- Card Suspensão Temporaria -->
+                    <div class="script-suspensão-temporaria.html bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="outros">
                         <div>
                             <div class="flex justify-between items-start mb-4">
                                 <span class="bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-sm font-extrabold px-3 py-1.5 rounded-lg tracking-wider">OUTROS ASSUNTOS</span>
                             </div>
-                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Solicitações Gerais</h3>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Suspensão Temporaria</h3>
                             <div class="bg-purple-50 dark:bg-purple-950/40 p-4 rounded-xl border border-purple-100 dark:border-purple-900/50 mb-6">
                                 <p class="text-xs sm:text-sm text-purple-900 dark:text-purple-200 leading-relaxed">
-                                    Solicitações que não se enquadram em Suporte ou Financeiro, como informações gerais, alterações cadastrais e administrativas.
+                                    Solicitações para suspende o plano do cliente.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <button onclick="openScriptViewer('Outros Assuntos', 'paginas_scripts/script-outros.html')" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-2.5 rounded-xl text-sm transition">
+                                Abrir no Painel
+                            </button>
+                            <a href="paginas_scripts/script-outros.html" target="_blank" class="block text-center text-xs text-gray-500 hover:text-brand-500 font-medium">
+                                Abrir em nova aba ↗
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Card Telefonia -->
+                    <div class="script-telefonia-fixa.html bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="outros">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-sm font-extrabold px-3 py-1.5 rounded-lg tracking-wider">OUTROS ASSUNTOS</span>
+                            </div>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Telefone Fixo</h3>
+                            <div class="bg-purple-50 dark:bg-purple-950/40 p-4 rounded-xl border border-purple-100 dark:border-purple-900/50 mb-6">
+                                <p class="text-xs sm:text-sm text-purple-900 dark:text-purple-200 leading-relaxed">
+                                    Solicitações para analise de telefonia.
                                 </p>
                             </div>
                         </div>
