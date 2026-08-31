@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoceTelecom - Portal de Automação</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#FF6600', // Laranja VoceTelecom
+                            600: '#E65C00',
+                            700: '#CC5200',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- TELA DE LOGIN -->
+    <div id="login-screen" class="fixed inset-0 z-50 bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 w-full max-w-md">
+            <div class="text-center mb-8">
+                <div class="inline-block bg-brand-500 text-white font-black text-2xl px-4 py-2 rounded-xl mb-3">VT</div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Voce<span class="text-brand-500">Telecom</span></h1>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Portal Interno de Automações</p>
+            </div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Usuário / ID</label>
+                    <input type="text" id="loginUser" required placeholder="VCT2026" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Senha</label>
+                    <input type="password" id="loginPass" required placeholder="••••••••" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+
+                <!-- Campo de Perfil de Acesso Ocultado / Fixo como Operador -->
+                <input type="hidden" id="loginRole" value="operador">
+
+                <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-medium py-2.5 rounded-xl text-sm transition shadow-md hover:shadow-lg mt-2">
+                    Entrar no Painel
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL PRINCIPAL -->
+    <div id="app-content" class="hidden min-h-screen flex flex-col">
+        <!-- Header / Navbar -->
+        <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40 transition-colors duration-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-brand-500 text-white font-black text-xl px-3 py-1 rounded-lg">VT</div>
+                        <span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">Voce<span class="text-brand-500">Telecom</span></span>
+                    </div>
+
+                    <!-- Navegação Principal -->
+                    <nav class="flex space-x-2 sm:space-x-4">
+                        <button onclick="switchTab('home')" id="tab-home" class="px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-medium text-xs sm:text-sm transition text-brand-500 bg-orange-50 dark:bg-gray-700">
+                            Início / Scripts
+                        </button>
+                        <button onclick="switchTab('profile')" id="tab-profile" class="px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-medium text-xs sm:text-sm transition text-gray-600 dark:text-gray-300 hover:text-brand-500 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            Meu Perfil
+                        </button>
+                    </nav>
+
+                    <!-- Controles do Usuário & Dark Mode -->
+                    <div class="flex items-center space-x-4">
+                        <button onclick="toggleDarkMode()" class="p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none" title="Alternar Modo Claro/Escuro">
+                            <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"></path>
+                            </svg>
+                            <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                            </svg>
+                        </button>
+
+                        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('profile')">
+                            <img id="header-avatar" src="https://via.placeholder.com/40" alt="Foto de perfil" class="w-9 h-9 rounded-full border border-gray-300 dark:border-gray-600 object-cover">
+                            <div class="hidden sm:block">
+                                <span id="header-name" class="block text-xs font-bold text-gray-800 dark:text-gray-200">Operador</span>
+                                <span id="header-badge" class="block text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider">Operador</span>
+                            </div>
+                        </div>
+
+                        <button onclick="logout()" class="text-xs text-red-500 hover:text-red-700 font-medium">Sair</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+            <!-- ABA 1: HOME E SCRIPTS -->
+            <section id="section-home" class="space-y-6">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Central de Categorias e Scripts</h1>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">Selecione a categoria para consultar ou executar automações.</p>
+                    </div>
+                    
+                    <div class="relative w-full md:w-96">
+                        <input type="text" id="searchInput" onkeyup="filterScripts()" placeholder="Pesquisar..." 
+                               class="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 dark:text-white text-sm">
+                        <svg class="w-5 h-5 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Filtros de Categoria -->
+                <div class="flex space-x-3 overflow-x-auto pb-2">
+                    <button onclick="filterCategory('all')" class="cat-btn bg-brand-500 text-white px-5 py-2 rounded-full text-sm font-bold tracking-wide whitespace-nowrap">TODAS</button>
+                    <button onclick="filterCategory('suporte')" class="cat-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-5 py-2 rounded-full text-sm font-bold tracking-wide hover:bg-gray-300 dark:hover:bg-gray-600 whitespace-nowrap">SUPORTE</button>
+                    <button onclick="filterCategory('financeiro')" class="cat-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-5 py-2 rounded-full text-sm font-bold tracking-wide hover:bg-gray-300 dark:hover:bg-gray-600 whitespace-nowrap">FINANCEIRO</button>
+                    <button onclick="filterCategory('outros')" class="cat-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-100 px-5 py-2 rounded-full text-sm font-bold tracking-wide hover:bg-gray-300 dark:hover:bg-gray-600 whitespace-nowrap">OUTROS ASSUNTOS</button>
+                </div>
+
+                <!-- Grid de Scripts com Links para Arquivos HTML -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="scriptGrid">
+                    <!-- Card Suporte -->
+                    <div class="script-card bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="suporte">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-sm font-extrabold px-3 py-1.5 rounded-lg tracking-wider">SUPORTE</span>
+                            </div>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Diagnóstico de Rede & Wi-Fi</h3>
+                            <div class="bg-blue-50 dark:bg-blue-950/40 p-4 rounded-xl border border-blue-100 dark:border-blue-900/50 mb-6">
+                                <p class="text-xs sm:text-sm text-blue-900 dark:text-blue-200 leading-relaxed">
+                                    Atendimento relacionado a problemas técnicos, conexão, internet, equipamentos, Wi-Fi, velocidade, instabilidade e suporte técnico.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <button onclick="openScriptViewer('Suporte Técnico', 'paginas_scripts/script-suporte.html')" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-2.5 rounded-xl text-sm transition">
+                                Abrir no Painel
+                            </button>
+                            <a href="paginas_scripts/script-suporte.html" target="_blank" class="block text-center text-xs text-gray-500 hover:text-brand-500 font-medium">
+                                Abrir em nova aba ↗
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- Card GLPI Incidente -->
+                    <div class="script-card bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="suporte">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300 text-sm font-extrabold px-3 py-1.5 rounded-lg tracking-wider">GLPI</span>
+                            </div>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Gerador de Incidente</h3>
+                            <div class="bg-orange-50 dark:bg-orange-950/40 p-4 rounded-xl border border-orange-100 dark:border-orange-900/50 mb-6">
+                                <p class="text-xs sm:text-sm text-orange-900 dark:text-orange-200 leading-relaxed">
+                                    Gerador de chamado GLPI para análise de ponto de acesso, incluindo dados do cliente e análises realizadas.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <button onclick="openScriptViewer('GLPI Incidente', 'paginas_scripts/script-glpi-incidente.html')" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-2.5 rounded-xl text-sm transition">
+                                Abrir no Painel
+                            </button>
+                            <a href="paginas_scripts/script-glpi-incidente.html" target="_blank" class="block text-center text-xs text-gray-500 hover:text-brand-500 font-medium">
+                                Abrir em nova aba ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card Financeiro -->
+                    <div class="script-card bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="financeiro">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-300 text-sm font-extrabold px-3 py-1.5 rounded-lg tracking-wider">FINANCEIRO</span>
+                            </div>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Consulta de Faturas & Débitos</h3>
+                            <div class="bg-green-50 dark:bg-green-950/40 p-4 rounded-xl border border-green-100 dark:border-green-900/50 mb-6">
+                                <p class="text-xs sm:text-sm text-green-900 dark:text-green-200 leading-relaxed">
+                                    Atendimento relacionado a faturas, pagamentos, cobranças, negociação de débitos, vencimentos, valores e cancelamentos.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <button onclick="openScriptViewer('Atendimento Financeiro', 'paginas_scripts/script-financeiro.html')" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-2.5 rounded-xl text-sm transition">
+                                Abrir no Painel
+                            </button>
+                            <a href="paginas_scripts/script-financeiro.html" target="_blank" class="block text-center text-xs text-gray-500 hover:text-brand-500 font-medium">
+                                Abrir em nova aba ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card Outros Assuntos -->
+                    <div class="script-card bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition duration-200 flex flex-col justify-between" data-category="outros">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-sm font-extrabold px-3 py-1.5 rounded-lg tracking-wider">OUTROS ASSUNTOS</span>
+                            </div>
+                            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Solicitações Gerais</h3>
+                            <div class="bg-purple-50 dark:bg-purple-950/40 p-4 rounded-xl border border-purple-100 dark:border-purple-900/50 mb-6">
+                                <p class="text-xs sm:text-sm text-purple-900 dark:text-purple-200 leading-relaxed">
+                                    Solicitações que não se enquadram em Suporte ou Financeiro, como informações gerais, alterações cadastrais e administrativas.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <button onclick="openScriptViewer('Outros Assuntos', 'paginas_scripts/script-outros.html')" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-2.5 rounded-xl text-sm transition">
+                                Abrir no Painel
+                            </button>
+                            <a href="paginas_scripts/script-outros.html" target="_blank" class="block text-center text-xs text-gray-500 hover:text-brand-500 font-medium">
+                                Abrir em nova aba ↗
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 2: PERFIL DO USUÁRIO -->
+            <section id="section-profile" class="hidden max-w-2xl mx-auto">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Editar Perfil</h2>
+                    
+                    <form onsubmit="updateProfile(event)" class="space-y-6">
+                        <div class="flex items-center space-x-6">
+                            <img id="profile-preview" src="https://via.placeholder.com/80" alt="Avatar" class="w-20 h-20 rounded-full object-cover border-2 border-brand-500">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Foto de Perfil</label>
+                                <input type="file" id="avatarInput" accept="image/*" onchange="previewImage(event)" class="text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-orange-50 dark:file:bg-gray-700 file:text-brand-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nome Completo</label>
+                            <input type="text" id="inputName" value="Operador" required class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                        </div>
+
+                        <div class="border-t border-gray-100 dark:border-gray-700 pt-6">
+                            <h3 class="text-md font-semibold text-gray-900 dark:text-white mb-4">Alterar Senha</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Senha Atual</label>
+                                    <input type="password" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nova Senha</label>
+                                    <input type="password" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end pt-4">
+                            <button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white font-medium px-6 py-2.5 rounded-xl text-sm transition shadow-md">
+                                Salvar Alterações
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL VISUALIZADOR DE SCRIPT (IFRAME INTEGRADO) -->
+    <div id="script-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-6xl h-[90vh] flex flex-col shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <!-- Header do Modal -->
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900">
+                <div class="flex items-center space-x-3">
+                    <span class="bg-brand-500 text-white text-xs font-bold px-2.5 py-1 rounded-md">EXECUTANDO</span>
+                    <h3 id="modal-title" class="text-lg font-bold text-gray-900 dark:text-white">Nome do Script</h3>
+                </div>
+                <button onclick="closeScriptViewer()" class="text-gray-400 hover:text-red-500 text-2xl font-bold p-1 rounded-lg transition">
+                    &times;
+                </button>
+            </div>
+            <!-- Body do Modal (Iframe) -->
+            <div class="flex-1 w-full bg-white">
+                <iframe id="script-iframe" src="" class="w-full h-full border-0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão Subir Tudo -->
+    <button id="scrollToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 hidden bg-brand-500 hover:bg-brand-600 text-white p-3 rounded-full shadow-lg transition duration-300 focus:outline-none z-40">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // Modal / Visualizador de Iframe
+        function openScriptViewer(title, url) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('script-iframe').src = url;
+            document.getElementById('script-modal').classList.remove('hidden');
+        }
+
+        function closeScriptViewer() {
+            document.getElementById('script-modal').classList.add('hidden');
+            document.getElementById('script-iframe').src = '';
+        }
+
+        // Login com credenciais estritas exigidas (VCT2026 / VCT2026)[cite: 9]
+        function handleLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if (user === 'VCT2026' && pass === 'VCT2026') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-content').classList.remove('hidden');
+
+                document.getElementById('header-name').innerText = 'Operador';
+                document.getElementById('header-badge').innerText = 'Operador';
+            } else {
+                alert('Usuário ou senha incorretos! Utilize as credenciais de operador válidas.');
+            }
+        }
+
+        function logout() {
+            document.getElementById('app-content').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('loginUser').value = '';
+            document.getElementById('loginPass').value = '';
+        }
+
+        // Navegação de Abas (Apenas Início e Perfil disponíveis para o operador)
+        function switchTab(tab) {
+            const homeSec = document.getElementById('section-home');
+            const profileSec = document.getElementById('section-profile');
+
+            const btnHome = document.getElementById('tab-home');
+            const btnProfile = document.getElementById('tab-profile');
+
+            homeSec.classList.add('hidden');
+            profileSec.classList.add('hidden');
+
+            const activeClass = "px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-medium text-xs sm:text-sm transition text-brand-500 bg-orange-50 dark:bg-gray-700";
+            const inactiveClass = "px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-medium text-xs sm:text-sm transition text-gray-600 dark:text-gray-300 hover:text-brand-500 hover:bg-gray-100 dark:hover:bg-gray-700";
+
+            btnHome.className = inactiveClass;
+            btnProfile.className = inactiveClass;
+
+            if (tab === 'home') {
+                homeSec.classList.remove('hidden');
+                btnHome.className = activeClass;
+            } else if (tab === 'profile') {
+                profileSec.classList.remove('hidden');
+                btnProfile.className = activeClass;
+            }
+        }
+
+        // Modo Escuro / Claro
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkIcon.classList.remove('hidden');
+        }
+
+        function toggleDarkMode() {
+            lightIcon.classList.toggle('hidden');
+            darkIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        }
+
+        // Scroll to Top
+        const scrollTopBtn = document.getElementById("scrollToTopBtn");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.classList.remove("hidden");
+            } else {
+                scrollTopBtn.classList.add("hidden");
+            }
+        };
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Busca e Filtros
+        function filterScripts() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.getElementsByClassName('script-card');
+            Array.from(cards).forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(input) ? "" : "none";
+            });
+        }
+
+        function filterCategory(cat) {
+            const cards = document.getElementsByClassName('script-card');
+            Array.from(cards).forEach(card => {
+                card.style.display = (cat === 'all' || card.dataset.category === cat) ? "" : "none";
+            });
+        }
+
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('profile-preview').src = reader.result;
+                document.getElementById('header-avatar').src = reader.result;
+            }
+            if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function updateProfile(event) {
+            event.preventDefault();
+            const newName = document.getElementById('inputName').value;
+            document.getElementById('header-name').innerText = newName;
+            alert('Perfil atualizado com sucesso!');
+        }
+    </script>
+</body>
+</html>
