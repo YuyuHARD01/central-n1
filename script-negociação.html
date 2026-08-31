@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoceTelecom - Calculador de Negociação</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            500: '#FF6600', // Laranja VoceTelecom
+                            600: '#E65C00',
+                            700: '#CC5200',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Container Principal -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+
+        <!-- Cabeçalho / Título da Ferramenta -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors duration-200">
+            <div>
+                <div class="flex items-center space-x-2">
+                    <span class="bg-brand-500 text-white text-xs font-bold px-2.5 py-1 rounded-md">FINANCEIRO</span>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Calculador de Negociação</h1>
+                </div>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Cálculo automático de entrada, parcelas e geração do script de atendimento</p>
+            </div>
+            
+            <!-- Botão Dark Mode -->
+            <button onclick="toggleDarkMode()" class="self-start md:self-center p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none border border-gray-200 dark:border-gray-700" title="Alternar Modo Claro/Escuro">
+                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z"></path>
+                </svg>
+                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Card: Dados do Cliente -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 flex items-center gap-2">
+                👤 Dados do Cliente
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Cliente</label>
+                    <input type="text" id="cliente" placeholder="Nome do cliente" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Telefone (TELL)</label>
+                    <input type="text" id="tell" placeholder="Telefone do cliente" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Valor total do débito (R$)</label>
+                    <input type="number" id="debito" min="0" step="0.01" placeholder="0,00" oninput="calcular()" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Situação do Plano</label>
+                    <select id="situacao" onchange="calcular(); atualizarAvisoPlano()" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                        <option value="ativo">🟢 PLANO HABILITADO</option>
+                        <option value="cancelado">🔴 PLANO CANCELADO</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Data de vencimento da entrada</label>
+                    <input type="date" id="vencimento" onchange="calcular()" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Pagamento à vista?</label>
+                    <select id="avista" onchange="calcular()" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                        <option value="nao">Não</option>
+                        <option value="sim">Sim</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="avisoPlano" class="mt-4 p-4 rounded-xl text-xs sm:text-sm font-semibold transition">
+                ⚠️ CONFIRME: O PLANO ESTÁ HABILITADO?
+            </div>
+        </div>
+
+        <!-- Card: Resultado do Cálculo -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 flex items-center gap-2">
+                🧮 Resultado do Cálculo
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl">
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Regra aplicada</span>
+                    <strong id="regra" class="text-sm font-bold text-brand-500">—</strong>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl">
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Entrada (%)</span>
+                    <strong id="entradaPct" class="text-lg font-bold text-brand-500">—</strong>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl">
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Valor da entrada</span>
+                    <strong id="entradaValor" class="text-lg font-bold text-brand-500">R$ 0,00</strong>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl">
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Parcelas</span>
+                    <strong id="parcelas" class="text-lg font-bold text-brand-500">—</strong>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl">
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Saldo parcelado</span>
+                    <strong id="saldo" class="text-lg font-bold text-brand-500">R$ 0,00</strong>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl">
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Valor de cada parcela</span>
+                    <strong id="valorParcela" class="text-lg font-bold text-brand-500">R$ 0,00</strong>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl">
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Condição</span>
+                    <strong id="condicao" class="text-sm font-bold text-brand-500">—</strong>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl">
+                    <span class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Data da entrada</span>
+                    <strong id="dataExibida" class="text-sm font-bold text-brand-500">—</strong>
+                </div>
+            </div>
+            <div id="avisoCalculo" class="hidden mt-4 bg-red-50 dark:bg-red-950/40 border-l-4 border-red-500 p-3 rounded-r-lg text-xs sm:text-sm text-red-800 dark:text-red-300"></div>
+        </div>
+
+        <!-- Card: Ajuste da Negociação -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200 space-y-4">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-3 flex items-center gap-2">
+                ⚙️ Ajuste da Negociação
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Percentual de entrada</label>
+                    <input type="number" id="pctManual" min="0" max="100" step="0.01" placeholder="Automático" oninput="calcular(true)" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Quantidade de parcelas</label>
+                    <input type="number" id="parcelasManual" min="1" max="7" placeholder="Automático" oninput="calcular(true)" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Regra especial acima de R$ 1.000,00</label>
+                    <select id="especial" onchange="calcular()" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                        <option value="auto">Automático</option>
+                        <option value="igual2">2x parcelas iguais</option>
+                        <option value="igual3">3x parcelas iguais</option>
+                        <option value="igual4">4x parcelas iguais</option>
+                        <option value="igual5">5x parcelas iguais</option>
+                        <option value="igual6">6x parcelas iguais</option>
+                        <option value="igual7">7x parcelas iguais</option>
+                    </select>
+                </div>
+            </div>
+            <div class="bg-orange-50 dark:bg-gray-700/50 border border-orange-200 dark:border-gray-600 text-orange-800 dark:text-orange-300 p-3 rounded-xl text-xs">
+                Os campos manuais permitem ajustar o cálculo para conferência. Se deixados vazios, o sistema usa automaticamente a regra da faixa.
+            </div>
+        </div>
+
+        <!-- Card: Ações dos Scripts -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200 space-y-4">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-3 flex items-center gap-2">
+                ⚙️ Ações dos Scripts
+            </h2>
+            <div class="flex flex-wrap gap-3">
+                <button onclick="gerar()" class="bg-brand-500 hover:bg-brand-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-sm">
+                    ⚙️ GERAR / ATUALIZAR
+                </button>
+                <button onclick="editarScript()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-sm">
+                    ✏️ EDITAR SCRIPT DO CLIENTE
+                </button>
+                <button onclick="editarRegistro()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-sm">
+                    ✏️ EDITAR REGISTRO
+                </button>
+                <button onclick="limpar()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition shadow-sm">
+                    🗑️ LIMPAR
+                </button>
+            </div>
+            <div class="bg-orange-50 dark:bg-gray-700/50 border border-orange-200 dark:border-gray-600 text-orange-800 dark:text-orange-300 p-3 rounded-xl text-xs">
+                Gere ou atualize os scripts após preencher os dados. Use os botões de edição para alterar manualmente o texto antes de copiar.
+            </div>
+        </div>
+
+        <!-- Card: Script Cliente -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 gap-2">
+                <div class="flex items-center gap-2">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">📝 Script para encaminhar ao cliente</h2>
+                    <span class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-2.5 py-0.5 rounded-full font-medium">Automático</span>
+                </div>
+                <div class="flex gap-2">
+                    <button id="editarBtn" onclick="editarScript()" class="bg-gray-600 hover:bg-gray-700 text-white font-medium px-4 py-1.5 rounded-lg text-xs transition">
+                        ✏️ EDITAR
+                    </button>
+                    <button onclick="copiarScript()" class="bg-brand-500 hover:bg-brand-600 text-white font-medium px-4 py-1.5 rounded-lg text-xs transition">
+                        📋 COPIAR
+                    </button>
+                </div>
+            </div>
+            <textarea id="script" readonly placeholder="O script gerado aparecerá aqui..." class="w-full h-36 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl font-mono text-xs sm:text-sm text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none resize-y leading-relaxed"></textarea>
+        </div>
+
+        <!-- Card: Retorno do Cliente -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200 space-y-4">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-3 flex items-center gap-2">
+                🤝 Retorno do Cliente
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Resultado da negociação</label>
+                    <select id="resultadoNegociacao" onchange="mostrarDesistencia()" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                        <option value="aceitou">CLIENTE ACEITOU A NEGOCIAÇÃO</option>
+                        <option value="desistiu">CLIENTE DESISTIU DA NEGOCIAÇÃO</option>
+                    </select>
+                </div>
+                <div id="campoDesistencia" class="hidden">
+                    <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Descreva o motivo da desistência</label>
+                    <input type="text" id="motivoDesistencia" placeholder="Descreva o motivo informado pelo cliente" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                </div>
+            </div>
+            <div class="bg-orange-50 dark:bg-gray-700/50 border border-orange-200 dark:border-gray-600 text-orange-800 dark:text-orange-300 p-3 rounded-xl text-xs">
+                Se o cliente desistir, informe o motivo para que ele seja incluído automaticamente no registro do atendimento.
+            </div>
+        </div>
+
+        <!-- Card: Registro no Atendimento -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-200 dark:border-gray-700 pb-3 mb-4 gap-2">
+                <div class="flex items-center gap-2">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">🧾 Script para registro no atendimento</h2>
+                    <span class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs px-2.5 py-0.5 rounded-full font-medium">Registro interno</span>
+                </div>
+                <div class="flex gap-2">
+                    <button id="editarRegistroBtn" onclick="editarRegistro()" class="bg-gray-600 hover:bg-gray-700 text-white font-medium px-4 py-1.5 rounded-lg text-xs transition">
+                        ✏️ EDITAR
+                    </button>
+                    <button onclick="copiarRegistro()" class="bg-brand-500 hover:bg-brand-600 text-white font-medium px-4 py-1.5 rounded-lg text-xs transition">
+                        📋 COPIAR
+                    </button>
+                </div>
+            </div>
+            <textarea id="registro" readonly placeholder="O registro interno aparecerá aqui..." class="w-full h-44 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl font-mono text-xs sm:text-sm text-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-brand-500 focus:outline-none resize-y leading-relaxed"></textarea>
+        </div>
+
+        <!-- Card: Regras de Negociação -->
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-200 space-y-4">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-3 flex items-center gap-2">
+                📚 Regras de Negociação
+            </h2>
+            <div class="bg-orange-50 dark:bg-gray-700/50 border border-orange-200 dark:border-gray-600 text-orange-800 dark:text-orange-300 p-4 rounded-xl text-xs sm:text-sm">
+                O sistema aplica automaticamente a faixa de negociação conforme o valor do débito. Para plano cancelado, utiliza a regra específica de cancelamento. Em valores acima de R$ 1.000,00 com plano cancelado, também é disponibilizada a opção de parcelas iguais.
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl text-xs sm:text-sm">
+                    <strong class="text-brand-500 block mb-1">R$ 100,00 a R$ 300,00</strong>
+                    Entrada: 60% · 2 parcelas
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl text-xs sm:text-sm">
+                    <strong class="text-brand-500 block mb-1">R$ 300,01 a R$ 500,00</strong>
+                    Entrada: 50% · 3 parcelas
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl text-xs sm:text-sm">
+                    <strong class="text-brand-500 block mb-1">R$ 500,01 a R$ 700,00</strong>
+                    Entrada: 40% · 4 parcelas
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-xl text-xs sm:text-sm">
+                    <strong class="text-brand-500 block mb-1">Acima de R$ 700,00</strong>
+                    Entrada: 30% · 5 parcelas
+                </div>
+            </div>
+            <div class="bg-red-50 dark:bg-red-950/40 border-l-4 border-red-500 p-4 rounded-r-xl text-xs sm:text-sm text-red-800 dark:text-red-300">
+                <strong>Plano cancelado:</strong> a regra de entrada é diferente. O sistema troca automaticamente para 50%, 40%, 30% ou 20%, conforme a faixa do débito.
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JavaScript Integrado -->
+    <script>
+        const brl = n => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(n) || 0);
+        const num = id => parseFloat(document.getElementById(id).value) || 0;
+        const val = id => document.getElementById(id).value.trim();
+
+        function dataBR(v) {
+            if (!v) return '—';
+            const p = v.split('-');
+            return p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : v;
+        }
+
+        function regraBase(valor, cancelado) {
+            if (valor < 100) {
+                return { pct: 0, parcelas: 0, nome: 'Abaixo de R$ 100,00' };
+            }
+            if (valor <= 300) return cancelado ? { pct: 50, parcelas: 2, nome: 'Cancelado · R$ 100,00 a R$ 300,00' } : { pct: 60, parcelas: 2, nome: 'R$ 100,00 a R$ 300,00' };
+            if (valor <= 500) return cancelado ? { pct: 40, parcelas: 3, nome: 'Cancelado · R$ 300,01 a R$ 500,00' } : { pct: 50, parcelas: 3, nome: 'R$ 300,01 a R$ 500,00' };
+            if (valor <= 700) return cancelado ? { pct: 30, parcelas: 4, nome: 'Cancelado · R$ 500,01 a R$ 700,00' } : { pct: 40, parcelas: 4, nome: 'R$ 500,01 a R$ 700,00' };
+            return cancelado ? { pct: 20, parcelas: 5, nome: 'Cancelado · acima de R$ 700,00' } : { pct: 30, parcelas: 5, nome: 'Acima de R$ 700,00' };
+        }
+
+        function atualizarAvisoPlano() {
+            const aviso = document.getElementById('avisoPlano');
+            const situacao = val('situacao');
+
+            if (situacao === 'cancelado') {
+                aviso.innerHTML = '🔴 <b>PLANO CANCELADO:</b> confirme que o plano está cancelado antes de prosseguir. A regra especial de cancelado será applied automaticamente.';
+                aviso.className = 'mt-4 p-4 rounded-xl text-xs sm:text-sm bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-800 dark:text-red-300';
+            } else {
+                aviso.innerHTML = '🟢 <b>PLANO HABILITADO:</b> confirme que o plano está habilitado antes de prosseguir. A regra normal de negociação será aplicada.';
+                aviso.className = 'mt-4 p-4 rounded-xl text-xs sm:text-sm bg-green-50 dark:bg-green-950/40 border border-green-200 dark:border-green-900 text-green-800 dark:text-green-300';
+            }
+        }
+
+        function calcular(modoManual = false) {
+            const debito = num('debito');
+            const cancelado = val('situacao') === 'cancelado';
+            const avista = val('avista') === 'sim';
+            let r = regraBase(debito, cancelado);
+
+            const especial = val('especial');
+            if (debito > 1000 && cancelado && especial !== 'auto') {
+                const n = parseInt(especial.replace('igual', ''));
+                r = { pct: 0, parcelas: n, nome: `Cancelado > R$ 1.000,00 · ${n}x parcelas iguais` };
+            }
+
+            const pctManual = document.getElementById('pctManual').value;
+            const parcelasManual = document.getElementById('parcelasManual').value;
+            let pct = pctManual !== '' ? Math.max(0, Math.min(100, parseFloat(pctManual))) : r.pct;
+            let parcelas = parcelasManual !== '' ? Math.max(1, parseInt(parcelasManual)) : r.parcelas;
+
+            if (avista) {
+                pct = 100; parcelas = 0; r = { ...r, nome: 'Pagamento à vista' };
+            }
+
+            let entrada = debito * (pct / 100);
+            let saldo = debito - entrada;
+            let parcela = parcelas > 0 ? saldo / parcelas : 0;
+
+            if (debito > 1000 && cancelado && especial !== 'auto') {
+                entrada = 0;
+                saldo = debito;
+                parcela = parcelas > 0 ? debito / parcelas : debito;
+                pct = 0;
+            }
+
+            document.getElementById('regra').textContent = r.nome;
+            document.getElementById('entradaPct').textContent = pct.toFixed(2).replace('.', ',') + '%';
+            document.getElementById('entradaValor').textContent = brl(entrada);
+            document.getElementById('parcelas').textContent = parcelas ? parcelas + 'x' : 'À vista';
+            document.getElementById('saldo').textContent = brl(saldo);
+            document.getElementById('valorParcela').textContent = parcelas ? brl(parcela) : '—';
+            document.getElementById('condicao').textContent = avista ? 'À vista' : (parcelas ? 'Boleto bancário' : '—');
+            document.getElementById('dataExibida').textContent = dataBR(val('vencimento'));
+
+            const aviso = document.getElementById('avisoCalculo');
+            if (debito > 0 && debito < 100) {
+                aviso.textContent = 'O valor informado está abaixo de R$ 100,00; a tabela de regras disponível não define uma condição automática para essa faixa.';
+                aviso.classList.remove('hidden');
+            } else {
+                aviso.classList.add('hidden');
+            }
+            return { debito, cancelado, avista, pct, parcelas, entrada, saldo, parcela, regra: r.nome };
+        }
+
+        function mostrarDesistencia() {
+            const resultado = val('resultadoNegociacao');
+            const campo = document.getElementById('campoDesistencia');
+            if (resultado === 'desistiu') {
+                campo.classList.remove('hidden');
+            } else {
+                campo.classList.add('hidden');
+                document.getElementById('motivoDesistencia').value = '';
+            }
+        }
+
+        function gerar() {
+            const c = calcular();
+            const cliente = val('cliente') || 'xxxxxxxxxxxxxx';
+            const tell = val('tell') || 'XXXXXXXXXXXXXXXXXXXX';
+            const data = dataBR(val('vencimento')) === '—' ? 'XX/XX/XXXX' : dataBR(val('vencimento'));
+            const resultado = val('resultadoNegociacao');
+            const motivo = val('motivoDesistencia') || 'Motivo não informado pelo cliente';
+
+            let texto = '';
+            if (c.avista) {
+                texto = `Verifiquei que o valor total do seu débito é de ${brl(c.debito)}. Podemos realizar o pagamento à vista no valor de ${brl(c.debito)}. Você aceita essa negociação?`;
+            } else if (c.debito > 1000 && c.cancelado && c.pct === 0) {
+                texto = `Verifiquei que o valor total do seu débito é de ${brl(c.debito)}. Para esta situação, podemos realizar a negociação em ${c.parcelas} parcelas iguais de ${brl(c.parcela)}. Você aceita essa negociação?`;
+            } else {
+                texto = `Verifiquei que o valor total do seu débito é de ${brl(c.debito)}. O que podemos fazer por você e realizar o pagamento de uma entrada de ${c.pct.toFixed(2).replace('.', ',')}% com vencimento para o dia ${data} no valor de ${brl(c.entrada)} mais ${c.parcelas} parcelas de ${brl(c.parcela)} para os meses seguintes. Você aceita essa negociação?`;
+            }
+
+            document.getElementById('script').value = texto;
+
+            document.getElementById('registro').value =
+`CLIENTE: ${cliente}
+TELL: ${tell}
+
+VALOR TOTAL DO DÉBITO: ${brl(c.debito)}
+SITUAÇÃO DO PLANO: ${c.cancelado ? 'CANCELADO' : 'ATIVO / INADIMPLENTE'}
+REGRA APLICADA: ${c.regra}
+ENTRADA: ${c.pct.toFixed(2).replace('.', ',')}% — ${brl(c.entrada)}
+VENCIMENTO DA ENTRADA: ${data}
+QUANTIDADE DE PARCELAS: ${c.parcelas || 'À VISTA'}
+VALOR DE CADA PARCELA: ${c.parcelas ? brl(c.parcela) : '—'}
+CONDIÇÃO: ${c.avista ? 'PAGAMENTO À VISTA' : 'BOLETO BANCÁRIO'}
+
+NEGOCIAÇÃO APRESENTADA AO CLIENTE.
+
+RESULTADO: ${resultado === 'aceitou' ? 'CLIENTE ACEITOU A NEGOCIAÇÃO' : 'CLIENTE DESISTIU DA NEGOCIAÇÃO'}
+${resultado === 'desistiu' ? 'MOTIVO DA DESISTÊNCIA: ' + motivo : ''}`;
+
+            bloquear('script', 'editarBtn');
+            bloquear('registro', 'editarRegistroBtn');
+        }
+
+        function bloquear(campoId, btnId) {
+            const campo = document.getElementById(campoId), btn = document.getElementById(btnId);
+            campo.setAttribute('readonly', 'true');
+            campo.classList.remove('border-brand-500', 'bg-white', 'dark:bg-gray-800');
+            btn.textContent = '✏️ EDITAR';
+            btn.className = 'bg-gray-600 hover:bg-gray-700 text-white font-medium px-4 py-1.5 rounded-lg text-xs transition';
+        }
+
+        function alternarEdicao(campoId, btnId) {
+            const campo = document.getElementById(campoId), btn = document.getElementById(btnId);
+            if (campo.hasAttribute('readonly')) {
+                campo.removeAttribute('readonly');
+                campo.classList.add('border-brand-500', 'bg-white', 'dark:bg-gray-800');
+                btn.textContent = '💾 SALVAR EDIÇÃO';
+                btn.className = 'bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-1.5 rounded-lg text-xs transition';
+                campo.focus();
+            } else {
+                bloquear(campoId, btnId);
+            }
+        }
+
+        function editarScript() { alternarEdicao('script', 'editarBtn') }
+        function editarRegistro() { alternarEdicao('registro', 'editarRegistroBtn') }
+
+        async function copiar(id) {
+            const campo = document.getElementById(id);
+            if (!campo.value.trim()) { alert('Gere o script primeiro.'); return }
+            try {
+                await navigator.clipboard.writeText(campo.value);
+                alert('Copiado com sucesso!');
+            } catch (e) {
+                campo.removeAttribute('readonly'); campo.select(); document.execCommand('copy'); campo.setAttribute('readonly', 'true');
+                alert('Copiado!');
+            }
+        }
+        function copiarScript() { copiar('script') }
+        function copiarRegistro() { copiar('registro') }
+
+        function limpar() {
+            ['cliente', 'tell', 'debito', 'vencimento', 'pctManual', 'parcelasManual', 'script', 'registro'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.getElementById('situacao').value = 'ativo';
+            document.getElementById('avista').value = 'nao';
+            document.getElementById('especial').value = 'auto';
+            document.getElementById('resultadoNegociacao').value = 'aceitou';
+            document.getElementById('motivoDesistencia').value = '';
+            mostrarDesistencia();
+            atualizarAvisoPlano();
+            ['script', 'registro'].forEach((id, i) => bloquear(id, i ? 'editarRegistroBtn' : 'editarBtn'));
+            calcular();
+        }
+
+        ['cliente', 'tell', 'debito', 'situacao', 'vencimento', 'avista', 'pctManual', 'parcelasManual', 'especial'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => calcular());
+            document.getElementById(id).addEventListener('change', () => calcular());
+        });
+
+        // Alternador de Modo Escuro
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkIcon.classList.remove('hidden');
+        }
+
+        function toggleDarkMode() {
+            lightIcon.classList.toggle('hidden');
+            darkIcon.classList.toggle('hidden');
+
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        }
+
+        // Executar inicializações
+        calcular();
+        atualizarAvisoPlano();
+    </script>
+</body>
+</html>
