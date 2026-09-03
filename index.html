@@ -311,13 +311,13 @@
             document.getElementById('script-iframe').src = '';
         }
 
-        // Validação estrita oculta (VCT2026 / VCT2026) sem exibir o texto por padrão
+        // Validação estrita oculta (bataba01 / bataba01) sem exibir o texto por padrão
         function handleLogin(event) {
             event.preventDefault();
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
 
-            if (user === 'VCT2026' && pass === 'VCT2026') {
+            if (user === 'bataba01' && pass === 'bataba01') {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('app-content').classList.remove('hidden');
             } else {
