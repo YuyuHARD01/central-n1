@@ -6,6 +6,7 @@
 <title>Você Telecom — Suporte Técnico</title>
 <!-- Biblioteca OCR Tesseract v5 -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <!-- CSS e JS do Cropper.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
@@ -85,6 +86,18 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);
 .crop-container{max-width:90vw;max-height:70vh;background:#000}
 .crop-container img{max-width:100%;max-height:70vh}
 .modal-actions{margin-top:15px;display:flex;gap:15px}
+
+
+.pdf-box{background:var(--card-bg);border:2px dashed var(--accent);border-radius:10px;padding:16px;margin-top:18px}
+.pdf-box input{display:none}
+.pdf-upload-btn{background:var(--accent);color:#000;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer;display:inline-block}
+.pdf-hint{font-size:.85rem;color:var(--subtext-color);margin:8px 0 12px}
+.pdf-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
+.pdf-item{position:relative;border:1px solid var(--card-border);border-radius:10px;padding:8px;background:var(--content-bg)}
+.pdf-item img{width:100%;height:120px;object-fit:contain;border-radius:6px;background:#111}
+.pdf-item-name{font-size:.75rem;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--label-color)}
+.pdf-remove{position:absolute;top:5px;right:5px;border:0;border-radius:50%;width:26px;height:26px;background:#7f1d1d;color:#fff;font-weight:bold;cursor:pointer}
+.pdf-count{font-size:.85rem;font-weight:bold;color:var(--summary-text);margin-top:10px}
 
 .hidden{display:none!important}
 .toast{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#000;font-weight:bold;padding:12px 16px;border-radius:8px;opacity:0;transition:.2s;z-index:1000}.toast.show{opacity:1}
@@ -247,6 +260,20 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);
 <button class="option" onclick="select('resultado','CLIENTE ABANDONOU NA TRATIVA',this)">⚠️ <b>CLIENTE ABANDONOU NA TRATIVA</b></button>
 <button class="option" onclick="select('resultado','NECESSARIO ANALISE DO SUPORTE AVANÇADO',this)">🛠️ <b>NECESSÁRIO ANÁLISE DO SUPORTE AVANÇADO</b></button>
 <button class="option" onclick="select('resultado','SOLICITAÇÃO DE VISITA TECNICA',this)">🚗 <b>SOLICITAÇÃO DE VISITA TÉCNICA</b></button>
+</div>
+
+
+<div class="pdf-box">
+  <h3 style="margin-top:0">📎 ANEXAR PRINTS / FOTOS</h3>
+  <div class="pdf-hint">Selecione várias imagens de uma vez ou adicione mais imagens. Todas serão reunidas em um único PDF.</div>
+  <label class="pdf-upload-btn" for="pdfImagesInput">📷 ADICIONAR PRINTS / FOTOS</label>
+  <input type="file" id="pdfImagesInput" accept="image/*" multiple onchange="adicionarImagensPDF(this.files)">
+  <div id="pdfCount" class="pdf-count">Nenhuma imagem anexada.</div>
+  <div id="pdfPreview" class="pdf-preview"></div>
+  <div class="actions">
+    <button type="button" class="btn primary" onclick="gerarPDFImagens()">📄 CONVERTER TUDO EM PDF</button>
+    <button type="button" class="btn secondary" onclick="limparImagensPDF()">🧹 LIMPAR IMAGENS</button>
+  </div>
 </div>
 
 <div class="summary">
@@ -483,6 +510,108 @@ function extrairDadosCRM(texto){
   }
 
   gerarScript();
+}
+
+
+let imagensPDF=[];
+
+function adicionarImagensPDF(files){
+  [...files].forEach(file=>{
+    if(!file.type.startsWith("image/")) return;
+    const reader=new FileReader();
+    reader.onload=e=>{
+      imagensPDF.push({
+        file,
+        data:e.target.result,
+        nome:file.name
+      });
+      renderImagensPDF();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById("pdfImagesInput").value="";
+}
+
+function renderImagensPDF(){
+  const preview=document.getElementById("pdfPreview");
+  const count=document.getElementById("pdfCount");
+
+  count.textContent=imagensPDF.length
+    ? `${imagensPDF.length} imagem(ns) anexada(s).`
+    : "Nenhuma imagem anexada.";
+
+  preview.innerHTML=imagensPDF.map((img,i)=>`
+    <div class="pdf-item">
+      <button type="button" class="pdf-remove" title="Remover" onclick="removerImagemPDF(${i})">×</button>
+      <img src="${img.data}" alt="Prévia">
+      <div class="pdf-item-name" title="${img.nome}">${img.nome}</div>
+    </div>
+  `).join("");
+}
+
+function removerImagemPDF(index){
+  imagensPDF.splice(index,1);
+  renderImagensPDF();
+}
+
+function limparImagensPDF(){
+  imagensPDF=[];
+  renderImagensPDF();
+  toast("Imagens removidas!");
+}
+
+function carregarImagemPDF(dataUrl){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    img.onload=()=>resolve(img);
+    img.onerror=reject;
+    img.src=dataUrl;
+  });
+}
+
+async function gerarPDFImagens(){
+  if(!imagensPDF.length){
+    toast("Anexe pelo menos uma imagem!");
+    return;
+  }
+
+  try{
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+    const pageW=210, pageH=297;
+    const margin=10;
+    const maxW=pageW-margin*2;
+    const maxH=pageH-margin*2;
+
+    for(let i=0;i<imagensPDF.length;i++){
+      if(i>0) pdf.addPage();
+
+      const img=await carregarImagemPDF(imagensPDF[i].data);
+      let w=img.naturalWidth || img.width;
+      let h=img.naturalHeight || img.height;
+
+      const ratio=Math.min(maxW/w,maxH/h);
+      w*=ratio;
+      h*=ratio;
+
+      const x=(pageW-w)/2;
+      const y=(pageH-h)/2;
+
+      let format="JPEG";
+      if(imagensPDF[i].file.type==="image/png") format="PNG";
+      else if(imagensPDF[i].file.type==="image/webp") format="WEBP";
+
+      pdf.addImage(img,format,x,y,w,h,undefined,"FAST");
+    }
+
+    const agora=new Date();
+    const nome=`prints-suporte-${agora.getFullYear()}-${String(agora.getMonth()+1).padStart(2,"0")}-${String(agora.getDate()).padStart(2,"0")}.pdf`;
+    pdf.save(nome);
+    toast("PDF gerado com sucesso!");
+  }catch(err){
+    console.error("Erro ao gerar PDF:",err);
+    toast("Não foi possível gerar o PDF.");
+  }
 }
 
 function gerarScript(){
