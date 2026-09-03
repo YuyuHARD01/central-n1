@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoceTelecom - Faturamento</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: { extend: { colors: {
+    brand: {500:'#FF6600',600:'#E65C00',700:'#CC5200'}
+  }}}
+}
+</script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans min-h-screen transition-colors duration-200">
+
+<main class="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+
+<!-- CABEÇALHO -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
+  <div>
+    <div class="flex items-center space-x-2">
+      <span class="bg-brand-500 text-white text-xs font-bold px-2.5 py-1 rounded-md">FATURAMENTO</span>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Gerador Automático de Scripts</h1>
+    </div>
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Scripts de atendimento — Setor de Faturamento</p>
+  </div>
+  <button onclick="toggleDarkMode()" class="p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700">
+    <span id="themeIcon">🌙</span>
+  </button>
+</div>
+
+<!-- ORIENTAÇÕES -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<h2 class="text-lg font-bold border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">📚 Orientações do Processo</h2>
+
+<div class="bg-orange-50 dark:bg-gray-700/50 border border-orange-200 dark:border-gray-600 text-orange-800 dark:text-orange-300 p-4 rounded-xl text-sm mb-4">
+Use esta seção como apoio. O Faturamento acompanha e resolve alterações financeiras do extrato do cliente.
+</div>
+
+<div class="space-y-3">
+
+<div class="border rounded-xl overflow-hidden dark:border-gray-700">
+<button onclick="abrirOrientacao(this)" class="w-full text-left bg-gray-50 dark:bg-gray-700/60 p-4 font-semibold text-sm flex justify-between">📌 Regras gerais <span>▼</span></button>
+<div class="hidden p-4 text-sm space-y-2">
+<p>É obrigatório informar o vencimento da fatura ou a solicitação do cliente.</p>
+<p>O motivo deve ser claro, breve e objetivo.</p>
+<p>Erro operacional somente deve ser encaminhado ao Faturamento após autorização da Gerência.</p>
+<p>Atendimentos sem as informações corretas podem ser finalizados sem resolução.</p>
+</div></div>
+
+<div class="border rounded-xl overflow-hidden dark:border-gray-700">
+<button onclick="abrirOrientacao(this)" class="w-full text-left bg-gray-50 dark:bg-gray-700/60 p-4 font-semibold text-sm flex justify-between">⏱️ Prazos importantes <span>▼</span></button>
+<div class="hidden p-4 text-sm space-y-2">
+<p><b>Troca de pagamento:</b> 72 horas úteis, podendo ultrapassar em caso de alto fluxo.</p>
+<p><b>Confirmação de pagamento convencional:</b> somente após 72 horas úteis.</p>
+<p><b>Confirmação via PIX/Totem:</b> prazo de análise de 24 horas úteis.</p>
+<p><b>Estorno de cartão:</b> processo pode ser efetuado em até 30 dias úteis.</p>
+</div></div>
+
+<div class="border rounded-xl overflow-hidden dark:border-gray-700">
+<button onclick="abrirOrientacao(this)" class="w-full text-left bg-gray-50 dark:bg-gray-700/60 p-4 font-semibold text-sm flex justify-between">💳 Formas de cobrança <span>▼</span></button>
+<div class="hidden p-4 text-sm space-y-2">
+<p><b>Conta consumo:</b> faturas que não cabem registro bancário e podem ser pagas nos bancos conveniados, lotéricas e aplicativos.</p>
+<p><b>Boleto registrado:</b> possui registro em banco específico e validade de 60 dias.</p>
+<p>Não é realizada alteração para débito automático; o cliente realiza a inclusão usando o código identificador fornecido.</p>
+</div></div>
+
+
+</div>
+</div>
+
+<!-- CLIENTE -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<h2 class="text-lg font-bold border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">👤 Dados do Cliente</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div><label class="label">Cliente</label><input id="cliente" class="campo" placeholder="Nome do cliente"></div>
+<div><label class="label">Telefone</label><input id="telefone" class="campo" placeholder="Telefone"></div>
+<div><label class="label">Protocolo do Atendimento</label><input id="protocolo" class="campo" placeholder="Protocolo"></div>
+<div><label class="label">Canal de Atendimento</label>
+<select id="canal" class="campo">
+<option>PDV</option><option>CALL</option><option>CHAT</option><option>WHATSAPP</option><option>MINHA VOCÊ</option>
+</select></div>
+</div>
+</div>
+
+<!-- TIPO -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<h2 class="text-lg font-bold border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">🧾 Tipo de Atendimento</h2>
+<select id="tipo" onchange="montarCampos()" class="campo">
+<option value="cobranca">💳 Alteração na Forma de Cobrança</option>
+<option value="confirmacao">✅ Confirmação de Pagamento</option>
+<option value="contestacao">⚠️ Contestação de Fatura</option>
+<option value="estorno">💳 Estorno de Cartão de Crédito</option>
+<option value="exclusao">🗑️ Exclusão de Faturas</option>
+<option value="ressarcimento">💵 Ressarcimento</option>
+<option value="segundaVia">📄 2ª Via de Boleto</option>
+<option value="troca">🔄 Troca de Pagamento — Mesmo Cliente</option>
+<option value="trocaOutro">👤 Troca de Pagamento — Outro Cliente</option>
+<option value="vencimento">📅 Mudança de Vencimento</option>
+</select>
+</div>
+
+<!-- CAMPOS DINÂMICOS -->
+<div class="text-xs text-gray-500 dark:text-gray-400 -mt-3 mb-3">* Campos essenciais para gerar um script completo. Preencha os dados disponíveis antes de encaminhar.</div>
+<div id="camposDinamicos" class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700"></div>
+
+<!-- AÇÕES -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<h2 class="text-lg font-bold border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">⚙️ Gerar Script</h2>
+<div class="flex flex-wrap gap-3">
+<button onclick="gerarScript()" class="bg-brand-500 hover:bg-brand-600 text-white font-semibold px-5 py-2.5 rounded-xl text-sm">⚙️ GERAR SCRIPT</button>
+<button onclick="limparTudo()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm">🗑️ LIMPAR</button>
+</div>
+</div>
+
+<!-- SCRIPT -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="flex flex-col sm:flex-row justify-between gap-2 border-b border-gray-200 dark:border-gray-700 pb-3 mb-4">
+<h2 class="text-lg font-bold">📋 Script — Faturamento</h2>
+<div class="flex gap-2">
+<button id="btnEditar" onclick="editarScript()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-1.5 rounded-lg text-xs">✏️ EDITAR</button>
+<button onclick="copiar()" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-1.5 rounded-lg text-xs">📋 COPIAR</button>
+</div></div>
+<textarea id="script" readonly class="w-full h-80 p-4 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl font-mono text-xs sm:text-sm resize-y leading-relaxed" placeholder="O script será gerado aqui..."></textarea>
+</div>
+
+</main>
+
+<style>
+.label{display:block;font-size:.75rem;font-weight:600;margin-bottom:.25rem}
+.campo{width:100%;padding:.55rem 1rem;background:#f9fafb;border:1px solid #d1d5db;border-radius:.75rem;outline:none;font-size:.875rem}
+.dark .campo{background:#374151;border-color:#4b5563;color:white}
+</style>
+
+<script>
+function abrirOrientacao(btn){btn.nextElementSibling.classList.toggle('hidden');}
+function v(id){const e=document.getElementById(id);return e?e.value.trim()||'XXXXXXXX':'';}
+function moeda(valor){return Number(valor||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+
+const camposBase = `
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div><label class="label">Vencimento da Fatura *</label><input id="vencimento" class="campo" placeholder="Ex.: 10/09/2026"></div>
+<div><label class="label">Valor da Fatura</label><input id="valor" class="campo" placeholder="R$ 0,00"></div>
+</div>
+<div class="mt-4"><label class="label">Observação / Motivo</label><input id="observacao" class="campo" placeholder="Ex.: Cliente informa que a fatura foi paga em duplicidade e solicita análise.">
+<div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+  <b>Exemplos:</b> pagamento não identificado; fatura paga em duplicidade; cobrança indevida; cliente solicita correção do valor; alteração na forma de cobrança; necessidade de ressarcimento.
+</div></div>`;
+
+function montarCampos(){
+ const tipo=document.getElementById('tipo').value;
+ let html=camposBase;
+ if(tipo==='troca'){
+  html=`<h3 class="font-bold mb-4">🔄 Troca de Pagamento — Mesmo Cliente</h3>${camposBase}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+  <div><label class="label">Fatura paga por engano</label><input id="faturaErrada" class="campo" placeholder="Vencimento"></div>
+  <div><label class="label">Fatura correta</label><input id="faturaCorreta" class="campo" placeholder="Vencimento"></div></div>
+  <div class="bg-orange-50 dark:bg-gray-700/50 p-3 rounded-xl text-sm mt-4">⚠️ A fatura mais recente não pode estar vencida e não pode possuir valor menor que a fatura mais antiga.</div>`;
+ } else if(tipo==='trocaOutro'){
+  html=`<h3 class="font-bold mb-4">👤 Troca de Pagamento — Outro Cliente</h3>${camposBase}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+  <div><label class="label">Cliente que recebeu o pagamento</label><input id="clienteDestino" class="campo" placeholder="Nome"></div>
+  <div><label class="label">Código do cliente destino</label><input id="codigoDestino" class="campo" placeholder="Código"></div>
+  <div><label class="label">Data do pagamento</label><input id="dataPagamento" class="campo" placeholder="DD/MM/AAAA"></div>
+  <div><label class="label">Fatura para receber o crédito</label><input id="faturaCredito" class="campo" placeholder="Vencimento"></div></div>
+  <div class="bg-orange-50 dark:bg-gray-700/50 p-3 rounded-xl text-sm mt-4">📎 Anexos: termo de troca/retificação, documentação com foto e comprovante de pagamento.</div>`;
+ } else if(tipo==='ressarcimento'){
+  html=`<h3 class="font-bold mb-4">💵 Ressarcimento</h3>${camposBase}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+  <div><label class="label">Valor correto da fatura</label><input id="valorCorreto" class="campo" placeholder="R$ 0,00"></div>
+  <div><label class="label">Valor a ressarcir</label><input id="valorRessarcir" class="campo" placeholder="R$ 0,00"></div></div>
+  <div class="bg-orange-50 dark:bg-gray-700/50 p-3 rounded-xl text-sm mt-4">📎 Anexos: comprovante, termo, selfie com documentação, cartão do banco frente e chave PIX da mesma conta. Dados bancários devem ser do titular.</div>`;
+ } else if(tipo==='confirmacao'){
+  html=`<h3 class="font-bold mb-4">✅ Confirmação de Pagamento</h3>${camposBase}
+  <div><label class="label">Forma de pagamento</label><select id="formaPagamento" class="campo"><option>Código de barras</option><option>PIX</option><option>Totem</option><option>Pagamento em duplicidade</option></select></div>
+  <div class="mt-4"><label class="label">Data do Pagamento</label><input id="dataPagamento" class="campo" placeholder="DD/MM/AAAA"></div>`;
+ } else if(tipo==='vencimento'){
+  html=`<h3 class="font-bold mb-4">📅 Mudança de Vencimento</h3>${camposBase}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+  <div><label class="label">Vencimento atual</label><select id="vencAtual" class="campo">
+    <option value="">Selecione</option><option>04</option><option>05</option><option>07</option><option>08</option><option>10</option><option>12</option>
+  </select></div>
+  <div><label class="label">Novo vencimento</label><select id="novoVenc" class="campo">
+    <option value="">Selecione</option><option>04</option><option>05</option><option>07</option><option>08</option><option>10</option><option>12</option>
+  </select></div></div>
+  <div class="bg-orange-50 dark:bg-gray-700/50 p-3 rounded-xl text-sm mt-4">⚠️ Vencimentos disponíveis: 04, 05, 07, 08, 10 e 12.</div>
+  <div class="mt-4"><label class="label">Observação</label><input id="observacao" class="campo" placeholder="Ex.: Cliente solicita alteração do vencimento por necessidade de ajuste financeiro.">
+<div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+  <b>Exemplos:</b> cliente solicita alteração do vencimento; fatura já gerada; necessidade de ajuste financeiro; mudança solicitada pelo cliente.
+</div></div>`;
+ } else if(tipo==='cobranca'){
+  html=`<h3 class="font-bold mb-4">💳 Alteração na Forma de Cobrança</h3>
+  <div><label class="label">Nova forma de cobrança</label><select id="novaCobranca" class="campo"><option>Conta Consumo</option><option>Boleto Registrado</option></select></div>
+  <div class="mt-4"><label class="label">Observação</label><input id="observacao" class="campo" placeholder="Ex.: Cliente solicita alteração de boleto para conta consumo.">
+<div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+  <b>Exemplos:</b> cliente solicita alteração da forma de cobrança; dificuldade com o boleto atual; solicitação de conta consumo.
+</div></div>
+  <div class="bg-orange-50 dark:bg-gray-700/50 p-3 rounded-xl text-sm mt-4">⚠️ Não é realizada alteração para débito automático. É fornecido somente o código identificador.</div>`;
+ } else if(tipo==='exclusao'){
+  html=`<h3 class="font-bold mb-4">🗑️ Exclusão de Faturas</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="label">Protocolo da negociação</label><input id="protocoloNeg" class="campo" placeholder="Protocolo"></div>
+  <div><label class="label">Faturas a excluir</label><input id="faturasExcluir" class="campo" placeholder="Ex.: 10/07/2026, 10/08/2026"></div></div>
+  <div class="bg-red-50 dark:bg-red-950/40 p-3 rounded-xl text-sm mt-4">⚠️ Exclusão somente em casos previstos no manual: renegociação, quitação à vista ou erro/desistência na hora da negociação.</div>`;
+ } else if(tipo==='contestacao'){
+  html=`<h3 class="font-bold mb-4">⚠️ Contestação de Fatura</h3>${camposBase}
+  <div class="bg-orange-50 dark:bg-gray-700/50 p-3 rounded-xl text-sm mt-4">Informe obrigatoriamente o vencimento e explique de forma clara, breve e objetiva o motivo que exige correção pelo Faturamento.</div>`;
+ } else if(tipo==='segundaVia'){
+  html=`<h3 class="font-bold mb-4">📄 2ª Via de Boleto</h3>${camposBase}
+  <div class="bg-orange-50 dark:bg-gray-700/50 p-3 rounded-xl text-sm mt-4">⚠️ Débitos não acatados pelo banco podem ficar disponíveis somente após 72 horas úteis ou quando o Faturamento informar a disponibilidade.</div>`;
+ } else if(tipo==='estorno'){
+  html=`<h3 class="font-bold mb-4">💳 Estorno de Cartão de Crédito</h3>${camposBase}
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+  <div><label class="label">Data do pagamento</label><input id="dataPagamento" class="campo" placeholder="DD/MM/AAAA"></div>
+  <div><label class="label">Destino do valor</label><select id="destinoEstorno" class="campo"><option>Estorno do crédito</option><option>Compensar na próxima fatura</option></select></div></div>
+  <div class="bg-orange-50 dark:bg-gray-700/50 p-3 rounded-xl text-sm mt-4">📎 Anexar comprovante de pagamento. O manual informa prazo de até 30 dias úteis para o processo.</div>`;
+ }
+ document.getElementById('camposDinamicos').innerHTML=html;
+}
+montarCampos();
+
+function gerarScript(){
+ const tipo=document.getElementById('tipo').value;
+ const cliente=v('cliente'), tel=v('telefone'), canal=v('canal');
+ let s='';
+
+ if(tipo==='troca'){
+  s=`SOLICITO AO FATURAMENTO A TROCA DO PAGAMENTO DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}. O CLIENTE INFORMA QUE PAGOU POR ENGANO A FATURA COM VENCIMENTO ${v('faturaErrada')}, SENDO A FATURA CORRETA A DE VENCIMENTO ${v('faturaCorreta')}.
+VALOR: R$ ${v('valor')}.
+CLIENTE CIENTE DO PRAZO DE ATÉ 72 HORAS ÚTEIS PARA REALIZAÇÃO DA TRATATIVA, PODENDO ULTRAPASSAR EM CASO DE ALTO FLUXO.`;
+ }
+ else if(tipo==='trocaOutro'){
+  s=`SOLICITO AO FATURAMENTO A TRANSFERÊNCIA DO PAGAMENTO DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}. O CLIENTE INFORMA QUE PAGOU POR ENGANO UMA FATURA VINCULADA AO CLIENTE ${v('clienteDestino')}, CÓDIGO ${v('codigoDestino')}, NO VALOR DE R$ ${v('valor')}, COM PAGAMENTO REALIZADO EM ${v('dataPagamento')}. SOLICITA QUE O VALOR SEJA TRANSFERIDO PARA A FATURA COM VENCIMENTO ${v('faturaCredito')}.
+ANEXOS: TERMO DE TROCA/RETIFICAÇÃO, DOCUMENTAÇÃO COM FOTO E COMPROVANTE DE PAGAMENTO.
+CLIENTE CIENTE DO PRAZO DE ATÉ 72 HORAS ÚTEIS PARA REALIZAÇÃO DA TRATATIVA, PODENDO ULTRAPASSAR EM CASO DE ALTO FLUXO.`;
+ }
+ else if(tipo==='ressarcimento'){
+  s=`SOLICITO AO FATURAMENTO O RESSARCIMENTO DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}. O CLIENTE INFORMA PAGAMENTO DA FATURA COM VENCIMENTO ${v('vencimento')} NO VALOR DE R$ ${v('valor')}, SENDO O VALOR CORRETO R$ ${v('valorCorreto')}. SOLICITA RESSARCIMENTO NO VALOR DE R$ ${v('valorRessarcir')}.
+MOTIVO: ${v('observacao')}.
+ANEXOS: COMPROVANTE DE PAGAMENTO, TERMO, SELFIE COM DOCUMENTO COM FOTO, CARTÃO BANCÁRIO E CHAVE PIX DA MESMA CONTA DO TITULAR.
+CLIENTE CIENTE DO PRAZO DE ATÉ 72 HORAS ÚTEIS PARA REALIZAÇÃO DA TRATATIVA, PODENDO ULTRAPASSAR EM CASO DE ALTO FLUXO.`;
+ }
+ else if(tipo==='confirmacao'){
+  const forma=document.getElementById('formaPagamento')?.value || 'XXXXXXXX';
+  if(forma==='Pagamento em duplicidade'){
+   s=`SOLICITO AO FATURAMENTO O REGISTRO DO PAGAMENTO EM DUPLICIDADE DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}. O CLIENTE INFORMA PAGAMENTO DA FATURA COM VENCIMENTO ${v('vencimento')} EM ${v('dataPagamento')}. SOLICITA QUE O VALOR PAGO EM DUPLICIDADE SEJA COMPENSADO NA PRÓXIMA FATURA.
+COMPROVANTE DE PAGAMENTO EM ANEXO.`;
+  } else {
+   s=`SOLICITO AO FATURAMENTO A CONFIRMAÇÃO DO PAGAMENTO DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}. O CLIENTE INFORMA QUE REALIZOU O PAGAMENTO DA FATURA COM VENCIMENTO ${v('vencimento')} EM ${v('dataPagamento')}, VIA ${forma}, PORÉM A COMPENSAÇÃO AINDA NÃO FOI IDENTIFICADA NO SISTEMA.
+COMPROVANTE DE PAGAMENTO E EXTRATO BANCÁRIO EM ANEXO.
+CLIENTE CIENTE DO PRAZO DE TRATATIVA: ATÉ 72 HORAS ÚTEIS PARA PAGAMENTO CONVENCIONAL E ATÉ 24 HORAS ÚTEIS PARA PIX/TOTEM.`;
+  }
+ }
+ else if(tipo==='vencimento'){
+  s=`SOLICITO AO FATURAMENTO A ALTERAÇÃO DA DATA DE VENCIMENTO DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}. O VENCIMENTO ATUAL É DIA ${v('vencAtual')} E O CLIENTE SOLICITA ALTERAÇÃO PARA O DIA ${v('novoVenc')}.
+CLIENTE CIENTE DE QUE, CASO A FATURA DO MÊS JÁ TENHA SIDO GERADA, A ALTERAÇÃO SERÁ APLICADA A PARTIR DO PRÓXIMO MÊS.`;
+ }
+ else if(tipo==='cobranca'){
+  s=`SOLICITO AO FATURAMENTO A ALTERAÇÃO DA FORMA DE COBRANÇA DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}, PARA ${v('novaCobranca')}.
+SOLICITAÇÃO/MOTIVO: ${v('observacao')}.`;
+ }
+ else if(tipo==='exclusao'){
+  s=`SOLICITO AO FATURAMENTO A EXCLUSÃO DAS FATURAS RELACIONADAS À NEGOCIAÇÃO DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}.
+PROTOCOLO DA NEGOCIAÇÃO: ${v('protocoloNeg')}.
+FATURAS A EXCLUIR: ${v('faturasExcluir')}.`;
+ }
+ else if(tipo==='contestacao'){
+  s=`SOLICITO AO FATURAMENTO A CORREÇÃO DA FATURA DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}, COM VENCIMENTO ${v('vencimento')}.
+MOTIVO DA CONTESTAÇÃO: ${v('observacao')}.
+SOLICITO A CORREÇÃO DO EXTRATO FINANCEIRO E, SE NECESSÁRIO, A EMISSÃO DA FATURA COM O VALOR CORRETO.`;
+ }
+ else if(tipo==='segundaVia'){
+  s=`SOLICITO AO FATURAMENTO A EMISSÃO DE 2ª VIA DO BOLETO DO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}, REFERENTE À FATURA COM VENCIMENTO ${v('vencimento')}, NO VALOR DE R$ ${v('valor')}.
+MOTIVO/SOLICITAÇÃO: ${v('observacao')}.`;
+ }
+ else if(tipo==='estorno'){
+  const destino=document.getElementById('destinoEstorno')?.value || 'XXXXXXXX';
+  s=`SOLICITO AO FATURAMENTO O REGISTRO DO PAGAMENTO EM DUPLICIDADE REALIZADO VIA CARTÃO DE CRÉDITO PELO CLIENTE ${cliente}, TEL ${tel}, ATENDIMENTO VIA ${canal}. O PAGAMENTO REFERE-SE À NEGOCIAÇÃO/FATURA COM VENCIMENTO ${v('vencimento')} E FOI REALIZADO EM ${v('dataPagamento')}, NO VALOR DE R$ ${v('valor')}.
+SOLICITAÇÃO: ${destino}.
+COMPROVANTE DE PAGAMENTO EM ANEXO.
+CLIENTE CIENTE DO PRAZO DE ATÉ 30 DIAS ÚTEIS PARA REALIZAÇÃO DA TRATATIVA.`;
+ }
+
+ document.getElementById('script').value=s;
+ bloquear();
+}
+
+function editarScript(){
+ const e=document.getElementById('script'),b=document.getElementById('btnEditar');
+ if(e.readOnly){e.readOnly=false;b.innerText='💾 SALVAR EDIÇÃO';e.focus();}
+ else bloquear();
+}
+function bloquear(){const e=document.getElementById('script'),b=document.getElementById('btnEditar');e.readOnly=true;b.innerText='✏️ EDITAR';}
+async function copiar(){const e=document.getElementById('script');if(!e.value.trim()){alert('Primeiro gere o script.');return;}await navigator.clipboard.writeText(e.value);alert('Script copiado com sucesso!');}
+function limparTudo(){
+ document.querySelectorAll('input').forEach(e=>e.value='');
+ document.getElementById('script').value='';
+ document.getElementById('tipo').selectedIndex=0;
+ montarCampos();bloquear();
+}
+function toggleDarkMode(){
+ document.documentElement.classList.toggle('dark');
+ document.getElementById('themeIcon').innerText=document.documentElement.classList.contains('dark')?'☀️':'🌙';
+ localStorage.setItem('color-theme',document.documentElement.classList.contains('dark')?'dark':'light');
+}
+if(localStorage.getItem('color-theme')==='dark'){document.documentElement.classList.add('dark');document.getElementById('themeIcon').innerText='☀️';}
+</script>
+</body>
+</html>
