@@ -86,6 +86,40 @@ body.light-mode .support-title,body.light-mode .support-title span{color:#ffffff
 .hidden{display:none!important}
 .toast{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#000;font-weight:bold;padding:12px 16px;border-radius:8px;opacity:0;transition:.2s;z-index:1000}.toast.show{opacity:1}
 @media(max-width:700px){.grid,.grid3,.grid4,.fields,.check-grid,.test-row{grid-template-columns:1fr}.header-content{flex-direction:column;align-items:flex-start;gap:12px}}
+
+.modal-crop{
+  position:fixed;
+  inset:0;
+  z-index:2000;
+  background:rgba(0,0,0,.72);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal-crop.hidden{display:none!important}
+.crop-container{
+  width:min(900px,95vw);
+  max-height:75vh;
+  background:#fff;
+  border-radius:12px;
+  padding:10px;
+  overflow:hidden;
+}
+.crop-container img{
+  display:block;
+  max-width:100%;
+  max-height:68vh;
+}
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
 </style>
 </head>
 <body>
@@ -155,6 +189,7 @@ body.light-mode .support-title,body.light-mode .support-title span{color:#ffffff
   <label class="ocr-btn" for="crmImageInput">Escolher Imagem</label>
   <input type="file" id="crmImageInput" accept="image/*" onchange="carregarImagemParaCrop(this.files[0])">
   <div id="ocrStatus" class="ocr-status"></div>
+   <div style="font-size:12px;color:var(--subtext-color);margin-top:6px;">Leitura automática: RX/ONU, OLT, temperatura, TX, uptime e últimos alarmes.</div>
 </div>
 
 <div class="fields">
@@ -164,6 +199,10 @@ body.light-mode .support-title,body.light-mode .support-title span{color:#ffffff
 <div class="field"><label>Potência de Transmissão:</label><input id="potTransmissao"></div>
 <div class="field"><label>Uptime:</label><input id="uptime"></div>
 <div class="field"><label>Últimos Alarmes:</label><input id="alarmes"></div>
+</div>
+<div id="crmOcrFeedback" class="instructions-box" style="margin-top:0">
+  <b>📷 Leitura da imagem:</b> o resultado da leitura aparece aqui, junto aos campos do CRM.
+  <div id="ocrStatusInline" style="margin-top:6px;font-weight:bold;"></div>
 </div>
 </div></section>
 
@@ -429,6 +468,8 @@ async function processarArquivoOCR(file){
      logger: m => {
        if(m.status === 'recognizing text') {
          status.textContent = `⏳ Processando recorte: ${Math.round(m.progress * 100)}%`;
+          const inlineStatus=document.getElementById("ocrStatusInline");
+          if(inlineStatus) inlineStatus.textContent=status.textContent;
        }
      }
    });
@@ -442,46 +483,120 @@ async function processarArquivoOCR(file){
  } catch(err) {
    console.error("Erro OCR:", err);
    status.textContent = "❌ Falha ao processar imagem (Verifique se há conexão com a internet).";
+    const inlineStatus=document.getElementById("ocrStatusInline");
+    if(inlineStatus) inlineStatus.textContent=status.textContent;
  }
 }
 
 function extrairDadosCRM(texto){
-  const t = texto.toLowerCase();
+  if(!texto) return;
 
-  const extrairValor = (padrao) => {
-    const match = t.match(padrao);
-    return match ? (match[1] || match[2]).replace(',', '.') : null;
-  };
+  // Normaliza o texto vindo do OCR sem destruir números, sinais e unidades.
+  const normalizar = s => (s || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[|]/g,"I")
+    .replace(/\u00a0/g," ")
+    .replace(/[ \t]+/g," ")
+    .trim();
 
-  // 1. Potência de Recepção - ONU
-  const rx = extrairValor(/(?:pot[eê]ncia\s*de\s*)?recep[çc][ãa]o[^\d\-]*(-?\d+[\.,]?\d*)|(?:rx|onu)[^\d\-]*(-?\d+[\.,]?\d*)/);
-  if (rx) {
-    document.getElementById("potRecepcao").value = rx + " dBm";
+  const original = texto.replace(/\r/g,"");
+  const linhas = original.split("\n").map(normalizar).filter(Boolean);
+  const t = normalizar(original);
+
+  // Aceita: -18.5 / -18,5 / 18.5 / 18,5 e também valores colados ao texto.
+  const numero = "(-?\\d+(?:[.,]\\d+)?)";
+
+  function limparNumero(v){
+    if(!v) return "";
+    return v.replace(",", ".").trim();
   }
 
-  // 2. Potência (OLT)
-  const olt = extrairValor(/olt[^\d\-]*(-?\d+[\.,]?\d*)/);
-  if (olt) {
-    document.getElementById("potOlt").value = olt;
+  function procurar(padroes, opcoes={}){
+    const {inteiro=false} = opcoes;
+
+    // Primeiro procura em cada linha, onde o OCR normalmente mantém
+    // o rótulo próximo do respectivo valor.
+    for(const linha of linhas){
+      for(const padrao of padroes){
+        const m = linha.match(padrao);
+        if(m && m[1]) return limparNumero(m[1]);
+      }
+    }
+
+    // Segunda tentativa no texto completo, permitindo que o valor
+    // esteja separado do rótulo por quebra de linha.
+    for(const padrao of padroes){
+      const m = t.match(padrao);
+      if(m && m[1]) return limparNumero(m[1]);
+    }
+
+    return "";
   }
 
-  // 3. Temperatura
-  const temp = extrairValor(/(?:temperatura|temp)[^\d\-]*(\d+[\.,]?\d*)/);
-  if (temp) {
-    document.getElementById("temperatura").value = temp + " °C";
+  // POTÊNCIA DE RECEPÇÃO / RX / ONU
+  const rx = procurar([
+    new RegExp("(?:potencia\\s*(?:de\\s*)?recepcao|recepcao|rx|onu)[^\\d-]{0,50}"+numero, "i"),
+    new RegExp(numero+"\\s*(?:dbm)?[^\\d\\n]{0,15}(?:rx|onu|recepcao)", "i")
+  ]);
+
+  // POTÊNCIA OLT
+  const olt = procurar([
+    new RegExp("(?:potencia\\s*\\(?\\s*olt\\s*\\)?|olt)[^\\d-]{0,50}"+numero, "i")
+  ]);
+
+  // TEMPERATURA
+  const temp = procurar([
+    new RegExp("(?:temperatura|temp)[^\\d-]{0,50}"+numero+"\\s*(?:°?c)?", "i")
+  ]);
+
+  // POTÊNCIA DE TRANSMISSÃO / TX
+  const tx = procurar([
+    new RegExp("(?:potencia\\s*(?:de\\s*)?transmissao|transmissao|tx|trans)[^\\d-]{0,50}"+numero, "i"),
+    new RegExp(numero+"\\s*(?:dbm)?[^\\d\\n]{0,15}(?:tx|transmissao)", "i")
+  ]);
+
+  // UPTIME: aceita formatos como 1d 02h 30m 15s, 1d:02h:30m:15s,
+  // além de pequenas variações causadas pelo OCR.
+  let uptime = "";
+  const uptimeRegexes = [
+    /uptime[^0-9]*(\d+\s*d\s*[: ]\s*\d+\s*h\s*[: ]\s*\d+\s*m\s*[: ]\s*\d+\s*s)/i,
+    /uptime[^0-9]*(\d+\s*d\s*\d+\s*h\s*\d+\s*m\s*\d+\s*s)/i,
+    /(\d+\s*d\s*[: ]\s*\d+\s*h\s*[: ]\s*\d+\s*m\s*[: ]\s*\d+\s*s)/i
+  ];
+
+  for(const r of uptimeRegexes){
+    const m = t.match(r);
+    if(m){
+      uptime = m[1].replace(/\s+/g,"");
+      break;
+    }
   }
 
-  // 4. Potência de Transmissão
-  const tx = extrairValor(/(?:transmiss[ãa]o|trans|tx)[^\d\-]*(-?\d+[\.,]?\d*)/);
-  if (tx) {
-    document.getElementById("potTransmissao").value = tx + " dBm";
+  // ALARMES: captura o conteúdo após o rótulo, sem tentar interpretar
+  // o texto do alarme como número.
+  let alarmes = "";
+  const alarmesRegexes = [
+    /(?:ultimos?\s*alarmes?|last\s*alarms?)[\s:=-]*(.+)/i,
+    /(?:alarmes?)[\s:=-]*(.+)/i
+  ];
+
+  for(const r of alarmesRegexes){
+    const m = t.match(r);
+    if(m && m[1]){
+      alarmes = m[1].trim();
+      break;
+    }
   }
 
-  // 5. Uptime
-  const uptimeMatch = t.match(/uptime[^\r\n]*?(\d+d\s*\d+h\s*\d+m\s*\d+s|\d+d:\d+h:\d+m:\d+s)/);
-  if (uptimeMatch) {
-    document.getElementById("uptime").value = uptimeMatch[1].replace(/\s+/g, '');
-  }
+  // Preenche somente quando encontrou um valor. Assim, uma leitura
+  // parcial não apaga dados já digitados pelo atendente.
+  if(rx) document.getElementById("potRecepcao").value = rx + " dBm";
+  if(olt) document.getElementById("potOlt").value = olt;
+  if(temp) document.getElementById("temperatura").value = temp + " °C";
+  if(tx) document.getElementById("potTransmissao").value = tx + " dBm";
+  if(uptime) document.getElementById("uptime").value = uptime;
+  if(alarmes) document.getElementById("alarmes").value = alarmes;
 
   gerarScript();
 }
