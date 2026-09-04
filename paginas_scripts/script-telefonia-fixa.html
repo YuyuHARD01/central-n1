@@ -22,6 +22,10 @@
             }
         }
     </script>
+<style>
+        #diagnosticoAutomatico { transition: all .2s ease; }
+        #diagnosticoAutomatico:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.06); }
+    </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 font-sans min-h-screen flex flex-col transition-colors duration-200">
 
@@ -188,6 +192,69 @@
                     </select>
                 </div>
             </div>
+
+            <div class="mt-5 pt-5 border-t border-gray-200 dark:border-gray-700">
+                <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">🧪 Diagnóstico Complementar</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Telefone inoperante?</label>
+                        <select id="inoperante" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                            <option>SIM</option><option>NÃO</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Origem da chamada:</label>
+                        <select id="origemChamada" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                            <option>CELULAR</option><option>OUTRO FIXO</option><option>RAMAL</option><option>NÃO TESTADO</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Tipo de falha:</label>
+                        <select id="tipoFalha" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                            <option>NÃO REALIZA CHAMADAS</option>
+                            <option>NÃO RECEBE CHAMADAS</option>
+                            <option>NÃO REALIZA E NÃO RECEBE</option>
+                            <option>SEM ÁUDIO</option>
+                            <option>ÁUDIO UNILATERAL</option>
+                            <option>CHAMADAS CAEM</option>
+                            <option>RUÍDO / INTERFERÊNCIA</option>
+                            <option>SEM TOM DE LINHA</option>
+                            <option>NÃO INFORMADO</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Aparelho:</label>
+                        <select id="tipoAparelho" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                            <option>PLUG AND PLAY</option><option>RAMAL</option><option>NÃO INFORMADO</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Número chamado:</label>
+                        <input type="text" id="numeroChamado" placeholder="Número usado no teste" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Operadora de destino:</label>
+                        <input type="text" id="operadora" placeholder="Operadora, se informada" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Trava no aparelho?</label>
+                        <select id="trava" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                            <option>NÃO</option><option>SIM</option><option>NÃO VERIFICADO</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">Teste de chamada:</label>
+                        <select id="testeChamada" class="w-full px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm dark:text-white">
+                            <option>SUCESSO</option><option>FALHA</option><option>NÃO TESTADO</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="diagnosticoAutomatico" class="mt-4 p-4 rounded-xl border border-orange-200 dark:border-gray-600 bg-orange-50 dark:bg-gray-700/50 text-xs sm:text-sm">
+                    <div class="font-bold text-gray-900 dark:text-white mb-1">🤖 Análise automática</div>
+                    <div id="diagnosticoTexto" class="text-gray-700 dark:text-gray-300">Preencha os campos para visualizar a orientação automática.</div>
+                </div>
+            </div>
         </div>
 
         <!-- Card: Teste pelo Ramal & Resultado -->
@@ -306,6 +373,31 @@
             return elemento ? (elemento.value.trim() || "xxxxxxxx") : "xxxxxxxx";
         }
 
+        function atualizarDiagnostico() {
+            const falha = valor("tipoFalha");
+            const aparelho = valor("tipoAparelho");
+            const teste = valor("testeChamada");
+            const trava = valor("trava");
+            const registrado = valor("telefoneRegistrado");
+            const suporte = valor("suporte");
+
+            let pontos = [];
+            if (registrado === "NÃO") pontos.push("confirmar/corrigir o número registrado");
+            if (aparelho === "RAMAL") pontos.push("validar o funcionamento do ramal antes de concluir a falha do telefone fixo");
+            if (trava === "SIM") pontos.push("verificar a trava no aparelho");
+            if (falha === "SEM TOM DE LINHA") pontos.push("priorizar verificação da linha/aparelho e realizar novo teste");
+            if (falha === "SEM ÁUDIO" || falha === "ÁUDIO UNILATERAL") pontos.push("realizar teste de áudio nos dois sentidos");
+            if (falha === "CHAMADAS CAEM") pontos.push("repetir chamadas para confirmar a recorrência");
+            if (teste === "FALHA") pontos.push("registrar o destino/número chamado e repetir o teste");
+            if (suporte === "SIM") pontos.push("encaminhar para o Suporte Avançado conforme procedimento interno");
+
+            let texto = pontos.length
+                ? "ORIENTAÇÃO: " + pontos.join(" • ") + "."
+                : "ANÁLISE: dados sem divergência crítica identificada. Prosseguir com o teste audível e validação pelo cliente.";
+
+            document.getElementById("diagnosticoTexto").textContent = texto;
+        }
+
         function gerarScript() {
             const cliente = valor("cliente");
             const tell = valor("tell");
@@ -324,6 +416,14 @@
             const acesso = valor("acesso");
             const situacao = valor("situacao");
             const suporte = valor("suporte");
+            const inoperante = valor("inoperante");
+            const origemChamada = valor("origemChamada");
+            const tipoFalha = valor("tipoFalha");
+            const tipoAparelho = valor("tipoAparelho");
+            const numeroChamado = valor("numeroChamado");
+            const operadora = valor("operadora");
+            const trava = valor("trava");
+            const testeChamada = valor("testeChamada");
 
             let complementoRamal = "";
 
@@ -343,19 +443,32 @@
                 final = "CLIENTE NÃO CONFIRMA ACESSO. / NECESSÁRIO ANÁLISE DO SUPORTE AVANÇADO.";
             }
 
+            const diagnostico = document.getElementById("diagnosticoTexto").textContent;
+
             const script = `CLIENTE: ${cliente}
 TELL: ${tell}
+NÚMERO FIXO: ${numeroFixo}
+MODELO DO APARELHO: ${modelo}
 
-INFORMANDO QUE SEU TELEFONE ESTÁ INOPERANTE, - ${dados} DADOS CADASTRAIS - TELEFONE REGISTRADO (${telefoneRegistrado}) - NÚMEROS ${divergentes === "NÃO" ? "NÃO DIVERGENTES" : "DIVERGENTES"} - ${senha} TROCA DE SENHAS DO USUÁRIO DE VOZ - NÚMERO COM PRIVACIDADE (${privacidade}) - RECEBER CHAMADAS A COBRAR (${cobrar}) - DESPROVISIONAMENTO ${desprovisionamento}
+INFORMANDO QUE SEU TELEFONE ESTÁ INOPERANTE (${inoperante}), - ${dados} DADOS CADASTRAIS - TELEFONE REGISTRADO (${telefoneRegistrado}) - NÚMEROS ${divergentes === "NÃO" ? "NÃO DIVERGENTES" : "DIVERGENTES"} - ${senha} TROCA DE SENHAS DO USUÁRIO DE VOZ - NÚMERO COM PRIVACIDADE (${privacidade}) - RECEBER CHAMADAS A COBRAR (${cobrar}) - DESPROVISIONAMENTO ${desprovisionamento}
 
-FEITO TESTE AUDÍVEL
+ANÁLISE DA FALHA: ${tipoFalha}
+APARELHO: ${tipoAparelho}
+ORIGEM DA CHAMADA: ${origemChamada}
+NÚMERO CHAMADO: ${numeroChamado}
+OPERADORA: ${operadora}
+TRAVA NO APARELHO: ${trava}
+TESTE DE CHAMADA: ${testeChamada}
+TESTE AUDÍVEL: ${audivel}
+
+${diagnostico}
 
 ${complementoRamal}
 
 ${final}`;
 
             document.getElementById("scriptFinal").value = script;
-            document.getElementById("status").textContent = "✓ Script gerado com sucesso.";
+            document.getElementById("status").textContent = "✓ Script gerado com sucesso com análise automática.";
             bloquearScript();
         }
 
@@ -403,8 +516,17 @@ ${final}`;
             }
         }
 
+        // Atualiza a análise automaticamente sempre que o operador altera os campos.
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("select, input").forEach(el => {
+                el.addEventListener("change", atualizarDiagnostico);
+                el.addEventListener("input", atualizarDiagnostico);
+            });
+            atualizarDiagnostico();
+        });
+
         function limparTudo() {
-            ['cliente', 'tell', 'numeroFixo', 'modelo'].forEach(id => {
+            ['cliente', 'tell', 'numeroFixo', 'modelo', 'numeroChamado', 'operadora'].forEach(id => {
                 document.getElementById(id).value = "";
             });
             document.getElementById("scriptFinal").value = "";
