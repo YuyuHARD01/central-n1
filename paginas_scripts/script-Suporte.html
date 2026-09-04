@@ -6,7 +6,6 @@
 <title>Você Telecom — Suporte Técnico</title>
 <!-- Biblioteca OCR Tesseract v5 -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <!-- CSS e JS do Cropper.js -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
@@ -30,12 +29,15 @@ body.light-mode{
 body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);color:var(--text-body);transition:.25s}
 .header{background:var(--header-bg);color:#fff;padding:24px 20px;border-bottom:2px solid #ffb15c}
 .header-content{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center}
- .container{max-width:1100px;margin:auto;padding:24px 18px 60px;max-width:1100px;margin:auto;padding:24px 18px 60px}
+ .container{max-width:1100px;margin:auto;padding:24px 18px 60px}
 .brand-title{display:flex;align-items:center;gap:12px;margin:0 0 6px}
+.support-title{font-size:22px;font-weight:700;color:#111827}
+.support-title span{color:#111827}
+body.light-mode .support-title,body.light-mode .support-title span{color:#ffffff}
 .brand-badge{background:#111;color:#ff9a3d;font-weight:900;padding:5px 10px;border-radius:6px;font-size:.82rem;letter-spacing:1px}
- .theme-toggle{background:#f3f4f6;border:1px solid #d1d5db;color:#374151;background:#ffffff22;border:1px solid #ffffff66;color:#fff;padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:bold}
- .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;margin-bottom:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.08);background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;margin-bottom:18px;overflow:hidden;box-shadow:0 6px 25px #00000020}
- .head{padding:20px;display:flex;gap:14px;align-items:center;cursor:pointer;background:var(--card-bg);padding:20px;display:flex;gap:14px;align-items:center;cursor:pointer;background:var(--card-bg)}
+ .theme-toggle{background:#ffffff22;border:1px solid #ffffff66;color:#fff;padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:bold}
+ .card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;margin-bottom:18px;overflow:hidden;box-shadow:0 6px 25px #00000020}
+ .head{padding:20px;display:flex;gap:14px;align-items:center;cursor:pointer;background:var(--card-bg)}
 .head:hover{background:var(--card-head-hover)}
 .num{background:var(--accent);color:#000;border-radius:50%;width:42px;height:42px;display:grid;place-items:center;font-weight:900;flex-shrink:0}
 .head div:nth-child(2){flex:1}.head h2{margin:0;font-size:1.1rem}
@@ -47,9 +49,9 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);
 .field label{margin:0 0 6px;font-weight:bold;font-size:.9rem;color:var(--label-color)}
 .field input,.field textarea,.field select{border:1px solid var(--input-border);border-radius:8px;padding:10px;background:var(--input-bg);color:var(--input-text);font:inherit}
 .field textarea{min-height:100px;resize:vertical}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0 22px}.grid3{grid-template-columns:repeat(3,1fr)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0 22px}.grid3{grid-template-columns:repeat(3,1fr)}.grid4{grid-template-columns:repeat(4,1fr)}
 .option{background:var(--card-bg);border:2px solid var(--card-border);color:var(--text-body);border-radius:11px;padding:15px;text-align:left;cursor:pointer;font:inherit}
- .option:hover,.option.active{border-color:var(--accent);background:#FF6600;color:#fff;border-color:var(--accent);background:#9a4800;color:#fff}
+ .option:hover,.option.active{border-color:var(--accent);background:#9a4800;color:#fff}
 .check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0 22px}
 .check-card{display:flex;align-items:center;gap:9px;background:var(--card-bg);border:2px solid var(--card-border);border-radius:11px;padding:14px;cursor:pointer}
 .check-card:hover{border-color:var(--accent)}
@@ -69,7 +71,7 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
 .btn{border:0;border-radius:8px;padding:11px 16px;font-weight:bold;cursor:pointer}
 .btn-sm{padding:6px 12px;font-size:.8rem}
- .primary{background:#FF6600;color:#fff;background:var(--accent);color:#000}.secondary{background:var(--card-border);color:var(--text-body)}
+ .primary{background:var(--accent);color:#000}.secondary{background:var(--card-border);color:var(--text-body)}
 
 .ocr-box{background:var(--card-bg);border:2px dashed var(--accent);border-radius:10px;padding:15px;text-align:center;margin-bottom:15px}
 .ocr-box input{display:none}
@@ -81,27 +83,9 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);
 .remove-test{background:#7f1d1d;color:#fff;border:0;border-radius:8px;padding:9px 11px;cursor:pointer;font-weight:bold}
 .test-summary-item{margin:4px 0;font-size:.9rem;color:var(--label-color)}
 
-/* Estilos do Modal de Recorte */
-.modal-crop{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2000;padding:20px}
-.crop-container{max-width:90vw;max-height:70vh;background:#000}
-.crop-container img{max-width:100%;max-height:70vh}
-.modal-actions{margin-top:15px;display:flex;gap:15px}
-
-
-.pdf-box{background:var(--card-bg);border:2px dashed var(--accent);border-radius:10px;padding:16px;margin-top:18px}
-.pdf-box input{display:none}
-.pdf-upload-btn{background:var(--accent);color:#000;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer;display:inline-block}
-.pdf-hint{font-size:.85rem;color:var(--subtext-color);margin:8px 0 12px}
-.pdf-preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
-.pdf-item{position:relative;border:1px solid var(--card-border);border-radius:10px;padding:8px;background:var(--content-bg)}
-.pdf-item img{width:100%;height:120px;object-fit:contain;border-radius:6px;background:#111}
-.pdf-item-name{font-size:.75rem;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--label-color)}
-.pdf-remove{position:absolute;top:5px;right:5px;border:0;border-radius:50%;width:26px;height:26px;background:#7f1d1d;color:#fff;font-weight:bold;cursor:pointer}
-.pdf-count{font-size:.85rem;font-weight:bold;color:var(--summary-text);margin-top:10px}
-
 .hidden{display:none!important}
 .toast{position:fixed;right:18px;bottom:18px;background:var(--accent);color:#000;font-weight:bold;padding:12px 16px;border-radius:8px;opacity:0;transition:.2s;z-index:1000}.toast.show{opacity:1}
-@media(max-width:700px){.grid,.grid3,.fields,.check-grid,.test-row{grid-template-columns:1fr}.header-content{flex-direction:column;align-items:flex-start;gap:12px}}
+@media(max-width:700px){.grid,.grid3,.grid4,.fields,.check-grid,.test-row{grid-template-columns:1fr}.header-content{flex-direction:column;align-items:flex-start;gap:12px}}
 </style>
 </head>
 <body>
@@ -110,7 +94,7 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);
   <div style="max-width:1100px;margin:auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;">
     <div style="display:flex;align-items:center;gap:12px;">
       <div>
-        <div style="font-size:22px;font-weight:700;color:#ffffff;">SUPORTE <span style="color:#ffffff;">N1</span></div>
+        <div class="support-title">SUPORTE <span>N1</span></div>
         <div style="font-size:12px;color:#6b7280;">Portal Interno</div>
       </div>
     </div>
@@ -131,10 +115,11 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);
 <div class="field"><label>TELL:</label><input id="tellInput"></div>
 </div>
 <h3>CANAL DE ATENDIMENTO</h3>
-<div class="grid grid3">
+<div class="grid grid4">
 <button class="option" onclick="select('canal','CALL',this)">📞 <b>CALL</b></button>
 <button class="option" onclick="select('canal','CHAT',this)">💬 <b>CHAT</b></button>
 <button class="option" onclick="select('canal','MINHA VC',this)">📱 <b>MINHA VC</b></button>
+<button class="option" onclick="select('canal','PDV',this)">🏪 <b>PDV</b></button>
 </div>
 </div></section>
 
@@ -263,18 +248,7 @@ body{margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg-body);
 </div>
 
 
-<div class="pdf-box">
-  <h3 style="margin-top:0">📎 ANEXAR PRINTS / FOTOS</h3>
-  <div class="pdf-hint">Selecione várias imagens de uma vez ou adicione mais imagens. Todas serão reunidas em um único PDF.</div>
-  <label class="pdf-upload-btn" for="pdfImagesInput">📷 ADICIONAR PRINTS / FOTOS</label>
-  <input type="file" id="pdfImagesInput" accept="image/*" multiple onchange="adicionarImagensPDF(this.files)">
-  <div id="pdfCount" class="pdf-count">Nenhuma imagem anexada.</div>
-  <div id="pdfPreview" class="pdf-preview"></div>
-  <div class="actions">
-    <button type="button" class="btn primary" onclick="gerarPDFImagens()">📄 CONVERTER TUDO EM PDF</button>
-    <button type="button" class="btn secondary" onclick="limparImagensPDF()">🧹 LIMPAR IMAGENS</button>
-  </div>
-</div>
+
 
 <div class="summary">
 <h3>📄 SCRIPT AUTOMÁTICO</h3>
@@ -512,107 +486,6 @@ function extrairDadosCRM(texto){
   gerarScript();
 }
 
-
-let imagensPDF=[];
-
-function adicionarImagensPDF(files){
-  [...files].forEach(file=>{
-    if(!file.type.startsWith("image/")) return;
-    const reader=new FileReader();
-    reader.onload=e=>{
-      imagensPDF.push({
-        file,
-        data:e.target.result,
-        nome:file.name
-      });
-      renderImagensPDF();
-    };
-    reader.readAsDataURL(file);
-  });
-  document.getElementById("pdfImagesInput").value="";
-}
-
-function renderImagensPDF(){
-  const preview=document.getElementById("pdfPreview");
-  const count=document.getElementById("pdfCount");
-
-  count.textContent=imagensPDF.length
-    ? `${imagensPDF.length} imagem(ns) anexada(s).`
-    : "Nenhuma imagem anexada.";
-
-  preview.innerHTML=imagensPDF.map((img,i)=>`
-    <div class="pdf-item">
-      <button type="button" class="pdf-remove" title="Remover" onclick="removerImagemPDF(${i})">×</button>
-      <img src="${img.data}" alt="Prévia">
-      <div class="pdf-item-name" title="${img.nome}">${img.nome}</div>
-    </div>
-  `).join("");
-}
-
-function removerImagemPDF(index){
-  imagensPDF.splice(index,1);
-  renderImagensPDF();
-}
-
-function limparImagensPDF(){
-  imagensPDF=[];
-  renderImagensPDF();
-  toast("Imagens removidas!");
-}
-
-function carregarImagemPDF(dataUrl){
-  return new Promise((resolve,reject)=>{
-    const img=new Image();
-    img.onload=()=>resolve(img);
-    img.onerror=reject;
-    img.src=dataUrl;
-  });
-}
-
-async function gerarPDFImagens(){
-  if(!imagensPDF.length){
-    toast("Anexe pelo menos uma imagem!");
-    return;
-  }
-
-  try{
-    const {jsPDF}=window.jspdf;
-    const pdf=new jsPDF({orientation:"portrait",unit:"mm",format:"a4"});
-    const pageW=210, pageH=297;
-    const margin=10;
-    const maxW=pageW-margin*2;
-    const maxH=pageH-margin*2;
-
-    for(let i=0;i<imagensPDF.length;i++){
-      if(i>0) pdf.addPage();
-
-      const img=await carregarImagemPDF(imagensPDF[i].data);
-      let w=img.naturalWidth || img.width;
-      let h=img.naturalHeight || img.height;
-
-      const ratio=Math.min(maxW/w,maxH/h);
-      w*=ratio;
-      h*=ratio;
-
-      const x=(pageW-w)/2;
-      const y=(pageH-h)/2;
-
-      let format="JPEG";
-      if(imagensPDF[i].file.type==="image/png") format="PNG";
-      else if(imagensPDF[i].file.type==="image/webp") format="WEBP";
-
-      pdf.addImage(img,format,x,y,w,h,undefined,"FAST");
-    }
-
-    const agora=new Date();
-    const nome=`prints-suporte-${agora.getFullYear()}-${String(agora.getMonth()+1).padStart(2,"0")}-${String(agora.getDate()).padStart(2,"0")}.pdf`;
-    pdf.save(nome);
-    toast("PDF gerado com sucesso!");
-  }catch(err){
-    console.error("Erro ao gerar PDF:",err);
-    toast("Não foi possível gerar o PDF.");
-  }
-}
 
 function gerarScript(){
  if(editando)return;
